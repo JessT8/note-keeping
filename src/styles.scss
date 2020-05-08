@@ -1,0 +1,178 @@
+.App {
+
+  	margin: 0 auto;
+  	width:80%;
+  header{
+  	display: flex;
+  	justify-content: center;
+  	align-items: center;
+	  .toggleAdd{
+	  	border-radius: 50%;
+	  	background-color: transparent;
+	 		padding:2px 5px 5px 5px;
+	 		margin: 5px;
+	 		font-size: 1.5rem;
+	  	text-align: center;
+	  	text-decoration: none;
+	  	&:hover{
+	  		background-color: black;
+	  		color:white;
+	  		cursor: pointer;
+	  	}
+	  	&:focus{
+	  		text-decoration: none;
+	  	}
+	  }
+  }
+	.overlay {
+	  position: fixed;
+	  top: 0;
+	  bottom: 0;
+	  left: 0;
+	  right: 0;
+	  background: rgba(0, 0, 0, 0.7);
+	  transition: opacity 500ms;
+	  visibility: visible;
+	  opacity: 1;
+	  z-index: 10;
+	}
+	.popup {
+	  margin: 70px auto;
+	  padding: 25px;
+	  background: #fff;
+	  border-radius: 5px;
+	  width: 30%;
+	  position: relative;
+	  transition: all 5s ease-in-out;
+	}
+	.popup .close {
+	  position: absolute;
+	  top: 20px;
+	  right: 30px;
+	  transition: all 200ms;
+	  font-size: 30px;
+	  font-weight: bold;
+	  text-decoration: none;
+	  color: #333;
+	}
+	.popup.close:hover {
+	  color: #06D85F;
+	}
+	.popup .content {
+	  max-height: 40%;
+	  overflow: auto;
+	}
+
+	@media screen and (max-width: 700px){
+	  .popup{
+	    width: 70%;
+	  }
+	}
+	$primary: #11998e;
+$secondary: #38ef7d;
+$black: #000000;
+$gray: #9b9b9b;
+.form__group_popup{
+	position: relative;
+  padding: 15px 10px;
+  margin-top: 10px;
+  width: 90%;
+}
+.form__field{
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid $gray;
+  outline: 0;
+  font-size: 1.3rem;
+  color: $black;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+
+  &::placeholder {
+    color: transparent;
+  }
+
+  &:placeholder-shown ~ .form__label {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 20px;
+  }
+
+}
+.space{
+	white-space: pre-wrap;
+}
+.form__field_custom{
+
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid $gray;
+  outline: 0;
+  font-size: 1.3rem;
+  color: $black;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+  resize: none;
+  &:placeholder-shown  {
+		text-align:center;
+		  &:focus {
+    text-align: left;
+  }
+	}
+  &:placeholder-shown ~ .form__label2 {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 20px;
+    color: transparent;
+  }
+  &:focus::placeholder {
+  	color: transparent;
+	}
+}
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: $gray;
+}
+.form__label2{
+	position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: $gray;
+}
+.form__field:focus , .form__field_custom:focus{
+  ~ .form__label, ~.form__label2 {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: $primary;
+    font-weight:700;
+  }
+
+  padding-bottom: 6px;
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, $primary,$secondary);
+  border-image-slice: 1;
+}
+.btnAdd{
+	border:0px;
+	margin-bottom: 20px;
+	cursor: pointer;
+	font-size:1rem;
+	&:focus{
+		outline: none;
+	}
+}
+}
