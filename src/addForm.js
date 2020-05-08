@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 function AddForm() {
     const [values, setValues] = useState({title:"", note:"" });
+    const [notes, setNotes] = useState([]);
     return  <div className="AddForm">
                 <div>
                     <label
@@ -14,6 +15,7 @@ function AddForm() {
                         id="title"
                         name="title"
                         value={values.title}
+                        onChange={(e)=>{setValues({...values, "title":e.target.value})}}
                     />
                 </div>
                 <div>
@@ -28,10 +30,13 @@ function AddForm() {
                         id="note"
                         value={values.note}
                         placeholder="Write your notes here!"
+                        onChange={(e)=>{setValues({...values, note:e.target.value})}}
                     />
                 </div>
                 <div>
-                    <button>
+                    <button onClick={()=>{
+                        setValues({title:"",note:""});
+                        setNotes([...notes, values])}}>
                         Add
                     </button>
                 </div>
