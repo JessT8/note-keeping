@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 function AddForm(props) {
     const [values, setValues] = useState({title:"", note:"" });
-    const [notes, setNotes] = useState([]);
     return  <div className="AddForm">
                 <div className="overlay">
                     <div className="popup">
@@ -46,7 +45,7 @@ function AddForm(props) {
                                 onClick={()=>{
                                 setValues({title:"",note:""});
                                 console.log("here");
-                                props.setNotes([...notes, values]);
+                                props.setNotes( values);
                                 props.close();}
                                 }>
                             Add

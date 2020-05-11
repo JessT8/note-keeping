@@ -14,8 +14,7 @@ function App() {
             <h1>Note keeper</h1>
             <button className="toggleAdd" onClick={()=>{setToggle(true)}}>+</button>
         </header>
-      {toggle && <AddForm close={()=>{setToggle(false)}} setNotes={(e)=>{setNotes(e);
-        console.log(e);}}/>}
+      {toggle && <AddForm close={()=>{setToggle(false)}} setNotes={(value)=>{setNotes([...notes, value]);}}/>}
       <DisplayNotes notes={notes} />
     </div>
   );
