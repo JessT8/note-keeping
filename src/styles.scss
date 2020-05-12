@@ -1,5 +1,4 @@
 .App {
-
   	margin: 0 auto;
   	width:80%;
   header{
@@ -7,10 +6,9 @@
   	justify-content: center;
   	align-items: center;
 	  .toggleAdd{
-	  	  border-radius: 15px ;
- 			  height: 30px ;
-  			width: 30px ;
-
+	  	border-radius: 15px ;
+ 			height: 30px ;
+  		width: 30px ;
 	  	background-color: transparent;
 	 		padding:2px 5px 5px 5px;
 	 		margin:10px 0 3px 10px;
@@ -23,7 +21,7 @@
 	  		cursor: pointer;
 	  	}
 	  	&:focus{
-		outline: none;
+				outline: none;
 	  		text-decoration: none;
 	  	}
 	  }
@@ -49,17 +47,17 @@
 	  position: relative;
 	  transition: all 5s ease-in-out;
 	}
-	.popup .close {
+	.close {
 	  position: absolute;
 	  top: 20px;
 	  right: 30px;
 	  transition: all 200ms;
 	  font-size: 30px;
 	  font-weight: bold;
-	  text-decoration: none;
+	  cursor:pointer;
 	  color: #333;
 	}
-	.popup.close:hover {
+	.close:hover {
 	  color: #06D85F;
 	}
 	.popup .content {
@@ -93,23 +91,19 @@ $gray: #9b9b9b;
   padding: 7px 0;
   background: transparent;
   transition: border-color 0.2s;
-
   &::placeholder {
     color: transparent;
   }
-
   &:placeholder-shown ~ .form__label {
     font-size: 1.3rem;
     cursor: text;
     top: 20px;
   }
-
 }
 .space{
 	white-space: pre-wrap;
 }
 .form__field_custom{
-
   font-family: inherit;
   width: 100%;
   border: 0;
@@ -163,7 +157,6 @@ $gray: #9b9b9b;
     color: $primary;
     font-weight:700;
   }
-
   padding-bottom: 6px;
   font-weight: 700;
   border-width: 3px;
@@ -175,11 +168,159 @@ $gray: #9b9b9b;
 	margin-bottom: 20px;
 	cursor: pointer;
 	font-size:1rem;
-	border-width: 3px;
-  border-image: linear-gradient(to right, $primary,$secondary);
-  border-image-slice: 1;
+	border: 1px solid black;
+	border-radius:10%;
+	&:hover{
+		background-color:black;
+		color:white;
+	}
 	&:focus{
 		outline: none;
 	}
 }
+}
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500);
+h2{
+	margin-top: 30px;
+}
+@mixin font-smoothing($value: on) {
+    @if $value == on {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    @else {
+        -webkit-font-smoothing: subpixel-antialiased;
+        -moz-osx-font-smoothing: auto;
+    }
+}
+
+$label-size: 60px;
+$label-margin: 16px;
+$label-before-size: 40px;
+$color-light: white;
+$color-brand: #2196F3;
+$color-font: rgba(black, .54);
+$font-size-md: 14px;
+$font-size-lg: 24px;
+$font-size-xl: 54px;
+$font-light: 300;
+$font-normal: 400;
+$font-bold: 500;
+
+* {
+   @include font-smoothing(on);
+}
+.title {
+  font-size: $font-size-xl;
+  font-weight: $font-light;
+  margin-bottom: 54px;
+  small {
+    font-size: 16px;
+  }
+}
+
+.link {
+  display: block;
+  color: $color-font;
+  margin-top: 54px;
+}
+.checkbox-input {
+  display: none;
+}
+.checkbox-label, .checkbox-text, .checkbox-text--description {
+   transition:all .4s ease;
+}
+.checkbox-label {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  width: 100%;
+  padding: $label-size/2 $label-size;
+  cursor: pointer;
+  font-size: $font-size-lg;
+  font-weight: $font-normal;
+  margin: $label-margin 0;
+  border: 1px solid darken($color-light, 15%);
+  border-radius:2px;
+  box-shadow:inset 0 0 0 0 $color-brand;
+  z-index: 2;
+  &:before {
+    position: absolute;
+    top: 75%;
+    left: -20px;
+    width: $label-before-size;
+    height: $label-before-size;
+    opacity: 0;
+    content: "\2605";
+    background-color: $color-brand;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 24px;
+    border-radius:50%;
+    transform: translate(0%, -50%);
+    transition:all .4s ease;
+  }
+  button{
+  	border:0;
+  	background: transparent;
+  	position: absolute;
+  	top:0;
+  	font-size: 1.2rem;
+  	cursor: pointer;
+  	animation-fill-mode: forwards;
+  	&:focus{
+			outline: none;
+		}
+  }
+  .remove{
+  	right:5px;
+  	color:red;
+  	animation: hide2 0.5s linear;
+  	z-index:1;
+  }
+  .edit{
+  	color:#FFDA00;
+    right:35px;
+    animation: hide 0.5s linear;
+    z-index:1;
+  }
+}
+.animated-box{
+	z-index:2;
+}
+.checkbox-text {
+  &--title {
+    font-weight: $font-bold;
+  }
+  &--description {
+    font-size: $font-size-md;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid $color-brand;
+  }
+}
+
+.checkbox-input:checked + .checkbox-label {
+  border-color: $color-brand;
+  box-shadow:inset 0 -12px 0 0 $color-brand;
+  &:before {
+    top: 0;
+    opacity: 1;
+  }
+	button{
+	  display: none;
+	}
+  & .checkbox-text {
+    // transform:translate(0, -8px);
+    &--description {
+      border-color: darken($color-light, 15%);
+    }
+  }
+}
+@media screen and (min-width: 540px) {
+  .checkbox-label {
+     width: 450px;
+     margin: $label-margin;
+  }
 }

@@ -7,7 +7,12 @@ import './styles.scss';
 function App() {
   const [toggle, setToggle] = useState(false);
   const [notes, setNotes] = useState([]);
-
+  const favorite=(id)=>{
+    const i = parseInt(id);
+    const n = [...notes];
+    n[i].favorite = !n[i].favorite;
+    setNotes(n);
+  }
   return (
     <div className="App">
         <header>
@@ -15,7 +20,8 @@ function App() {
             <button className="toggleAdd" onClick={()=>{setToggle(true)}}>+</button>
         </header>
       {toggle && <AddForm close={()=>{setToggle(false)}} setNotes={(value)=>{setNotes([...notes, value]);}}/>}
-      <DisplayNotes notes={notes} />
+      <DisplayNotes notes={notes} favorite={(e)=>{favorite(e)}}/>
+
     </div>
   );
 }

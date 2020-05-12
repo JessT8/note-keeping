@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 
 function AddForm(props) {
-    const [values, setValues] = useState({title:"", note:"" });
+    const [values, setValues] = useState({title:"", note:"", favorite:false });
     return  <div className="AddForm">
                 <div className="overlay">
                     <div className="popup">
+                        <a className="close" onClick={()=>{props.close();}}>&times;</a>
                         <div className="content">
                             <div className="form__group_popup">
                                 <input
@@ -43,10 +44,13 @@ function AddForm(props) {
                         <div>
                         <button className="btnAdd"
                                 onClick={()=>{
-                                setValues({title:"",note:""});
-                                console.log("here");
-                                props.setNotes( values);
-                                props.close();}
+                                if(values.title && values.note){
+                                    setValues({title:"",note:""});
+                                    props.setNotes( values);
+                                    props.close();
+                                }else{
+                                    console.log("error message");
+                                }}
                                 }>
                             Add
                         </button>
