@@ -35,31 +35,30 @@ function EditForm(props) {
                                     onChange={(e)=>{
                                         setValues({...values, note:e.target.value})}}
                                 />
-                            <label
-                                htmlFor="note"
-                                className="form__label2"
-                            >
+                                 <label
+                                    htmlFor="note"
+                                    className="form__label2"
+                                >
                                 Note
-                            </label>
+                                </label>
+                            </div>
+                            <div>
+                                <button className="btnAdd"
+                                        onClick={()=>{
+                                            if(values.title && values.note){
+                                                props.close();
+                                                props.updateNote(values, props.index);
+                                            }else{
+                                                console.log("error message");
+                                            }}
+                                        }>
+                                             Save
+                                 </button>
+                            </div>
                         </div>
-                        <div>
-                        <button className="btnAdd"
-                                onClick={()=>{
-                                if(values.title && values.note){
-                                    props.close();
-                                    props.updateNote(values, props.index);
-                                }else{
-                                    console.log("error message");
-                                }}
-                                }>
-                            Save
-                        </button>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 }
-
 
 export default EditForm;

@@ -19,6 +19,11 @@ function App() {
     n[i] = values;
     setNotes(n);
   }
+  const deleteNote = (i)=>{
+    const n = [...notes];
+    n.splice(i,1);
+    setNotes(n);
+  }
   return (
     <div className="App">
         <header>
@@ -26,7 +31,7 @@ function App() {
             <button className="toggleAdd" onClick={()=>{setToggle(true)}}>+</button>
         </header>
       {toggle && <AddForm close={()=>{setToggle(false)}} setNotes={(value)=>{setNotes([...notes, value]);}}/>}
-      <DisplayNotes notes={notes} favorite={(e)=>{favorite(e)}} updateNote={(values, i)=>{updateNote(values, i)}} />
+      <DisplayNotes notes={notes} favorite={(e)=>{favorite(e)}} updateNote={(values, i)=>{updateNote(values, i)}} deleteNote={(i)=>{deleteNote(i)}}/>
     </div>
   );
 }
