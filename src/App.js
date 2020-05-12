@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import AddForm from "./addForm"
+import AddForm from "./addForm";
 import DisplayNotes from "./displayNotes"
 import './styles.scss';
 
@@ -13,6 +13,12 @@ function App() {
     n[i].favorite = !n[i].favorite;
     setNotes(n);
   }
+
+  const updateNote = (values, i)=>{
+    const n = [...notes];
+    n[i] = values;
+    setNotes(n);
+  }
   return (
     <div className="App">
         <header>
@@ -20,8 +26,7 @@ function App() {
             <button className="toggleAdd" onClick={()=>{setToggle(true)}}>+</button>
         </header>
       {toggle && <AddForm close={()=>{setToggle(false)}} setNotes={(value)=>{setNotes([...notes, value]);}}/>}
-      <DisplayNotes notes={notes} favorite={(e)=>{favorite(e)}}/>
-
+      <DisplayNotes notes={notes} favorite={(e)=>{favorite(e)}} updateNote={(values, i)=>{updateNote(values, i)}} />
     </div>
   );
 }
