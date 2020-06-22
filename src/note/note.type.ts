@@ -1,4 +1,4 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql'
+import { ObjectType, Field, ID} from '@nestjs/graphql'
 
 @ObjectType('Note')
 export class NoteType{
@@ -10,4 +10,5 @@ export class NoteType{
 
 	@Field()
 	description:string;
+
 }
