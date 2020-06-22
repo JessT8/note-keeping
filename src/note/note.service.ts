@@ -3,6 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Note } from './note.entity';
 import { Repository } from 'typeorm';
+import { CreateNoteInput } from './note.input'
+import { User } from '../user/user.entity';
 
 @Injectable()
 export class NoteService {
@@ -12,11 +14,21 @@ export class NoteService {
 	async getNote(id:number):Promise<Note>{
 		return this.noteRepository.findOne({id});
 	}
-	async createNote(title, description): Promise<Note>{
+	async getNotes():Promise<Note[]>{
+		return this.noteRepository.find();
+	}
+	async createNote(
+		createNoteInput: CreateNoteInput,
+		// @GetUser() user: User
+		): Promise<Note>{
+		const { title, description } = createNoteInput;
 		const note = this.noteRepository.create({
 			title,
-			description
+			description,
 		});
+
 		return this.noteRepository.save(note);
+		// delete note.user;
+		// return note;
 	}
 }
