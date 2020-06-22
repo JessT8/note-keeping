@@ -1,7 +1,7 @@
 import { Resolver , Query , Mutation, Args} from '@nestjs/graphql';
 import { NoteType } from './note.type';
 import { NoteService } from './note.service';
-
+import { CreateNoteInput } from './note.input';
 
 @Resolver(of => NoteType )
 export class NoteResolver {
@@ -14,12 +14,16 @@ export class NoteResolver {
 		){
 		return this.noteService.getNote(id);
 	}
-
+	@Query(returns => [ NoteType ])
+	notes(
+		){
+		return this.noteService.getNotes();
+	}
 	@Mutation(returns => NoteType)
 	createNote(
-		@Args('title') title:string,
-		@Args('description') description: string
+		@Args("createNoteInput") createNoteInput : CreateNoteInput,
+		// @Args("user") user : User
 	){
-		return this.noteService.createNote(title, description);
+		return this.noteService.createNote(createNoteInput);
 	}
 }
