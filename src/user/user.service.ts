@@ -36,11 +36,17 @@ export class UserService {
 			}
 		}
 	}
-	// async validatePassword( createUserInput: CreateUserInput): Promise<User>{
-
-	// }
+	async validatePassword( createUserInput: CreateUserInput): Promise<string>{
+		const { username ,password } = createUserInput;
+		const user = await User.findOne({username});
+		const validation = await user.validatePassword(password);
+		if( user && validation){
+			return user.username;
+		}else{
+			return null;
+		}
+	}
 	private async hashPassword(password: string, salt:string){
 		return bcrypt.hash(password,salt);
 	}
-
 }

@@ -19,6 +19,11 @@ export class UserResolver{
 	users(){
 		return this.userService.getUsers();
 	}
+	@Query (returns => Boolean)
+	signUp(
+		@Args("createUserInput") createUserInput: CreateUserInput){
+		return this.userService.validatePassword(createUserInput);
+		}
 
 	@Mutation (returns => Boolean)
 	createUser(
