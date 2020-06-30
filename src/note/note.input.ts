@@ -12,6 +12,4 @@ export class CreateNoteInput {
 	@Field()
 	description: string;
 
-	@Field(type=> [ID])
-	userId: number;
 }
