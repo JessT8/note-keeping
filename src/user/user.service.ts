@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateUserInput } from './create-user.input';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
-
+import { jwtConstants } from '../constants';
 
 @Injectable()
 export class UserService {
@@ -47,9 +47,7 @@ export class UserService {
 		const { id } = user;
 		const validation = await user.validatePassword(password);
 		if( user && validation){
-			delete user.password;
-			delete user.salt;
-			return jwt.sign({id, username},'secret');
+			return jwt.sign({id, username}, jwtConstants.secret);
 		}else{
 			throw new UnauthorizedException('Invalid Credential');
 		}
