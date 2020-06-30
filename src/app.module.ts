@@ -9,7 +9,8 @@ import { UserModule } from './user/user.module';
   imports: [
  		TypeOrmModule.forRoot(typeOrmConfig),
     GraphQLModule.forRoot({
-    	autoSchemaFile: true
+    	autoSchemaFile: true,
+    	context: ({ req }) => ({ headers: req.headers})
     }),
     NoteModule,
     UserModule
