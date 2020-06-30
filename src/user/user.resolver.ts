@@ -10,15 +10,7 @@ import { AuthGuard } from './auth.guard';
 export class UserResolver{
 	constructor(
 			private userService: UserService,
-
 		){}
-	@Query( returns => UserType )
-	user(
-		@Args('id') id:number
-		){
-		return this.userService.getUser(id);
-		}
-
 	@Query (returns => [ UserType ])
 	@UseGuards(new AuthGuard())
 	users(@Context('user') user: UserType){
