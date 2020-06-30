@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Note } from './note.entity';
 import { Repository } from 'typeorm';
 import { CreateNoteInput } from './note.input'
+import { GetUser } from '../user/get-user.decorator';
 import { User } from '../user/user.entity';
 
 @Injectable()
@@ -19,16 +20,14 @@ export class NoteService {
 	}
 	async createNote(
 		createNoteInput: CreateNoteInput,
-		// @GetUser() user: User
+		@GetUser() user: User
 		): Promise<Note>{
 		const { title, description } = createNoteInput;
 		const note = this.noteRepository.create({
 			title,
 			description,
+			user
 		});
-
 		return this.noteRepository.save(note);
-		// delete note.user;
-		// return note;
 	}
 }

@@ -1,8 +1,12 @@
-import { Resolver , Query , Mutation, Args} from '@nestjs/graphql';
+import { Resolver , Query , Mutation, Args, Context} from '@nestjs/graphql';
 import { NoteType } from './note.type';
 import { NoteService } from './note.service';
 import { CreateNoteInput } from './note.input';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from '../user/auth.guard';
+import { User } from '../user/user.entity';
 
+@UseGuards(new AuthGuard())
 @Resolver(of => NoteType )
 export class NoteResolver {
 	constructor(
@@ -22,8 +26,8 @@ export class NoteResolver {
 	@Mutation(returns => NoteType)
 	createNote(
 		@Args("createNoteInput") createNoteInput : CreateNoteInput,
-		// @Args("user") user : User
+		@Context('user') user: User
 	){
-		return this.noteService.createNote(createNoteInput);
+		return this.noteService.createNote(createNoteInput, user);
 	}
 }
