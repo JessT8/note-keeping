@@ -1,12 +1,16 @@
-import { Resolver, Query, Args , Mutation} from '@nestjs/graphql';
+import { Resolver, Query, Args , Mutation, Context} from '@nestjs/graphql';
 import { UserType } from './user.type';
 import { UserService } from './user.service';
 import { CreateUserInput } from './create-user.input';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from './auth.guard';
 
 @Resolver(of => UserType)
+
 export class UserResolver{
 	constructor(
-		private userService: UserService
+			private userService: UserService,
+
 		){}
 	@Query( returns => UserType )
 	user(
@@ -16,14 +20,17 @@ export class UserResolver{
 		}
 
 	@Query (returns => [ UserType ])
-	users(){
+	@UseGuards(new AuthGuard())
+	users(@Context('user') user: UserType){
 		return this.userService.getUsers();
 	}
-	@Query (returns => Boolean)
-	signUp(
-		@Args("createUserInput") createUserInput: CreateUserInput){
-		return this.userService.validatePassword(createUserInput);
-		}
+
+	@Query (returns => String)
+	async signIn(
+		@Args("createUserInput") createUserInput: CreateUserInput)
+	{
+		return this.userService.validatePassword(createUserInput)
+	}
 
 	@Mutation (returns => Boolean)
 	createUser(

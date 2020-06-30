@@ -1,21 +1,25 @@
-import { Injectable , ConflictException, InternalServerErrorException} from '@nestjs/common';
+import { Injectable , ConflictException, InternalServerErrorException,  UnauthorizedException} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserInput } from './create-user.input';
 import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
+
 
 @Injectable()
 export class UserService {
 	constructor(
-		@InjectRepository(User) private userRepository: Repository<User>)
+		@InjectRepository(User)
+		private userRepository: Repository<User>,
+		)
 	{}
 	//get user by id
 	async getUser(id:number):Promise<User>{
 		return this.userRepository.findOne({id});
 	}
 	//get all users
-	async getUsers( ): Promise<User[]>{
+	async getUsers(): Promise<User[]>{
 		return this.userRepository.find();
 	}
 	//create user
@@ -36,14 +40,18 @@ export class UserService {
 			}
 		}
 	}
+
 	async validatePassword( createUserInput: CreateUserInput): Promise<string>{
 		const { username ,password } = createUserInput;
 		const user = await User.findOne({username});
+		const { id } = user;
 		const validation = await user.validatePassword(password);
 		if( user && validation){
-			return user.username;
+			delete user.password;
+			delete user.salt;
+			return jwt.sign({id, username},'secret');
 		}else{
-			return null;
+			throw new UnauthorizedException('Invalid Credential');
 		}
 	}
 	private async hashPassword(password: string, salt:string){
