@@ -3,7 +3,7 @@ import { MinLength, IsString, MaxLength} from 'class-validator'
 
 
 @InputType()
-export class CreateUserInput {
+export class UserInput {
 	@MinLength(4)
 	@MaxLength(20)
 	@Field()

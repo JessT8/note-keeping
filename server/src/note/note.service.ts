@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Note } from './note.entity';
 import { Repository } from 'typeorm';
-import { CreateNoteInput } from './note.input'
+import { NoteInput } from './note.input'
 import { GetUser } from '../user/get-user.decorator';
 import { User } from '../user/user.entity';
 
@@ -19,10 +19,10 @@ export class NoteService {
 		return this.noteRepository.find();
 	}
 	async createNote(
-		createNoteInput: CreateNoteInput,
+		noteInput: NoteInput,
 		@GetUser() user: User
 		): Promise<Note>{
-		const { title, description } = createNoteInput;
+		const { title, description } = noteInput;
 		const note = this.noteRepository.create({
 			title,
 			description,

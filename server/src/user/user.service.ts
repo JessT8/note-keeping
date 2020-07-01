@@ -2,7 +2,7 @@ import { Injectable , ConflictException, InternalServerErrorException,  Unauthor
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
-import { CreateUserInput } from './create-user.input';
+import { UserInput } from './user.input';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { jwtConstants } from '../constants';
@@ -23,8 +23,8 @@ export class UserService {
 		return this.userRepository.find();
 	}
 	//create user
-	async createUser( createUserInput: CreateUserInput): Promise<boolean>{
-		const { username, password } = createUserInput;
+	async createUser( userInput: UserInput): Promise<boolean>{
+		const { username, password } = userInput;
 		const user = new User();
 		user.username = username;
 		user.salt = await bcrypt.genSalt();
@@ -41,8 +41,8 @@ export class UserService {
 		}
 	}
 
-	async validatePassword( createUserInput: CreateUserInput): Promise<string>{
-		const { username ,password } = createUserInput;
+	async validatePassword( userInput: UserInput): Promise<string>{
+		const { username ,password } = userInput;
 		const user = await User.findOne({username});
 		const { id } = user;
 		const validation = await user.validatePassword(password);

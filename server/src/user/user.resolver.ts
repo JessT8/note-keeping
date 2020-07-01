@@ -1,7 +1,7 @@
 import { Resolver, Query, Args , Mutation, Context} from '@nestjs/graphql';
 import { UserType } from './user.type';
 import { UserService } from './user.service';
-import { CreateUserInput } from './create-user.input';
+import { UserInput } from './user.input';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from './auth.guard';
 
@@ -19,15 +19,15 @@ export class UserResolver{
 
 	@Query (returns => String)
 	async signIn(
-		@Args("createUserInput") createUserInput: CreateUserInput)
+		@Args("userInput") userInput: UserInput)
 	{
-		return this.userService.validatePassword(createUserInput)
+		return this.userService.validatePassword(userInput)
 	}
 
 	@Mutation (returns => Boolean)
 	createUser(
-		@Args("createUserInput") createUserInput: CreateUserInput
+		@Args("userInput") userInput: UserInput
 		){
-		return this.userService.createUser(createUserInput);
+		return this.userService.createUser(userInput);
 	}
 }
