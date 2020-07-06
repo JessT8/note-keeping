@@ -14,10 +14,6 @@ export class UserService {
 		private userRepository: Repository<User>,
 		)
 	{}
-	//get user by id
-	async getUser(id:number):Promise<User>{
-		return this.userRepository.findOne({id});
-	}
 	//get all users
 	async getUsers(): Promise<User[]>{
 		return this.userRepository.find();

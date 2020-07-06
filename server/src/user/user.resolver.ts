@@ -12,8 +12,7 @@ export class UserResolver{
 			private userService: UserService,
 		){}
 	@Query (returns => [ UserType ])
-	@UseGuards(new AuthGuard())
-	users(@Context('user') user: UserType){
+	users(){
 		return this.userService.getUsers();
 	}
 
@@ -21,7 +20,7 @@ export class UserResolver{
 	async signIn(
 		@Args("userInput") userInput: UserInput)
 	{
-		return this.userService.validatePassword(userInput)
+		return this.userService.validatePassword(userInput);
 	}
 
 	@Mutation (returns => Boolean)
