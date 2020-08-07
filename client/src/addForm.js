@@ -12,20 +12,33 @@ const ADD_NOTE = gql`
 `;
 
 function AddForm(props) {
-    const [values, setValues] = useState({title:"", description:"", pin:false });
+    const [values, setValues] = useState({id:"", title:"", description:"", pin:false });
     const inputRef = useRef([]);
-    const [addNote, {data}] = useMutation(ADD_NOTE);
+    const [addNote] = useMutation(ADD_NOTE, {
+    onCompleted: (data) => {
+        if(data){
+            values.id = data.createNote.id
+            console.log(values)
+            props.setNotes( values);
+        }
+    },
+    onError:(err)=>{
+        console.log(err)
+        props.displayMessage('Opps... Something went wrong '+ err);
+    }
+    });
     inputRef.current = [];
 
    const addToRefs = el => {
+   //display errors
      if (el && !inputRef.current.includes(el)) {
        inputRef.current.push(el);
      }
     };
     return  <div className="AddForm">
                 <div className="overlay">
-                    <div className="popup">
-                        <a className="close" onClick={()=>{props.close();}}>&times;</a>
+                      <div className="popup">
+                      <a className="close" onClick={()=>{props.close();}}>&times;</a>
                         <div className="content">
                             <form>
                                 <div className="form__group_popup">
@@ -73,18 +86,11 @@ function AddForm(props) {
 
                                     if(values.title && values.description){
                                         setValues({title:"",description:""});
-                                     //   try{
                                        addNote({variables:{ noteInput: { title: values.title, description: values.description , pin:values.pin} }})
-                                       console.log(data);
-                                   // }catch(err=> console.log(err))
-                                        console.log('adding note')
-                                        props.setNotes( values);
                                         props.close();
-
                                     }else{
                                         !values.title ? inputRef.current[0].focus(): inputRef.current[1].focus();
                                     }}
-
                                     }>
                                 Add
                             </button>
