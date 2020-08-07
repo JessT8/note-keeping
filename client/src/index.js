@@ -3,10 +3,22 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache , gql} from '@apollo/client';
+import { createHttpLink } from "apollo-link-http";
+
+const link = createHttpLink({ uri: process.env.SERVER_URI});
+
+const client = new ApolloClient({
+  link,
+  cache: new InMemoryCache()
+});
 
 ReactDOM.render(
   <React.StrictMode>
+   <ApolloProvider client={client}>
     <App />
+</ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
