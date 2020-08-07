@@ -1,8 +1,20 @@
 import React, { useState , useRef } from "react";
+import { gql, useMutation } from '@apollo/client';
+
+const ADD_NOTE = gql`
+   mutation createNote($noteInput:NoteInput!){
+      createNote(
+        noteInput:$noteInput
+        ){
+        id
+    }
+  }
+`;
 
 function AddForm(props) {
-    const [values, setValues] = useState({title:"", note:"", favorite:false });
+    const [values, setValues] = useState({title:"", description:"", pin:false });
     const inputRef = useRef([]);
+    const [addNote, {data}] = useMutation(ADD_NOTE);
     inputRef.current = [];
 
    const addToRefs = el => {
@@ -37,18 +49,18 @@ function AddForm(props) {
                                 <div className="form__group_popup">
                                     <textarea
                                         ref={addToRefs}
-                                        name="note"
-                                        id="note"
+                                        name="description"
+                                        id="description"
                                         rows="3"
                                         className="form__field_custom"
-                                        value={values.note}
+                                        value={values.description}
                                         placeholder="Write your notes here!"
                                         onChange={(e)=>{
-                                            setValues({...values, note:e.target.value})}}
+                                            setValues({...values, description:e.target.value})}}
                                         required="required"
                                     />
                                 <label
-                                    htmlFor="note"
+                                    htmlFor="description"
                                     className="form__label2"
                                 >
                                     Note
@@ -56,15 +68,23 @@ function AddForm(props) {
                             </div>
                             <div>
                             <button className="btnAdd"
-                                    type="submit"
-                                    onClick={()=>{
-                                    if(values.title && values.note){
-                                        setValues({title:"",note:""});
+                                    type="button"
+                                    onClick={ ()=>{
+
+                                    if(values.title && values.description){
+                                        setValues({title:"",description:""});
+                                     //   try{
+                                       addNote({variables:{ noteInput: { title: values.title, description: values.description , pin:values.pin} }})
+                                       console.log(data);
+                                   // }catch(err=> console.log(err))
+                                        console.log('adding note')
                                         props.setNotes( values);
                                         props.close();
+
                                     }else{
                                         !values.title ? inputRef.current[0].focus(): inputRef.current[1].focus();
                                     }}
+
                                     }>
                                 Add
                             </button>
