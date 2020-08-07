@@ -11,4 +11,7 @@ export class NoteType{
 	@Field()
 	description:string;
 
+	@Field()
+	pin:boolean;
+
 }

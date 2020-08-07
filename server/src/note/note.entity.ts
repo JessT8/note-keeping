@@ -13,6 +13,9 @@ export class Note extends BaseEntity{
   @Column()
 	description:string;
 
+	@Column({default: false})
+	pin:boolean;
+
 	@ManyToOne(type => User, user => user.notes, {eager:false})
   user: User;
 }
