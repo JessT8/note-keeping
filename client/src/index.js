@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { ApolloProvider } from '@apollo/client';
-import { ApolloClient, InMemoryCache , gql} from '@apollo/client';
+import { ApolloClient, InMemoryCache} from '@apollo/client';
 import { createHttpLink } from "apollo-link-http";
 
 const link = createHttpLink({ uri: process.env.SERVER_URI});
