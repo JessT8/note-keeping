@@ -19,28 +19,30 @@ const NOTES = gql`
 function App() {
   const [toggle, setToggle] = useState(false);
   const [notes, setNotes] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [displayMessage, setDisplayMessage] = useState("");
   const { loading, error, data } = useQuery(NOTES);
   useEffect(()=>{
-    if(error)
-       setErrorMessage('Error :(')
-    else if(data)
+    if (loading)
+        setDisplayMessage('loading');
+    else if(error)
+       setDisplayMessage('Error :(');
+    else if(data){
+       setDisplayMessage('');
        setNotes(data.notes);
-    },[data,error])
+    }
+},[loading, data,error])
 
   const favorite=(id)=>{
     const n = notes.map(note=> {
         if (note.id === id) {
-            const pin = (note.pin=='true')? 'false': 'true'
+            const pin = (note.pin ==='true')? 'false': 'true'
             note = {...note, pin};
         }
         return note;
     });
     setNotes(n);
   }
-  const addNotes =()=>{
 
-  }
   const updateNote = (values)=>{
      const n = notes.map(note=> {
         if (note.id === values.id) {
@@ -63,8 +65,10 @@ function App() {
             <h1>Note keeper</h1>
             <button className="toggleAdd" onClick={()=>{setToggle(true)}}>+</button>
         </header>
-      {toggle && <AddForm close={()=>{setToggle(false)}} setNotes={(values)=>{addNotes(values);}}/>}
-      {errorMessage}
+      {toggle && <AddForm close={()=>{setToggle(false)}} setNotes={(values)=>{console.log(values);setNotes([...notes,values]); }} displayMessage={(msg)=>{
+        setDisplayMessage(msg);
+      }}/>}
+      {displayMessage}
       <DisplayNotes notes={notes} favorite={(e)=>{favorite(e)}} updateNote={(values)=>{ updateNote(values)}} deleteNote={(i)=>{deleteNote(i)}}/>
     </div>
   );
