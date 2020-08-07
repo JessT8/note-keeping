@@ -30,4 +30,15 @@ export class NoteService {
 		});
 		return this.noteRepository.save(note);
 	}
+	async updateNote(
+		id:number,
+		noteInput: NoteInput,
+		@GetUser() user: User
+		): Promise<Note>{
+		const { title, description } = noteInput;
+		const note = await this.noteRepository.findOne({id});
+		note.title = title;
+		note.description = description;
+		return this.noteRepository.save(note);
+	}
 }

@@ -6,7 +6,7 @@ import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../user/auth.guard';
 import { User } from '../user/user.entity';
 
-@UseGuards(new AuthGuard())
+// @UseGuards(new AuthGuard())
 @Resolver(of => NoteType )
 export class NoteResolver {
 	constructor(
@@ -29,5 +29,13 @@ export class NoteResolver {
 		@Context('user') user: User
 	){
 		return this.noteService.createNote(noteInput, user);
+	}
+	@Mutation(returns => NoteType)
+	updateNote(
+		@Args("noteInput") noteInput : NoteInput,
+		@Args("id") id:number,
+		@Context('user') user: User
+	){
+		return this.noteService.updateNote(id, noteInput, user);
 	}
 }
