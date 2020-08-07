@@ -3,9 +3,9 @@ import { UserService } from './user.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
-import { NotFoundException, ConflictException, InternalServerErrorException} from '@nestjs/common';
+import { NotFoundException, ConflictException, InternalServerErrorException, UnauthorizedException} from '@nestjs/common';
 
-const mockUser = { username:'test ureser', password:'password123'}
+const mockUser = { username:'test username', password:'password123'}
 const repositoryMockFactory= () =>(
 {
   find:  jest.fn(),
@@ -60,16 +60,22 @@ describe('UserService',() => {
 		beforeEach(() => {
 			userRepository.findOne = jest.fn();
 			user = new User();
-			user.username = 'TestUsername';
-			user.validatePassword = jest.fn();
+			user.username = 'test username';
+			userRepository.validatePassword= jest.fn();
 		});
-		it('returns validate successfully' ()=>{
-
+		it('returns validate successfully', async ()=>{
+			userRepository.findOne.mockResolvedValue(user);
+			userRepository.validatePassword.mockResolvedValue('user');
+			const result = await userRepository.validatePassword(mockUser);
+			expect(result).toEqual('user');
 		});
-		it('return null as user cannot be found', () => {
-		 });
-		it('returns null as password is invalid', ()=>{
-
-		});
-	})
+		// it('throws invalid credential as user cannot be found', () => {
+		// userRepository.signIn.mockRejectedValue({ code: '23505' });
+		// 	expect(userRepository.createUser(mockUser)).rejects.toThrow(UnauthorizedException);
+		//  });
+		// it('throws invalid credential as password is invalid', ()=>{
+		// userRepository.signIn.mockRejectedValue({ code: '23505' });
+		// 	expect(userRepository.createUser(mockUser)).rejects.toThrow(UnauthorizedException);
+		// });
+	 })
 });
