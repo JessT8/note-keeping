@@ -26,14 +26,14 @@ function EditForm(props) {
                             </div>
                             <div className="form__group_popup">
                                 <textarea
-                                    name="note"
-                                    id="note"
+                                    name="description"
+                                    id="description"
                                     rows="3"
                                     className="form__field_custom"
-                                    value={values.note}
+                                    value={values.description}
                                     placeholder="Write your notes here!"
                                     onChange={(e)=>{
-                                        setValues({...values, note:e.target.value})}}
+                                        setValues({...values, description:e.target.value})}}
                                 />
                                  <label
                                     htmlFor="note"
@@ -45,9 +45,11 @@ function EditForm(props) {
                             <div>
                                 <button className="btnAdd"
                                         onClick={()=>{
-                                            if(values.title && values.note){
-                                                props.close();
+
+                                            if(values.title && values.description){
                                                 props.updateNote(values, props.index);
+                                                  props.close();
+
                                             }else{
                                                 console.log("error message");
                                             }}
