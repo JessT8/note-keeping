@@ -298,6 +298,8 @@ $font-bold: 500;
     margin-top: 16px;
     padding-top: 16px;
     border-top: 1px solid $color-brand;
+    white-space: pre-wrap;
+    text-align: left;
   }
 }
 
@@ -320,4 +322,7 @@ $font-bold: 500;
      width: 450px;
      margin: $label-margin;
   }
+}
+textarea{
+	white-space: pre-line;
 }
