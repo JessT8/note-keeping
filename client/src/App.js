@@ -3,7 +3,7 @@ import './App.css';
 import AddForm from "./addForm";
 import DisplayNotes from "./displayNotes"
 import './styles.scss';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, gql, useMutation, useLazyQuery} from '@apollo/client';
 
 const NOTES = gql`
       query{
@@ -15,12 +15,27 @@ const NOTES = gql`
       }
   }`;
 
+const DELETE_NOTE = gql`
+   mutation deleteNote($id: Float!){
+      deleteNote(
+        id:$id
+        )}`;
 
 function App() {
   const [toggle, setToggle] = useState(false);
   const [notes, setNotes] = useState([]);
   const [displayMessage, setDisplayMessage] = useState("");
   const { loading, error, data } = useQuery(NOTES);
+  const [ deleteNote ]= useMutation(DELETE_NOTE, {
+    onCompleted: (data) => {
+        if(data.deleteNote)
+            console.log('Successfully deleted')
+    },
+    onError:(err)=>{
+        console.log(err)
+        setDisplayMessage("Something went wrong :(  " + err);
+    }
+    })
   useEffect(()=>{
     if (loading)
         setDisplayMessage('loading');
@@ -50,12 +65,12 @@ function App() {
         }
         return note;
     });
-     console.log(values);
     setNotes(n);
   }
-  const deleteNote = (i)=>{
-    const n = [...notes];
-    n.splice(i,1);
+  const removeNote= (i)=>{
+    const id = parseInt(i,10);
+    deleteNote({variables:{id}})
+    const n = notes.filter(note => note.id !== i)
     setNotes(n);
   }
 
@@ -65,11 +80,23 @@ function App() {
             <h1>Note keeper</h1>
             <button className="toggleAdd" onClick={()=>{setToggle(true)}}>+</button>
         </header>
-      {toggle && <AddForm close={()=>{setToggle(false)}} setNotes={(values)=>{console.log(values);setNotes([...notes,values]); }} displayMessage={(msg)=>{
-        setDisplayMessage(msg);
-      }}/>}
+      {toggle && <AddForm close={()=>{setToggle(false)}}
+                          setNotes={(values)=>{
+                            setNotes([...notes,values]); }}
+                          displayMessage={(msg)=>{
+                                setDisplayMessage(msg);
+                          }}
+                          />
+      }
       {displayMessage}
-      <DisplayNotes notes={notes} favorite={(e)=>{favorite(e)}} updateNote={(values)=>{ updateNote(values)}} deleteNote={(i)=>{deleteNote(i)}}/>
+      <DisplayNotes notes={notes}
+                    favorite={(e)=>{favorite(e)}}
+                    updateNote={(values)=>{ updateNote(values)}}
+                    deleteNote={(i)=>{removeNote(i)}}
+                    displayMessage={(msg)=>{
+                                setDisplayMessage(msg);
+                          }}
+                    />
     </div>
   );
 }
