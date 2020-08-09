@@ -1,8 +1,23 @@
 import React, { useState } from "react";
+import { gql, useMutation } from '@apollo/client';
+
+const UPDATE_NOTE = gql`
+   mutation updateNote($id: Float!, $noteInput:NoteInput!){
+      updateNote(id:$id, noteInput:$noteInput){
+        id,
+        description
+      }
+  }
+`;
 
 function EditForm(props) {
     const [values, setValues] = useState(props.values);
-
+    const [ updateNote ]= useMutation(UPDATE_NOTE, {
+        onError:(err)=>{
+            console.log(err)
+            props.displayMessage('Error :( ... ' +err);
+        }
+  });
     return  <div className="EditForm">
                 <div className="overlay">
                     <div className="popup">
@@ -47,9 +62,10 @@ function EditForm(props) {
                                         onClick={()=>{
 
                                             if(values.title && values.description){
-                                                props.updateNote(values, props.index);
+                                                props.updateNote(values);
                                                   props.close();
-
+                                                  values.pin = false;
+                                                  updateNote( {variables: { id:parseInt(values.id,10), noteInput:{title:values.title, description: values.description, pin: values.pin}}});
                                             }else{
                                                 console.log("error message");
                                             }}
