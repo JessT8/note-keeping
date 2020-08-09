@@ -41,4 +41,11 @@ export class NoteService {
 		note.description = description;
 		return this.noteRepository.save(note);
 	}
+	async deleteNote(
+		id:number,
+		@GetUser() user: User
+		): Promise<Boolean>{
+			const result = await this.noteRepository.delete(id);
+			return (result.affected !== 0)? true : false;
+	}
 }

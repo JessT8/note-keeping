@@ -38,4 +38,11 @@ export class NoteResolver {
 	){
 		return this.noteService.updateNote(id, noteInput, user);
 	}
+	@Mutation(returns => Boolean)
+	deleteNote(
+		@Args("id") id:number,
+		@Context('user') user: User
+	){
+		return this.noteService.deleteNote(id, user);
+	}
 }
