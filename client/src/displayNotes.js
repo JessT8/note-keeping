@@ -1,15 +1,14 @@
-import React, { useState , useCallback } from "react";
+import React, { useState } from "react";
 import EditForm from "./editForm";
 
 function DisplayNotes(props) {
     const [toggle , setToggle ] = useState(false);
     const [currentEdit , setCurrentEdit ] = useState({});
-    const [index, setIndex] = useState(-1);
 
-    const resetValues = useCallback(() => {
+//for currentEdit values
+    const resetValues = ()=>{
         setCurrentEdit({});
-        setIndex(-1);
-    }, [currentEdit, index])
+    };
 
     const notes = props.notes.map((note)=>{
         return  (<React.Fragment key={note.id}>
@@ -30,7 +29,7 @@ function DisplayNotes(props) {
                                      onClick={(e)=>{
                                         setToggle(true);
                                         setCurrentEdit(note);
-                                        setIndex(note.id);}}>
+                                        }}>
                                         <i className="fa edit">&#xf040;</i>
                             </button>
                             <button className="remove"
@@ -46,8 +45,11 @@ function DisplayNotes(props) {
                 {toggle && <EditForm close={()=>{
                                         setToggle(false)}}
                                     values={currentEdit}
-                                    index={props.id}
+                                    displayMessage={(msg)=>{
+                                        props.displayMessage(msg);
+                                    }}
                                     updateNote={(values)=>{
+
                                         resetValues();
                                         props.updateNote(values);}}/>}
             </div>
