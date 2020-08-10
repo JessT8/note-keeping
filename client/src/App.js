@@ -5,10 +5,10 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  Redirect
+  Link
 } from "react-router-dom";
 import Home from './home'
+import SignIn from './signin'
 
 function App() {
   return (
@@ -34,19 +34,13 @@ function App() {
                     <Home/>
                 </Route>
                 <Route path="/signin">
-                    <Signin />
+                    <SignIn />
                 </Route>
             </Switch>
     </Router>
   );
 }
 
-function Signin() {
-  return (
-    <div>
-      <h2>Signin</h2>
-    </div>
-  );
-}
+
 
 export default App;
