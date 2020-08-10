@@ -1,102 +1,50 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.css';
-import AddForm from "./addForm";
-import DisplayNotes from "./displayNotes"
 import './styles.scss';
-import { useQuery, gql, useMutation, useLazyQuery} from '@apollo/client';
-
-const NOTES = gql`
-      query{
-        notes{
-          id,
-          title,
-          description,
-          pin
-      }
-  }`;
-
-const DELETE_NOTE = gql`
-   mutation deleteNote($id: Float!){
-      deleteNote(
-        id:$id
-        )}`;
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect
+} from "react-router-dom";
+import Home from './home'
 
 function App() {
-  const [toggle, setToggle] = useState(false);
-  const [notes, setNotes] = useState([]);
-  const [displayMessage, setDisplayMessage] = useState("");
-  const { loading, error, data } = useQuery(NOTES);
-  const [ deleteNote ]= useMutation(DELETE_NOTE, {
-    onCompleted: (data) => {
-        if(data.deleteNote)
-            console.log('Successfully deleted')
-    },
-    onError:(err)=>{
-        console.log(err)
-        setDisplayMessage("Something went wrong :(  " + err);
-    }
-    })
-  useEffect(()=>{
-    if (loading)
-        setDisplayMessage('loading');
-    else if(error)
-       setDisplayMessage('Error :(');
-    else if(data){
-       setDisplayMessage('');
-       setNotes(data.notes);
-    }
-},[loading, data,error])
-
-  const favorite=(id)=>{
-    const n = notes.map(note=> {
-        if (note.id === id) {
-            const pin = (note.pin ==='true')? 'false': 'true'
-            note = {...note, pin};
-        }
-        return note;
-    });
-    setNotes(n);
-  }
-
-  const updateNote = (values)=>{
-     const n = notes.map(note=> {
-        if (note.id === values.id) {
-            return values;
-        }
-        return note;
-    });
-    setNotes(n);
-  }
-  const removeNote= (i)=>{
-    const id = parseInt(i,10);
-    deleteNote({variables:{id}})
-    const n = notes.filter(note => note.id !== i)
-    setNotes(n);
-  }
-
   return (
-    <div className="App">
-        <header>
-            <h1>Note keeper</h1>
-            <button className="toggleAdd" onClick={()=>{setToggle(true)}}>+</button>
-        </header>
-      {toggle && <AddForm close={()=>{setToggle(false)}}
-                          setNotes={(values)=>{
-                            setNotes([...notes,values]); }}
-                          displayMessage={(msg)=>{
-                                setDisplayMessage(msg);
-                          }}
-                          />
-      }
-      {displayMessage}
-      <DisplayNotes notes={notes}
-                    favorite={(e)=>{favorite(e)}}
-                    updateNote={(values)=>{ updateNote(values)}}
-                    deleteNote={(i)=>{removeNote(i)}}
-                    displayMessage={(msg)=>{
-                                setDisplayMessage(msg);
-                          }}
-                    />
+    <Router>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <Link class="navbar-brand"  to="/">Notekeeper</Link>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent" aria-controls="navContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item mr-2" >
+                        <Link to="/">Home</Link>
+                    </li>
+                    <li class="nav-item mr-2">
+                        <Link to="/signin">Signin</Link>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+            <Switch>
+                <Route exact path="/">
+                    <Home/>
+                </Route>
+                <Route path="/signin">
+                    <Signin />
+                </Route>
+            </Switch>
+    </Router>
+  );
+}
+
+function Signin() {
+  return (
+    <div>
+      <h2>Signin</h2>
     </div>
   );
 }
