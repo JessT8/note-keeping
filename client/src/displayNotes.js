@@ -12,19 +12,22 @@ function DisplayNotes(props) {
 
     const notes = props.notes.map((note)=>{
         return  (<React.Fragment key={note.id}>
-                    <input type="checkbox"
-                           name={note.title}
-                           id={note.title}
-                           onChange={(e)=>{
-                                props.favorite(note.id);}}
-                           className="checkbox-input"/>
-                    <label htmlFor={note.title}
-                           className="checkbox-label">
-                        <div className="checkbox-text">
-                            <div className="animated-box">
-                                <p className="checkbox-text--title">{note.title}</p>
-                                <p className="checkbox-text--description">{note.description}</p>
-                            </div>
+                    <div className="card border-0 pt-2">
+                            <input type="checkbox"
+                                   name={note.title}
+                                   id={note.title}
+                                   onChange={(e)=>{
+                                        props.favorite(note.id);}}
+                                   className="card-body checkbox-input"/>
+                            <label htmlFor={note.title}
+                                   className="checkbox-label">
+                                <div className="checkbox-text">
+                                    <div className="animated-box">
+                                        <h5 className="checkbox-text--title">{note.title}</h5>
+                                        <p className="card-text checkbox-text--description mt-2 pt-2">{note.description}</p>
+
+                                         <p className="checkbox-text--description  text-muted"><span className="ml-auto">Username</span></p>
+                                    </div>
                              <button className="edit"
                                      onClick={(e)=>{
                                         setToggle(true);
@@ -38,10 +41,14 @@ function DisplayNotes(props) {
                             </button>
                          </div>
                     </label>
+
+                    </div>
                 </React.Fragment>);
         });
     return <div>
-                {notes}
+                <div className="card-columns">
+                    {notes}
+                </div>
                 {toggle && <EditForm close={()=>{
                                         setToggle(false)}}
                                     values={currentEdit}

@@ -252,14 +252,15 @@ $font-bold: 500;
     width: $label-before-size;
     height: $label-before-size;
     opacity: 0;
+    font-size: 25px;
     content: "\2605";
-    background-color: $color-brand;
+    color: $color-brand;
     background-position: center;
     background-repeat: no-repeat;
     background-size: 24px;
     border-radius:50%;
     transform: translate(0%, -50%);
-    transition:all .4s ease;
+     transition:all .4s ease;
   }
   button{
   	border:0;
@@ -317,12 +318,7 @@ $font-bold: 500;
     }
   }
 }
-@media screen and (min-width: 540px) {
-  .checkbox-label {
-     width: 450px;
-     margin: $label-margin;
-  }
-}
+
 textarea{
 	white-space: pre-line;
 }
