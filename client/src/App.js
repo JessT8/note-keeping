@@ -13,18 +13,18 @@ import Home from './home'
 function App() {
   return (
     <Router>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <Link class="navbar-brand"  to="/">Notekeeper</Link>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent" aria-controls="navContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+        <nav className="navbar navbar-expand-lg navbar-light mb-3" id="navBar">
+            <Link className="navbar-brand"  to="/">Notekeeper</Link>
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent" aria-controls="navContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navContent">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item mr-2" >
-                        <Link to="/">Home</Link>
+            <div className="collapse navbar-collapse" id="navContent">
+                <ul className="navbar-nav ml-auto">
+                    <li className="nav-item mr-2" >
+                        <Link className="navLink" to="/">Home</Link>
                     </li>
-                    <li class="nav-item mr-2">
-                        <Link to="/signin">Signin</Link>
+                    <li className="nav-item mr-2">
+                        <Link className="navLink"to="/signin">Signin</Link>
                     </li>
                 </ul>
             </div>
