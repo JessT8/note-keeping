@@ -21,7 +21,10 @@ function EditForm(props) {
     return  <div className="EditForm">
                 <div className="overlay">
                     <div className="popup">
-                        <a className="close" onClick={()=>{props.close();}}>&times;</a>
+                        <a className="close"
+                           onClick={()=>{props.close();}}>
+                           &times;
+                        </a>
                         <div className="content">
                             <div className="form__group_popup">
                                 <input
@@ -58,14 +61,15 @@ function EditForm(props) {
                                 </label>
                             </div>
                             <div>
-                                <button className="btnAdd"
+                                <button className="noteBtn"
                                         onClick={()=>{
-
                                             if(values.title && values.description){
+                                                //if changes were made
+                                                if(props.values.title != values.title || props.values.description!== values.description){
                                                 props.updateNote(values);
-                                                  props.close();
-                                                  values.pin = false;
                                                   updateNote( {variables: { id:parseInt(values.id,10), noteInput:{title:values.title, description: values.description, pin: values.pin}}});
+                                               }
+                                            props.close();
                                             }else{
                                                 console.log("error message");
                                             }}

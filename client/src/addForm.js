@@ -79,7 +79,7 @@ function AddForm(props) {
                                 </label>
                             </div>
                             <div>
-                            <button className="btnAdd"
+                            <button className="noteBtn"
                                     type="button"
                                     onClick={ ()=>{
 
