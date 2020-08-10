@@ -26,7 +26,7 @@ function DisplayNotes(props) {
                                         <h5 className="checkbox-text--title">{note.title}</h5>
                                         <p className="card-text checkbox-text--description mt-2 pt-2">{note.description}</p>
 
-                                         <p className="checkbox-text--description  text-muted"><span className="ml-auto">Username</span></p>
+                                         <p className="checkbox-text--description  text-muted"><span className="ml-auto">-Username</span></p>
                                     </div>
                              <button className="edit"
                                      onClick={(e)=>{
@@ -36,7 +36,9 @@ function DisplayNotes(props) {
                                         <i className="fa edit">&#xf040;</i>
                             </button>
                             <button className="remove"
-                                    onClick={(e)=>{props.deleteNote(note.id)}}>
+                                    onClick={(e)=>{
+                                    if (window.confirm('Are you sure you wish to delete this note?'))
+                                        props.deleteNote(note.id)}}>
                                     <i className="fa">&#xf00d;</i>
                             </button>
                          </div>
