@@ -24,9 +24,9 @@ export class UserResolver{
 	}
 
 	@Mutation (returns => Boolean)
-	createUser(
+	signUp(
 		@Args("userInput") userInput: UserInput
 		){
-		return this.userService.createUser(userInput);
+		return this.userService.signUp(userInput);
 	}
 }

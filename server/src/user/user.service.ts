@@ -19,7 +19,7 @@ export class UserService {
 		return this.userRepository.find();
 	}
 	//create user
-	async createUser( userInput: UserInput): Promise<boolean>{
+	async signUp( userInput: UserInput): Promise<boolean>{
 		const { username, password } = userInput;
 		const user = new User();
 		user.username = username;
