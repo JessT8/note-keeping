@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import Home from './home'
 import SignIn from './signin'
+import SignUp from './signup'
 
 function App() {
   return (
@@ -35,6 +36,9 @@ function App() {
                 </Route>
                 <Route path="/signin">
                     <SignIn />
+                </Route>
+                <Route path="/signup">
+                    <SignUp />
                 </Route>
             </Switch>
     </Router>
