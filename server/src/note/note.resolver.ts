@@ -1,10 +1,12 @@
-import { Resolver , Query , Mutation, Args, Context} from '@nestjs/graphql';
+import { Resolver , Query , Mutation, Args, Context, Parent} from '@nestjs/graphql';
 import { NoteType } from './note.type';
 import { NoteService } from './note.service';
 import { NoteInput } from './note.input';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../user/auth.guard';
 import { User } from '../user/user.entity';
+import { Note } from './note.entity';
+
 
 // @UseGuards(new AuthGuard())
 @Resolver(of => NoteType )
@@ -17,6 +19,11 @@ export class NoteResolver {
 		@Args('id') id:number
 		){
 		return this.noteService.getNote(id);
+	}
+	findAll(
+		@Args('id') id:number
+		){
+		return this.noteService.findAll({userId:id});
 	}
 	@Query(returns => [ NoteType ])
 	notes(

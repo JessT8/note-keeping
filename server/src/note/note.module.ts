@@ -6,11 +6,12 @@ import { Note } from './note.entity';
 
 @Module({
 	imports: [
-	TypeOrmModule.forFeature([Note])]
-	,
+	TypeOrmModule.forFeature([Note])
+	],
 	providers: [
 	NoteResolver,
 	NoteService
-	]
+	],
+  exports: [NoteService]
 })
 export class NoteModule {}

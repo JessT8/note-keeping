@@ -1,5 +1,6 @@
 import { InputType , Field, ID} from '@nestjs/graphql'
 import { MinLength , IsOptional} from 'class-validator'
+import { User } from '../user/user.entity';
 
 @InputType()
 export class NoteInput {
@@ -16,4 +17,6 @@ export class NoteInput {
 	@Field()
 	pin: boolean;
 
+ // @Field()
+	// userId: number;
 }

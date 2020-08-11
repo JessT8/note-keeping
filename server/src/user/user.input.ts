@@ -14,4 +14,5 @@ export class UserInput {
   // @Matches(/((?=.*\d)|(?=.*\W)+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*s/)
 	@Field()
 	password: string;
+
 }
