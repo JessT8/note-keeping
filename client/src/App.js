@@ -14,7 +14,7 @@ import SignUp from './signup'
 function App() {
   return (
     <Router>
-        <nav className="navbar navbar-expand-lg navbar-light mb-3" id="navBar">
+        <nav className="navbar navbar-expand-lg bg-dark navbar-dark mb-3" id="navBar">
             <Link className="navbar-brand"  to="/">Notekeeper</Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent" aria-controls="navContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
@@ -22,10 +22,10 @@ function App() {
             <div className="collapse navbar-collapse" id="navContent">
                 <ul className="navbar-nav ml-auto">
                     <li className="nav-item mr-2" >
-                        <Link className="navLink" to="/">Home</Link>
+                        <Link className="navLink text-white" to="/">Home</Link>
                     </li>
                     <li className="nav-item mr-2">
-                        <Link className="navLink"to="/signin">Signin</Link>
+                        <Link className="navLink text-white"to="/signin">Signin</Link>
                     </li>
                 </ul>
             </div>
