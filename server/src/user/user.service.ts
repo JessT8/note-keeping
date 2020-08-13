@@ -43,10 +43,14 @@ export class UserService {
 	async validatePassword( userInput: UserInput): Promise<string>{
 		const { username ,password } = userInput;
 		const user = await User.findOne({username});
-		const { id } = user;
-		const validation = await user.validatePassword(password);
-		if( user && validation){
-			return jwt.sign({id, username}, jwtConstants.secret);
+		if(user){
+			const { id } = user;
+			const validation = await user.validatePassword(password);
+			if( user && validation){
+				return jwt.sign({id, username}, jwtConstants.secret);
+			}else{
+				throw new UnauthorizedException('Invalid Credential');
+			}
 		}else{
 			throw new UnauthorizedException('Invalid Credential');
 		}

@@ -8,7 +8,7 @@ import { User } from '../user/user.entity';
 import { Note } from './note.entity';
 
 
-// @UseGuards(new AuthGuard())
+@UseGuards(new AuthGuard())
 @Resolver(of => NoteType )
 export class NoteResolver {
 	constructor(

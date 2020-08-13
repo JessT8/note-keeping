@@ -19,7 +19,7 @@ export class NoteService {
 	}
 async findAll({userId:number}):Promise<Note[]>{
 		return this.noteRepository.find(User);
-	}
+		}
 	async createNote(
 		noteInput: NoteInput,
 		@GetUser() user: User

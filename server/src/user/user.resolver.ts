@@ -36,9 +36,9 @@ export class UserResolver{
 		){
 		return this.userService.signUp(userInput);
 	}
-  @Resolver(of => User)
-  getNotes(@Parent() user: User) {
-  	const id = 1
-    return this.noteService.findAll({userId: id})
+  @Resolver(of => UserType)
+  getNotes(@Parent() user: UserType) {
+  	const  id  =  {user};
+    return this.noteService.findAll({userId: id});
   }
 }
