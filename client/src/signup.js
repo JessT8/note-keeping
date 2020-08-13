@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import './App.css';
 import { gql, useMutation} from '@apollo/client';
+import { useHistory } from "react-router-dom";
 
 const SIGN_UP = gql`mutation SignUp($userInput: UserInput!){
         signUp(userInput: $userInput)
   }`;
 
-function SignUp() {
+function SignUp(props) {
     const [signup ]= useMutation(SIGN_UP);
     const [values, setValues] = useState({username:'', password:''});
+     const history = useHistory();
   return (
     <div className="container">
         <h3>Sign Up</h3>
@@ -37,9 +39,11 @@ function SignUp() {
                     className="btn btn-primary"
                     onClick={(e)=>{
                         e.preventDefault();
-                         signup({variables:{userInput:{username:values.username, password:values.password}}})}
+                        signup({variables:{userInput:{username:values.username, password:values.password}}})
+                         history.push("/");
                     }
-                    >
+                    }
+                >
                     Sign up
             </button>
         </form>

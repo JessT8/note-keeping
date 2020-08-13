@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { gql, useLazyQuery} from '@apollo/client';
+import { useHistory } from "react-router-dom";
 
 const SIGN_IN = gql`query SignIn($userInput: UserInput!){
         signIn(userInput: $userInput)
   }`;
 
 function SignIn() {
-    const  [getUser]= useLazyQuery(SIGN_IN);
-    const [values, setValues] = useState({username:'', password:''});
+    const [values, setValues] = useState({username:'', password:'', success:false});
+    const history = useHistory();
+    const  [getUser]= useLazyQuery(SIGN_IN, {
+        onCompleted:(data)=>{
+            setValues({...values,data})
+        }
+    });
+    useEffect(()=>{
+        if(values.data){
+            localStorage.setItem("token",  values.data.signIn);
+            history.push('/');
+        }
+    },[values])
   return (
     <div className="container">
         <form>
@@ -36,7 +48,8 @@ function SignIn() {
                     className="btn btn-primary"
                     onClick={(e)=>{
                         e.preventDefault();
-                         getUser({variables:{userInput:{username:values.username, password:values.password}}})}
+                         getUser({variables:{userInput:{username:values.username, password:values.password}}})
+                     }
                     }
                     >
                     Sign in

@@ -6,11 +6,28 @@ import * as serviceWorker from './serviceWorker';
 import { ApolloProvider } from '@apollo/client';
 import { ApolloClient, InMemoryCache} from '@apollo/client';
 import { createHttpLink } from "apollo-link-http";
+import { setContext } from '@apollo/client/link/context';
 
 const link = createHttpLink({ uri: process.env.SERVER_URI});
 
+// const client = new ApolloClient({
+//   link,
+//   cache: new InMemoryCache()
+// });
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = localStorage.getItem('token');
+  // return the headers to the context so httpLink can read them\
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    }
+  }
+});
+
 const client = new ApolloClient({
-  link,
+  link: authLink.concat(link),
   cache: new InMemoryCache()
 });
 
