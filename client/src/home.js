@@ -11,7 +11,11 @@ const NOTES = gql`
           id,
           title,
           description,
-          pin
+          pin,
+          user{
+            id,
+            username
+          }
       }
   }`;
 

@@ -7,7 +7,7 @@ const SIGN_UP = gql`mutation SignUp($userInput: UserInput!){
         signUp(userInput: $userInput)
   }`;
 
-function SignUp(props) {
+function SignUp() {
     const [signup ]= useMutation(SIGN_UP);
     const [values, setValues] = useState({username:'', password:''});
      const history = useHistory();

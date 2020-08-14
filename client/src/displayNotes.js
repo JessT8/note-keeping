@@ -26,7 +26,7 @@ function DisplayNotes(props) {
                                         <h5 className="checkbox-text--title">{note.title}</h5>
                                         <p className="card-text checkbox-text--description mt-2 pt-2">{note.description}</p>
 
-                                         <p className="checkbox-text--description  text-muted"><span className="ml-auto">-Username</span></p>
+                                         <p className="checkbox-text--description  text-muted"><span className="ml-auto">-{note.user.username}</span></p>
                                     </div>
                              <button className="edit"
                                      onClick={(e)=>{
