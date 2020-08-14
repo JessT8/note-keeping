@@ -4,7 +4,7 @@ import { NoteType } from '../note/note.type';
 @ObjectType('User')
 export class UserType{
 	@Field( type => ID )
-	id:string;
+	id:number;
 
 	@Field()
 	username:string;

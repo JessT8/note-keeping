@@ -15,6 +15,6 @@ import {  NoteModule } from '../note/note.module';
   providers: [
  		UserService,
   	UserResolver
-  ],
+  ]
 })
 export class UserModule {}

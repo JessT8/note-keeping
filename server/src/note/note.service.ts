@@ -12,10 +12,10 @@ export class NoteService {
 	@InjectRepository(Note) private noteRepository: Repository<Note>,
 	){}
 	async getNote(id:number):Promise<Note>{
-		return this.noteRepository.findOne({id});
+		return this.noteRepository.findOne(id, {relations: ['user']})
 	}
 	async getNotes():Promise<Note[]>{
-		return this.noteRepository.find();
+		return this.noteRepository.find({relations: ['user']});
 	}
 async findAll({userId:number}):Promise<Note[]>{
 		return this.noteRepository.find(User);

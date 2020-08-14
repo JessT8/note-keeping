@@ -5,8 +5,6 @@ import { NoteInput } from './note.input';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../user/auth.guard';
 import { User } from '../user/user.entity';
-import { Note } from './note.entity';
-
 
 @UseGuards(new AuthGuard())
 @Resolver(of => NoteType )

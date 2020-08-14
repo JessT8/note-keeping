@@ -12,7 +12,7 @@ import { NoteService } from '../note/note.service';
 export class UserResolver{
 	constructor(
 			private userService: UserService,
-			private noteService: NoteService
+		  private noteService: NoteService
 		){}
 	@Query (returns => [ UserType ])
 	users(){

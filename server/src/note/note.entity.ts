@@ -1,4 +1,4 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne , JoinColumn} from 'typeorm';
 import { User } from '../user/user.entity';
 
 @Entity("notes")
@@ -16,6 +16,8 @@ export class Note extends BaseEntity{
 	@Column({default: false})
 	pin:boolean;
 
-	@ManyToOne(type => User, user => user.notes)
+	@ManyToOne(type => User, user => user.notes )
+	@JoinColumn()
   user: User;
+
 }
