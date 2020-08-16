@@ -28,7 +28,8 @@ function DisplayNotes(props) {
 
                                          <p className="checkbox-text--description  text-muted"><span className="ml-auto">-{note.user.username}</span></p>
                                     </div>
-                             <button className="edit"
+                            {localStorage.getItem('user') == note.user.username ?
+                             <span><button className="edit"
                                      onClick={(e)=>{
                                         setToggle(true);
                                         setCurrentEdit(note);
@@ -40,7 +41,7 @@ function DisplayNotes(props) {
                                     if (window.confirm('Are you sure you wish to delete this note?'))
                                         props.deleteNote(note.id)}}>
                                     <i className="fa">&#xf00d;</i>
-                            </button>
+                            </button></span>:""}
                          </div>
                     </label>
 
