@@ -80,8 +80,8 @@ function Home() {
 
   return (
     <div className="App">
-        <header>
-            <h1>Note keeper</h1>
+        <header className="pt-5 pb-2">
+            <h1 className="nunito-font">My notes</h1>
             <button className="toggleAdd" onClick={()=>{setToggle(true)}}>+</button>
         </header>
       {toggle && <AddForm close={()=>{setToggle(false)}}

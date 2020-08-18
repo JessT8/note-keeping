@@ -13,7 +13,7 @@ import SignIn from './components/user/signin';
 import SignUp from './components/user/signup';
 
 function App() {
-    const [user, setUser] = useState({token:"", username:""})
+    const [user, setUser] = useState({token:localStorage.getItem('token'), username:localStorage.getItem('user')})
   return (
     <Router>
         <nav className="navbar navbar-expand-lg bg-dark navbar-dark" id="navBar">

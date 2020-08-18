@@ -13,11 +13,11 @@ function SignUp() {
      const history = useHistory();
   return (
     <div className="container-fluid position-fixed h-100 w-100 bg-light">
-        <div className="row justify-content-center">
-            <div className="col-5 rounded border p-5 mt-5 bg-white fade-in">
+        <div className="row h-75 justify-content-center">
+            <div className="col-5 rounded border pt-4 pb-5 pl-5 pr-5 mt-5 bg-white my-auto">
                 <form>
                     <div className="text-center mb-4">
-                        <h3>Register</h3>
+                        <h2 className="nunito-font">Sign Up</h2>
                     </div>
                     <div className="form-group">
                         <input className="form-control"
@@ -37,20 +37,22 @@ function SignUp() {
                                onChange={e=>{setValues({...values,"password":e.target.value})}}
                         />
                     </div>
-                    <button type="submit"
-                            className="btn btn-primary"
-                            onClick={(e)=>{
-                                e.preventDefault();
-                                signup({variables:{userInput:{username:values.username, password:values.password}}})
-                                 history.push("/");
-                            }
-                            }
-                        >
-                            Sign up
-                    </button>
+                    <div className="text-right">
+                        <button type="submit"
+                                className="btn btn-primary"
+                                onClick={(e)=>{
+                                    e.preventDefault();
+                                    signup({variables:{userInput:{username:values.username, password:values.password}}})
+                                     history.push("/");
+                                }
+                                }
+                            >
+                                Sign up &rarr;
+                        </button>
+                    </div>
                     <hr/>
                     <div className="text-center mb-4">
-                        <p className="text-muted">Already have an account? Click <a href="/signin">here</a> to login</p>
+                        <p className="text-muted">Already have an account? Click <a href="/signin">here</a> to sign in</p>
                     </div>
                 </form>
             </div>

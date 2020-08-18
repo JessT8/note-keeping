@@ -8,11 +8,15 @@ const SIGN_IN = gql`query SignIn($userInput: UserInput!){
   }`;
 
 function SignIn(props) {
-    const [values, setValues] = useState({username:'', password:'', success:false});
+    const [values, setValues] = useState({username:'', password:''});
+     const [error, setError] = useState("");
     const history = useHistory();
     const  [getUser]= useLazyQuery(SIGN_IN, {
         onCompleted:(data)=>{
             setValues({...values,data})
+        },
+        onError:(data)=>{
+            setError(true);
         }
     });
     useEffect(()=>{
@@ -23,14 +27,17 @@ function SignIn(props) {
             history.push('/');
         }
     },[values])
+    const errorMessage = error ? (<div className="alert alert-danger" role="alert">The username or password is invalid</div>): "";
   return (
        <div className="container-fluid position-fixed h-100 w-100 bg-light">
             <div className="row h-75 justify-content-center">
-                <div className="col-5 rounded border p-5 bg-white fade-in my-auto">
+                <div className="col-5 rounded border  pt-4 pb-5 pl-5 pr-5 mt-5 bg-white my-auto">
                     <form>
                         <div className="text-center mb-4">
-                            <h3>Sign In</h3>
+                            <h2 className="nunito-font">Sign In</h2>
                         </div>
+                        {errorMessage}
+
                         <div className="form-group ">
                             <input className="form-control"
                                    id="username"
@@ -54,7 +61,11 @@ function SignIn(props) {
                                     className="btn btn-primary"
                                     onClick={(e)=>{
                                         e.preventDefault();
+                                        if(values.username && values.password){
                                          getUser({variables:{userInput:{username:values.username, password:values.password}}})
+                                        }else{
+                                            setError(true);
+                                        }
                                      }
                                     }
                                     >
