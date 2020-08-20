@@ -26,7 +26,7 @@ function EditForm(props) {
                            &times;
                         </button>
                         <div className="content">
-                            <div className="form__group_popup">
+                            <div className="form__group_popup mx-auto">
                                 <input
                                     id="title"
                                     name="title"
@@ -42,7 +42,7 @@ function EditForm(props) {
                                     Title
                                 </label>
                             </div>
-                            <div className="form__group_popup">
+                            <div className="form__group_popup mx-auto">
                                 <textarea
                                     name="description"
                                     id="description"

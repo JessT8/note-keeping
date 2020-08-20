@@ -1,10 +1,28 @@
+$primary: #11998e;
+$secondary: #38ef7d;
+$black: #000000;
+$gray: #9b9b9b;
+$label-size: 60px;
+$label-margin: 16px;
+$label-before-size: 40px;
+$color-light: white;
+$color-brand: #2196F3;
+$color-font: rgba(black, .54);
+$font-size-md: 14px;
+$font-size-lg: 24px;
+$font-size-xl: 54px;
+$font-light: 300;
+$font-normal: 400;
+$font-bold: 500;
+$star: "\2605";
+
 .App {
   	margin: 0 auto;
   	width:80%;
-  header{
-  	display: flex;
-  	justify-content: center;
-  	align-items: center;
+  	header{
+  		display: flex;
+  		justify-content: center;
+  		align-items: center;
 	  .toggleAdd{
 	  	border-radius: 15px ;
 	  	border:1px solid black;
@@ -26,7 +44,7 @@
 	  		text-decoration: none;
 	  	}
 	  }
-  }
+ 	}
 	.overlay {
 	  position: fixed;
 	  top: 0;
@@ -40,12 +58,16 @@
 	  z-index: 10;
 	}
 	.popup {
-	  margin: 70px auto;
+		width: 100%;
+  	height: 100%;
+  	position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
 	  padding: 25px;
 	  background: #fff;
-	  border-radius: 5px;
-	  width: 30%;
-	  position: relative;
 	  transition: all 5s ease-in-out;
 	}
 	.close {
@@ -62,24 +84,22 @@
 	  color: #06D85F;
 	}
 	.popup .content {
-	  max-height: 40%;
+
 	  overflow: auto;
 	}
 
 	@media screen and (max-width: 700px){
 	  .popup{
-	    width: 70%;
+	    width: 100%;
 	  }
 	}
-	$primary: #11998e;
-$secondary: #38ef7d;
-$black: #000000;
-$gray: #9b9b9b;
+
 .form__group_popup{
+
 	position: relative;
   padding: 15px 10px;
   margin-top: 10px;
-  width: 90%;
+  width: 70%;
 }
 .form__field{
   font-family: inherit;
@@ -164,6 +184,7 @@ $gray: #9b9b9b;
   border-image: linear-gradient(to right, $primary,$secondary);
   border-image-slice: 1;
 }
+
 .noteBtn{
 	padding:5px 10px 5px 10px;
 	margin-bottom: 20px;
@@ -195,21 +216,6 @@ h2{
         -moz-osx-font-smoothing: auto;
     }
 }
-
-$label-size: 60px;
-$label-margin: 16px;
-$label-before-size: 40px;
-$color-light: white;
-$color-brand: #2196F3;
-$color-font: rgba(black, .54);
-$font-size-md: 14px;
-$font-size-lg: 24px;
-$font-size-xl: 54px;
-$font-light: 300;
-$font-normal: 400;
-$font-bold: 500;
-$star: "\2605";
-
 * {
    @include font-smoothing(on);
 }
@@ -239,7 +245,6 @@ $star: "\2605";
   position: relative;
   width: 100%;
   padding: $label-size/2 $label-size;
-  cursor: pointer;
   font-size: $font-size-lg;
   font-weight: $font-normal;
   margin: $label-margin 0;
@@ -263,7 +268,7 @@ $star: "\2605";
     background-size: 24px;
     border-radius:50%;
     transform: translate(0%, -50%);
-     transition:all .4s ease;
+    transition:all .4s ease;
   }
   button{
   	border:0;
@@ -300,19 +305,17 @@ $star: "\2605";
   &--description {
     font-size: $font-size-md;
     margin-top: 16px;
-    padding-top: 16px;
+    // padding-top: 16px;
+    height:$font-size-md * 3;
     border-top: 1px solid $color-brand;
-    white-space: pre-wrap;
+
     text-align: left;
-    height: 60px;
-    text-overflow: ellipsis;
     white-space: nowrap;
+    text-overflow: ellipsis;
   	overflow: hidden;
   }
    &--footer {
     font-size: $font-size-md;
-    margin-top: 20px;
-    padding-top: 16px;
     border-top: 1px solid $color-brand;
     text-align: left;
   }
@@ -330,15 +333,15 @@ $star: "\2605";
   }
   & .note-text {
     // transform:translate(0, -8px);
-    &--description {
-      border-color: darken($color-light, 15%);
-    }
+     border-color: darken($color-light, 15%);
   }
 }
 
+.note-label { transition: all 100ms ease-in-out; }
+
 .note-label:hover{
 	border-color: $color-brand;
-	transform: scale(1.05);
+	transform: scale(1.02);
 }
 
 textarea{
