@@ -208,6 +208,7 @@ $font-size-xl: 54px;
 $font-light: 300;
 $font-normal: 400;
 $font-bold: 500;
+$star: "\2605";
 
 * {
    @include font-smoothing(on);
@@ -229,11 +230,10 @@ $font-bold: 500;
 .checkbox-input {
   display: none;
 }
-.checkbox-label, .checkbox-text, .checkbox-text--description {
+.note-label, .note-text, .note-text--description {
    transition:all .4s ease;
 }
-.checkbox-label {
-
+.note-label {
   display: inline-block;
   vertical-align: top;
   position: relative;
@@ -256,7 +256,7 @@ $font-bold: 500;
     height: $label-before-size;
     opacity: 0;
     font-size: 25px;
-    content: "\2605";
+    content: $star;
     color: $color-brand;
     background-position: center;
     background-repeat: no-repeat;
@@ -290,10 +290,10 @@ $font-bold: 500;
     z-index:1;
   }
 }
-.animated-box{
-	z-index:2;
-}
-.checkbox-text {
+// .animated-box{
+// 	z-index:2;
+// }
+.note-text {
   &--title {
     font-weight: $font-bold;
   }
@@ -302,12 +302,25 @@ $font-bold: 500;
     margin-top: 16px;
     padding-top: 16px;
     border-top: 1px solid $color-brand;
-    white-space: pre-wrap;
+    // white-space: pre-wrap;
+    text-align: left;
+    height: 60px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  	overflow: hidden;
+  }
+   &--footer {
+    font-size: $font-size-md;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid $color-brand;
     text-align: left;
   }
 }
-
-.checkbox-input:checked + .checkbox-label, {
+.option{
+    color:pink;
+  }
+.checkbox-input:checked + .note-label{
   border-color: $color-brand;
   // box-shadow:inset 0 -12px 0 0 $color-brand;
     box-shadow: 3px 3px 5px 6px #ccc;
@@ -315,20 +328,22 @@ $font-bold: 500;
     top: 0;
     opacity: 1;
   }
-  & .checkbox-text {
+  & .note-text {
     // transform:translate(0, -8px);
     &--description {
       border-color: darken($color-light, 15%);
     }
   }
 }
-.checkbox-label:hover{
+
+.note-label:hover{
 	border-color: $color-brand;
+	transform: scale(1.05);
 }
+
 textarea{
 	white-space: pre-line;
 }
-
 
 .fade-in {
 	opacity: 1;
@@ -360,4 +375,15 @@ textarea{
 	font-family: 'Cinzel', serif;
 	letter-spacing: 0.3rem;
 	word-spacing: 0.5rem;
+}
+
+.button-link {
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  color: #069;
+  cursor: pointer;
+}
+.view-button:hover{
+	color:$color-brand !important;
 }

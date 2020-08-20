@@ -37,7 +37,7 @@ function AddForm(props) {
     return  <div className="AddForm">
                 <div className="overlay">
                       <div className="popup">
-                      <a className="close" onClick={()=>{props.close();}}>&times;</a>
+                      <button className="close button-link" onClick={()=>{props.close();}}>&times;</button>
                         <div className="content">
                             <form>
                                 <div className="form__group_popup">

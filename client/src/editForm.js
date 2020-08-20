@@ -15,16 +15,16 @@ function EditForm(props) {
     const [ updateNote ]= useMutation(UPDATE_NOTE, {
         onError:(err)=>{
             console.log(err)
-            props.displayMessage('Error :( ... ' +err);
+            props.displayMessage('Error :( ... ' + err);
         }
   });
     return  <div className="EditForm">
                 <div className="overlay">
                     <div className="popup">
-                        <a className="close"
+                        <button className="close button-link"
                            onClick={()=>{props.close();}}>
                            &times;
-                        </a>
+                        </button>
                         <div className="content">
                             <div className="form__group_popup">
                                 <input
@@ -65,7 +65,7 @@ function EditForm(props) {
                                         onClick={()=>{
                                             if(values.title && values.description){
                                                 //if changes were made
-                                                if(props.values.title != values.title || props.values.description!== values.description){
+                                                if(props.values.title !== values.title || props.values.description!== values.description){
                                                 props.updateNote(values);
                                                   updateNote( {variables: { id:parseInt(values.id,10), noteInput:{title:values.title, description: values.description, pin: values.pin}}});
                                                }

@@ -13,7 +13,7 @@ import SignIn from './components/user/signin';
 import SignUp from './components/user/signup';
 
 function App() {
-    const [user, setUser] = useState({token:localStorage.getItem('token'), username:localStorage.getItem('user')})
+   const [user, setUser] = useState({token:localStorage.getItem('token'), username:localStorage.getItem('user')})
   return (
     <Router>
         <nav className="navbar navbar-expand-lg bg-dark navbar-dark" id="navBar">
@@ -32,13 +32,13 @@ function App() {
                       {!user.token ?
                       <Link className="nunito-font navLink text-white"
                             to="/signin">Sign in</Link> :
-                      <a className="navLink nunito-font text-white"
+                      <button className="button-link navLink nunito-font text-white"
                          onClick={()=> {
                                 localStorage.clear();
                                 setUser({token:"", username:""});
                                 window.location.href = '/';
                             }}>
-                            Sign Out</a>
+                            Sign Out</button>
                         }
                     </li>
 
@@ -51,7 +51,10 @@ function App() {
 
                 </Route>
                 <Route path="/signin">
-                    <SignIn setUser = {(values)=>{setUser(values)}}/>
+                    <SignIn setUser = {(values)=>{
+                        setUser(values);
+
+                    }}/>
                 </Route>
                 <Route path="/signup">
                     <SignUp />

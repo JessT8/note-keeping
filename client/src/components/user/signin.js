@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../../App.css';
 import { gql, useLazyQuery} from '@apollo/client';
 import { useHistory } from "react-router-dom";
@@ -13,20 +13,18 @@ function SignIn(props) {
     const history = useHistory();
     const  [getUser]= useLazyQuery(SIGN_IN, {
         onCompleted:(data)=>{
-            setValues({...values,data})
+            if(data.signIn){
+                localStorage.setItem("token",  data.signIn);
+                localStorage.setItem("user",  values.username);
+                props.setUser({token: data.signIn, user: values.username})
+                history.push('/');
+            }
         },
         onError:(data)=>{
             setError(true);
         }
     });
-    useEffect(()=>{
-        if(values.data){
-            localStorage.setItem("token",  values.data.signIn);
-            localStorage.setItem("user",  values.username);
-            props.setUser({token: values.data.signIn, user: values.username})
-            history.push('/');
-        }
-    },[values])
+
     const errorMessage = error ? (<div className="alert alert-danger" role="alert">The username or password is invalid</div>): "";
   return (
        <div className="container-fluid position-fixed h-100 w-100 bg-light">
