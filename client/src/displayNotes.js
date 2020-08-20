@@ -12,44 +12,27 @@ function DisplayNotes(props) {
 
     const notes = props.notes.map((note)=>{
         return  (<React.Fragment key={note.id}>
-                    <div className="card border-0 pt-2">
-                            <input type="checkbox"
-                                   name={note.title}
-                                   id={note.title}
-                                   onChange={(e)=>{
-                                        props.favorite(note.id);}}
-                                   className="card-body checkbox-input"/>
-                            <label htmlFor={note.title}
-                                   className="checkbox-label">
-                                <div className="checkbox-text">
-                                    <div className="animated-box">
-                                        <h5 className="checkbox-text--title">{note.title}</h5>
-                                        <p className="card-text checkbox-text--description mt-2 pt-2">{note.description}</p>
-
-                                         <p className="checkbox-text--description  text-muted"><span className="ml-auto">-{note.user.username}</span></p>
+                    <div className="card border-0 pt-2 col-4">
+                            <div className="card-block note-label">
+                                <div className="note-text">
+                                        <h5 className="note-text--title">{note.title}
+                                        </h5>
+                                        <p className="card-text note-text--description text-truncate mt-2 pt-2">{note.description}
+                                        </p>
                                     </div>
-                            {localStorage.getItem('user') == note.user.username ?
-                             <span><button className="edit"
-                                     onClick={(e)=>{
-                                        setToggle(true);
-                                        setCurrentEdit(note);
-                                        }}>
-                                        <i className="fa edit">&#xf040;</i>
-                            </button>
-                            <button className="remove"
-                                    onClick={(e)=>{
-                                    if (window.confirm('Are you sure you wish to delete this note?'))
-                                        props.deleteNote(note.id)}}>
-                                    <i className="fa">&#xf00d;</i>
-                            </button></span>:""}
-                         </div>
-                    </label>
-
+                                <div>
+                                <div className="d-flex justify-content-end note-text--footer bg-white">
+                                    <button type="button" className="position-relative text-dark view-button">
+                                    <i className="fab fa-readme">  View</i>
+                                    </button>
+                                </div>
+                            </div>
+                          </div>
                     </div>
                 </React.Fragment>);
         });
-    return <div>
-                <div className="card-columns">
+    return <div className="container">
+            <div className="row">
                     {notes}
                 </div>
                 {toggle && <EditForm close={()=>{
@@ -62,6 +45,5 @@ function DisplayNotes(props) {
 
                                         resetValues();
                                         props.updateNote(values);}}/>}
-            </div>
-}
+            </div>}
 export default DisplayNotes;
