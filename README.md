@@ -1,6 +1,7 @@
 # Note-keeping
+An app to keep track of notes using NestJS and React
 
-# Technologies used
+## Technologies used
 * Nestjs
 * GraphQL
 * Apollo-client
