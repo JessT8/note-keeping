@@ -1,4 +1,4 @@
-# NoteKeeper
+# Note-keeping
 
 # Technologies used
 * Nestjs
