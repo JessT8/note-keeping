@@ -115,14 +115,13 @@ $star: "\2605";
   width: 70%;
 }
 .form__field{
-  font-family: inherit;
   width: 100%;
   border: 0;
   border-bottom: 2px solid $gray;
   outline: 0;
   font-size: 1.3rem;
   color: $black;
-  padding: 7px 0;
+  padding: 30px 0 0 0;
   background: transparent;
   transition: border-color 0.2s;
   &::placeholder {
@@ -138,29 +137,24 @@ $star: "\2605";
 	white-space: pre-wrap;
 }
 .form__field_custom{
-  font-family: inherit;
+	height:50vh;
   width: 100%;
   border: 0;
   border-bottom: 2px solid $gray;
   outline: 0;
   font-size: 1.3rem;
   color: $black;
-  padding: 7px 0;
+  margin: 30px 0 0 0;
+  // padding: 20px 0 0 0;
   background: transparent;
   transition: border-color 0.2s;
   resize: none;
   &:placeholder-shown  {
 		text-align:center;
 		  &:focus {
-    text-align: left;
-  }
+    	text-align: left;
+  	}
 	}
-  &:placeholder-shown ~ .form__label2 {
-    font-size: 1.3rem;
-    cursor: text;
-    top: 20px;
-    color: transparent;
-  }
   &:focus::placeholder {
   	color: transparent;
 	}
@@ -170,31 +164,30 @@ $star: "\2605";
   top: 0;
   display: block;
   transition: 0.2s;
-  font-size: 1rem;
+  font-size: 1.8rem;
   color: $gray;
 }
-.form__label2{
-	position: absolute;
-  top: 0;
-  display: block;
-  transition: 0.2s;
-  font-size: 1rem;
-  color: $gray;
-}
+// .form__label2{
+// 	position: absolute;
+//   top: 0;
+//   display: block;
+//   transition: 0.2s;
+//   font-size: 1.8rem;
+//   color: $gray;
+// }
 .form__field:focus , .form__field_custom:focus{
-  ~ .form__label, ~.form__label2 {
+  ~ .form__label{
     position: absolute;
     top: 0;
     display: block;
     transition: 0.2s;
-    font-size: 1rem;
-    color: $primary;
+    // font-size: 1rem;
+    color: black;
     font-weight:700;
   }
-  padding-bottom: 6px;
-  font-weight: 700;
+  // font-weight: 700;
   border-width: 3px;
-  border-image: linear-gradient(to right, $primary,$secondary);
+  border-image: linear-gradient(to right, $color-brand, white);
   border-image-slice: 1;
 }
 
@@ -269,7 +262,8 @@ h2{
   &:before {
     position: absolute;
     top: 75%;
-    left: -20px;
+    //left: -20px;
+    left: 0px;
     width: $label-before-size;
     height: $label-before-size;
     opacity: 0;
@@ -409,6 +403,15 @@ textarea{
   color: #069;
   cursor: pointer;
 }
-.view-button:hover{
-	color:$color-brand !important;
+.view-button{
+	background-color: transparent;
+	cursor: pointer;
+	i{
+		font-size: 1.2rem;
+	}
+  &:hover{
+		i{
+			color:$color-brand !important;
+		}
+ 	}
 }

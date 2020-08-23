@@ -36,7 +36,7 @@ function EditForm(props) {
                             />
                             <label
                                 htmlFor="title"
-                                className="form__label"
+                                className="form__label nunito-font"
                                 >
                                 Title
                             </label>
@@ -54,7 +54,7 @@ function EditForm(props) {
                             />
                              <label
                                 htmlFor="note"
-                                className="form__label2"
+                                className="form__label nunito-font"
                             >
                             Note
                             </label>
