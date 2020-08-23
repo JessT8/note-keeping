@@ -5,19 +5,20 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  Redirect
 } from "react-router-dom";
 import Home from './home';
 import LandingPage from './landingPage';
 import SignIn from './components/user/signin';
 import SignUp from './components/user/signup';
-
+import NotFound from './notFound';
 function App() {
    const [user, setUser] = useState({token:localStorage.getItem('token'), username:localStorage.getItem('user')})
   return (
     <Router>
         <nav className="navbar navbar-expand-lg bg-dark navbar-dark" id="navBar">
-            <Link className="navbar-brand cinzel-font pl-5"  to="/">Notekeeper</Link>
+            <Link className="navbar-brand cinzel-font pl-5" to="/">Notekeeper</Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent" aria-controls="navContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
@@ -41,7 +42,6 @@ function App() {
                             Sign Out</button>
                         }
                     </li>
-
                 </ul>
             </div>
         </nav>
@@ -50,14 +50,17 @@ function App() {
                     { user.token ? <Home />  : <LandingPage/> }
 
                 </Route>
-                <Route path="/signin">
+                <Route exact path="/signin">
+                 {!user.token ?
                     <SignIn setUser = {(values)=>{
                         setUser(values);
-
-                    }}/>
+                    }}/> : <Redirect exact from='/signin' to='/'/>}
                 </Route>
-                <Route path="/signup">
-                    <SignUp />
+                <Route exact path="/signup">
+                   {!user.token ? <SignUp /> : <Redirect exact from='/signup' to='/'/>}
+                </Route>
+                 <Route path="*">
+                    <NotFound />
                 </Route>
             </Switch>
     </Router>
