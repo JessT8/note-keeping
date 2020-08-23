@@ -1,6 +1,7 @@
-# NoteKeeper
+# Note-keeping
+An app to keep track of notes using NestJS and React
 
-# Technologies used
+## Technologies used
 * Nestjs
 * GraphQL
 * Apollo-client
@@ -9,13 +10,13 @@
 
 ## Prerequisites  
 * NPM,  yarn package manager
- * PostgreSQL (Datasource used) or MongoDB
+* PostgreSQL (Datasource used) or MongoDB
 
 ## Installation
 
 Fork the repo, then run:
 
-`git clone https://github.com/YourUserName/notekeeper.git`
+`git clone https://github.com/YourUserName/note-keeping.git`
 
 Next, install all dependencies:
 
