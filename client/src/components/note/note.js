@@ -1,13 +1,10 @@
 import React, {useState} from 'react';
-import EditForm from "./../../editForm";
+import NoteModal from "./noteModal";
+import EditFrom from "../../editForm";
 
 function Note(props){
     const [toggle , setToggle ] = useState(false);
-    const [currentEdit , setCurrentEdit ] = useState({});
-    //for currentEdit values
-    const resetValues = ()=>{
-        setCurrentEdit({});
-    };
+
     return (
             <div className="card border-0 pt-2 col-12 col-md-6 col-lg-4 col-xl-4 ">
                 <div className="card-block note-label">
@@ -21,7 +18,6 @@ function Note(props){
                     <div>
                         <div className="d-flex justify-content-end note-text--footer bg-white">
                                 <button type="button" className="position-relative text-dark view-button pt-2" onClick={()=>{
-                                        setCurrentEdit(props.note);
                                         setToggle({toggle:true})
                                     }}>
                                 <i className="fab fa-readme">  View</i>
@@ -29,16 +25,17 @@ function Note(props){
                         </div>
                     </div>
                 </div>
-                {toggle && <EditForm close={()=>{
+                {toggle && <NoteModal back={()=>{
                                         setToggle(false)}}
-                                    values={currentEdit}
+                                    values={props.note}
                                     displayMessage={(msg)=>{
                                         props.displayMessage(msg);
                                     }}
                                     updateNote={(values)=>{
-                                        resetValues();
                                         props.updateNote(values);}
-                                    }/>
+                                    }
+                                    deleteNote={props.deleteNote}
+                                    />
                 }
             </div>
             )

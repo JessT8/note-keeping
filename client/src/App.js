@@ -48,7 +48,6 @@ function App() {
             <Switch>
                 <Route exact path="/">
                     { user.token ? <Home />  : <LandingPage/> }
-
                 </Route>
                 <Route exact path="/signin">
                  {!user.token ?

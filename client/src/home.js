@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import AddForm from "./addForm";
-import DisplayNotes from "./components/note/notes"
+import Notes from "./components/note/notes"
 import './styles.scss';
 import { useQuery, gql, useMutation} from '@apollo/client';
 
@@ -93,7 +93,7 @@ function Home() {
                           />
       }
       {displayMessage}
-      <DisplayNotes notes={notes}
+      <Notes notes={notes}
                     favorite={(e)=>{favorite(e)}}
                     updateNote={(values)=>{ updateNote(values)}}
                     deleteNote={(i)=>{removeNote(i)}}

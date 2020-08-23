@@ -18,12 +18,11 @@ function EditForm(props) {
             props.displayMessage('Error :( ... ' + err);
         }
   });
-        console.log(props.values);
     return  <div className="EditForm">
                 <div className="popup">
-                    <button className="close button-link"
-                       onClick={()=>{props.close();}}>
-                       &times;
+                    <button className="back button-link"
+                       onClick={()=>{props.showEdit()}}>
+                        &larr;
                     </button>
                     <div className="content">
                         <div className="form__group_popup mx-auto">
@@ -69,7 +68,7 @@ function EditForm(props) {
                                             props.updateNote(values);
                                               updateNote( {variables: { id:parseInt(values.id,10), noteInput:{title:values.title, description: values.description, pin: values.pin}}});
                                            }
-                                            props.close();
+                                            props.showEdit();
                                         }else{
                                             console.log("invalid input");
                                         }}

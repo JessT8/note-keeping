@@ -84,8 +84,21 @@ $star: "\2605";
 	.close:hover {
 	  color: #06D85F;
 	}
+	.back {
+	  position: absolute;
+	  top: 5px;
+	  left: 40px;
+	  transition: all 200ms;
+	  font-size: 2rem;
+	  font-weight: bold;
+	  cursor:pointer;
+	  color: #333;
+    outline:none;
+	}
+	.back:hover {
+	  color: $color-brand;
+	}
 	.popup .content {
-
 	  overflow: auto;
 	}
 
@@ -319,6 +332,15 @@ h2{
     border-top: 1px solid $color-brand;
     text-align: left;
   }
+}
+.details{
+	&--description{
+		text-align: justify;
+		white-space: pre-wrap;
+		width: 80%;
+  	overflow: scroll;
+    max-height: 70vh;
+	}
 }
 .option{
     color:pink;
