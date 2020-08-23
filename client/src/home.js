@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import AddForm from "./addForm";
-import DisplayNotes from "./displayNotes"
+import DisplayNotes from "./components/note/notes"
 import './styles.scss';
 import { useQuery, gql, useMutation} from '@apollo/client';
 

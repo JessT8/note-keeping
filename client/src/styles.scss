@@ -68,6 +68,7 @@ $star: "\2605";
     z-index: 10;
 	  padding: 25px;
 	  background: #fff;
+	  transform: translate3d(0vw, 0, 0);
 	  transition: all 5s ease-in-out;
 	}
 	.close {
@@ -88,14 +89,13 @@ $star: "\2605";
 	  overflow: auto;
 	}
 
-	@media screen and (max-width: 700px){
-	  .popup{
-	    width: 100%;
-	  }
-	}
+	// @media screen and (max-width: 700px){
+	//   .popup{
+	//     width: 100%;
+	//   }
+	// }
 
 .form__group_popup{
-
 	position: relative;
   padding: 15px 10px;
   margin-top: 10px;
