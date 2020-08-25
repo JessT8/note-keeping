@@ -1,0 +1,21 @@
+.tool-label{
+	  color: #999;
+    cursor: pointer;
+    margin-right: 16px;
+    padding: 2px 0;
+}
+
+.italic{
+	font-style: italic;
+}
+.bold{
+	font-weight: bold;
+}
+
+.strikethrough{
+	text-decoration: line-through;
+}
+
+.underline{
+	text-decoration: underline;
+}
