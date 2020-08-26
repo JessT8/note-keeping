@@ -1,67 +1,68 @@
-import Draft from 'draft-js'
 import React from 'react'
-import './TextEditor.css'
+import Draft from 'draft-js'
 import createStyles from 'draft-js-custom-styles';
-const {Editor, EditorState, Modifier, RichUtils, convertToRaw} = Draft;
+import './TextEditor.css'
+const {Editor, EditorState, Modifier, RichUtils, convertToRaw, convertFromRaw} = Draft;
 const {styles, customStyleFn} = createStyles(['font-size', 'font-style', 'font-weight', 'text-decoration'])
 
-      export default class TextEditor extends React.Component {
-        constructor(props) {
-          super(props);
-          this.state = {editorState: EditorState.createEmpty()};
-          this.editor = React.createRef();
-          this.focus = () => {this.editor.current.focus()};
-          this.onChange = (editorState) => {this.setState({editorState})
+export default class TextEditor extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {editorState: EditorState.createEmpty()};
+        this.editor = React.createRef();
+        this.focus = () => {this.editor.current.focus()};
+        this.onChange = (editorState) => {
+        this.setState({editorState})
             const contentState = editorState.getCurrentContent();
-          this.props.onChange(contentState.getPlainText('\n'), contentState )};
-          this.onToggle = (value, type) => this._onToggle(value,type);
+            this.props.onChange(JSON.stringify(convertToRaw(contentState)));
+        };
+        this.onToggle = (value, type) => this._onToggle(value,type);
+    }
+    componentDidMount(){
+        const data = JSON.parse(JSON.parse(this.props.description));
+        const contentState = convertFromRaw(data);
+        const editorState = EditorState.createWithContent(contentState);
+        this.onChange(editorState);
+    }
+    _onToggle( value, type ){
+        const { editorState } = this.state;
+        if( value === 'unordered-list-item' ){
+            this.onChange(RichUtils.toggleBlockType(this.state.editorState, value));
+            return;
+        }else if( value === 'initial' ){
+            const properties = ['fontStyle', 'fontWeight', 'textDecoration' ];
+            let newEditorState = editorState;
+            properties.map(p=>{
+                newEditorState = styles[p].remove(newEditorState);
+            });
+                this.onChange(newEditorState);
+                return;
         }
-
-
-          _onToggle( value, type ){
-
-            const { editorState } = this.state;
-
-            if( value === 'unordered-list-item' ){
-                this.onChange(RichUtils.toggleBlockType(this.state.editorState, value));
-                return;
-            }else if( value === 'initial' ){
-               const properties = ['fontStyle', 'fontWeight', 'textDecoration' ];
-               let newEditorState = editorState;
-               properties.map(p=>{
-                  newEditorState = styles[p].remove(newEditorState);
-               });
-                  this.onChange(newEditorState);
-                return;
+        const selection = editorState.getSelection();
+        const newEditorState = styles[type].remove(editorState);
+        this.onChange(styles[type].add(newEditorState,value))
+    }
+    render() {
+        const {editorState} = this.state;
+            return (
+                <div style={styling.root}>
+                    <OptionControls
+                        editorState={editorState}
+                        onToggle={this.onToggle}
+                    />
+                    <div style={styling.editor} onClick={this.focus}>
+                        <Editor
+                          editorState={editorState}
+                          onChange={this.onChange}
+                          placeholder="Write your notes here..."
+                          ref={this.editor}
+                          customStyleFn={customStyleFn}
+                        />
+                    </div>
+                </div>
+                );
             }
-
-            const selection = editorState.getSelection();
-            const newEditorState = styles[type].remove(editorState);
-            this.onChange(styles[type].add(newEditorState,value))
         }
-
-        render() {
-          const {editorState} = this.state;
-          return (
-            <div style={styling.root}>
-              <OptionControls
-                editorState={editorState}
-                onToggle={this.onToggle}
-              />
-              <div style={styling.editor} onClick={this.focus}>
-                <Editor
-                  editorState={editorState}
-                  onChange={this.onChange}
-                  placeholder="Write your notes here..."
-                  ref={this.editor}
-                  values={this.props.description}
-                  customStyleFn={customStyleFn}
-                />
-              </div>
-            </div>
-          );
-        }
-      }
 
 
 
@@ -137,46 +138,3 @@ const {styles, customStyleFn} = createStyles(['font-size', 'font-style', 'font-w
           userSelect: 'none',
         },
       };
-
-
-      //       var BUTTONS = [
-      //     {label:'U', value:'underline',styleName:'tool-label underline'},
-      //     {label:'B', property:'bold', styleName:'tool-label bold'},
-      //     {label:'I', property:'italic',styleName:'tool-label italic'},
-      // ]
-
-
-          // class EmpasizeButton extends React.Component {
-    //     constructor(props) {
-    //       super(props);
-    //       this.onToggleE = (e) => {
-    //         e.preventDefault();
-    //         this.setState({down:true})
-    //         this.props.onToggleE(this.props.name);
-    //       };
-    //       this.state={
-    //         down: false
-    //       }
-    //     }
-
-    //     render() {
-    //         let styleHere = {...styling.styleButton}
-    //         if(this.state.down){
-    //             styleHere.color = "pink";
-    //         }else{
-    //              styleHere.color = "#999";
-    //         }
-    //       return (
-    //         <span
-    //         style={styleHere}
-    //         onMouseDown={this.onToggleE}
-    //         onMouseUp={e=>{this.setState({down:false})}}
-    //         onMouseOut={e=>{if(this.state.down)this.setState({down:false})}}
-    //         className={this.props.className}
-    //          name={this.props.name}
-    //         >{this.props.label}</span>
-    //       );
-    //   }
-    // }
-
-      //BUTTONS
