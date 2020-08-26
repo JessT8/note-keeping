@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { gql, useMutation } from '@apollo/client';
+import  TextEditor  from './components/TextEditor/TextEditor';
+import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
 
 const UPDATE_NOTE = gql`
    mutation updateNote($id: Float!, $noteInput:NoteInput!){
@@ -17,7 +20,7 @@ function EditForm(props) {
             console.log(err)
             props.displayMessage('Error :( ... ' + err);
         }
-  });
+    });
     return  <div className="EditForm">
                 <div className="popup">
                     <button className="back button-link"
@@ -41,29 +44,16 @@ function EditForm(props) {
                                 Title
                             </label>
                         </div>
-                        <div className="form__group_popup mx-auto">
-                            <textarea
-                                name="description"
-                                id="description"
-                                rows="3"
-                                className="form__field_custom"
-                                value={values.description}
-                                placeholder="Write your notes here!"
-                                onChange={(e)=>{
-                                    setValues({...values, description:e.target.value})}}
-                            />
-                             <label
-                                htmlFor="note"
-                                className="form__label nunito-font"
-                            >
-                            Note
-                            </label>
+                        <div className=" form__group_popup mx-auto">
+                            <TextEditor description={values.description} onChange={(desc)=>{setValues({...values, "description":JSON.stringify(desc)})
+
+                            }} />
                         </div>
                         <div>
                             <button className="noteBtn"
                                     onClick={()=>{
                                         if(values.title && values.description){
-                                            //if changes were made
+
                                             if(props.values.title !== values.title || props.values.description!== values.description){
                                             props.updateNote(values);
                                               updateNote( {variables: { id:parseInt(values.id,10), noteInput:{title:values.title, description: values.description, pin: values.pin}}});
@@ -71,7 +61,8 @@ function EditForm(props) {
                                             props.showEdit();
                                         }else{
                                             console.log("invalid input");
-                                        }}
+                                        }console.log('Empty');
+                                    }
                                     }>
                                          Save
                              </button>

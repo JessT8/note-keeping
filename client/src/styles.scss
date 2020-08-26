@@ -144,6 +144,7 @@ $star: "\2605";
   outline: 0;
   font-size: 1.3rem;
   color: $black;
+  overflow: auto;
   margin: 30px 0 0 0;
   // padding: 20px 0 0 0;
   background: transparent;
@@ -159,6 +160,30 @@ $star: "\2605";
   	color: transparent;
 	}
 }
+div.DraftEditor-root{
+	height:50vh;
+  border: 0;
+  border-bottom: 2px solid $gray;
+  outline: 0;
+  color: $black;
+ // overflow: scroll;
+  background: transparent;
+  resize: none;
+}
+.public-DraftEditor-content{
+	 overflow: scroll;
+}
+.public-DraftStyleDefault-block{
+	margin: 0 !important;
+}
+// .public-DraftEditorPlaceholder-root{
+// 	text-align:center !important;
+// 	position:relative;
+// }
+
+// .public-DraftEditorPlaceholder-hasFocus{
+// 	display: none;
+// }
 .form__label {
   position: absolute;
   top: 0;
@@ -167,30 +192,27 @@ $star: "\2605";
   font-size: 1.8rem;
   color: $gray;
 }
-// .form__label2{
-// 	position: absolute;
-//   top: 0;
-//   display: block;
-//   transition: 0.2s;
-//   font-size: 1.8rem;
-//   color: $gray;
-// }
+
 .form__field:focus , .form__field_custom:focus{
   ~ .form__label{
     position: absolute;
     top: 0;
     display: block;
     transition: 0.2s;
-    // font-size: 1rem;
+    font-size: 1rem;
     color: black;
     font-weight:700;
   }
-  // font-weight: 700;
+  font-weight: 700;
   border-width: 3px;
   border-image: linear-gradient(to right, $color-brand, white);
   border-image-slice: 1;
 }
-
+// .DraftEditor-root:focus-within{
+// 	  border-width: 3px;
+//   border-image: linear-gradient(to right, $color-brand, white);
+//   border-image-slice: 1;
+// }
 .noteBtn{
 	padding:5px 10px 5px 10px;
 	margin-bottom: 20px;
@@ -390,6 +412,9 @@ textarea{
 	font-size: 4rem;
 }
 
+.textbox-font{
+	font-family: 'Cinzel', serif;
+}
 .cinzel-font{
 	font-family: 'Cinzel', serif;
 	letter-spacing: 0.3rem;

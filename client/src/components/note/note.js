@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import NoteModal from "./noteModal";
 import EditFrom from "../../editForm";
+import TextConverter from '../TextEditor/TextConverter';
 
 function Note(props){
     const [toggle , setToggle ] = useState(false);
@@ -16,7 +17,8 @@ function Note(props){
                                 {props.note.title}
                             </h5>
                             <div className="note-text--description d-flex ">
-                                <div className="text-truncate my-auto">{props.note.description}
+                                <div className="text-truncate my-auto">
+                                    <TextConverter description={props.note.description}/>
                                 </div>
                             </div>
                             <div>
@@ -28,10 +30,10 @@ function Note(props){
                             </div>
                         </button>
                 {toggle && <NoteModal back={()=>{
-                                        setToggle(false)}}
+                                    setToggle(false)}}
                                     values={props.note}
                                     displayMessage={(msg)=>{
-                                        props.displayMessage(msg);
+                                        console.log(msg);
                                     }}
                                     updateNote={(values)=>{
                                         props.updateNote(values);}

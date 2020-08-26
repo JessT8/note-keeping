@@ -1,4 +1,5 @@
-import React , {useState }from 'react';
+import React , { useState, useEffect }from 'react';
+import TextConverter from '../TextEditor/TextConverter';
 
 function NoteDetails(props) {
     return  <div className="popup">
@@ -23,7 +24,7 @@ function NoteDetails(props) {
                         </div>
                     </div>
                     <div className="details--description mt-3 mx-auto">
-                        <p>{props.values.description}</p>
+                    <TextConverter description={props.values.description} format={true}/>
                     </div>
                 </div>
             </div>
