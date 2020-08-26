@@ -16,7 +16,7 @@ $font-normal: 400;
 $font-bold: 500;
 $star: "\2605";
 
-.App {
+.App-main {
   	margin: 0 auto;
   	width:80%;
   	header{
@@ -58,7 +58,6 @@ $star: "\2605";
 	  z-index: 10;
 	}
 	.popup {
-		width: 100%;
   	height: 100%;
   	position: fixed;
     top: 0;
@@ -160,30 +159,6 @@ $star: "\2605";
   	color: transparent;
 	}
 }
-div.DraftEditor-root{
-	height:50vh;
-  border: 0;
-  border-bottom: 2px solid $gray;
-  outline: 0;
-  color: $black;
- // overflow: scroll;
-  background: transparent;
-  resize: none;
-}
-.public-DraftEditor-content{
-	 overflow: scroll;
-}
-.public-DraftStyleDefault-block{
-	margin: 0 !important;
-}
-// .public-DraftEditorPlaceholder-root{
-// 	text-align:center !important;
-// 	position:relative;
-// }
-
-// .public-DraftEditorPlaceholder-hasFocus{
-// 	display: none;
-// }
 .form__label {
   position: absolute;
   top: 0;
@@ -439,4 +414,4 @@ textarea{
 			color:$color-brand !important;
 		}
  	}
-}
+ }

@@ -5,6 +5,11 @@
     padding: 2px 0;
 }
 
+.flex-center{
+	display: flex;
+	justify-content: center;
+}
+
 .italic{
 	font-style: italic;
 }
@@ -18,4 +23,30 @@
 
 .underline{
 	text-decoration: underline;
+}
+div.DraftEditor-root{
+	width: 100%;
+	padding:0;
+}
+div.DraftEditor-root{
+	outline: 0;
+
+	color: $black;
+  overflow: scroll;
+	background: transparent;
+	resize: none;
+}
+.public-DraftEditor-content{
+	 overflow: scroll;
+}
+.public-DraftStyleDefault-block{
+	margin: 0 !important;
+}
+.public-DraftEditorPlaceholder-root{
+	text-align:center !important;
+	position:relative;
+}
+
+.public-DraftEditorPlaceholder-hasFocus{
+	display: none;
 }

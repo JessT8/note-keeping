@@ -8,10 +8,13 @@ function NoteDetails(props) {
                     &larr;
                 </button>
                 <div>
-                    <div className="mx-auto mt-3">
-                        <h1>{props.values.title}</h1>
+                    <div>
+                        <div className="d-flex justify-content-center mt-3">
+                            <h1>{props.values.title}</h1>
+                        </div>
                         <div className="row">
-                            <div className="col mx-auto">
+                            <div className="col d-flex justify-content-center mt-">
+
                                 <button className="button-link mx-2"
                                         onClick={()=>{
                                             props.showEdit();
@@ -24,7 +27,7 @@ function NoteDetails(props) {
                         </div>
                     </div>
                     <div className="details--description mt-3 mx-auto">
-                    <TextConverter description={props.values.description} format={true}/>
+                      <TextConverter description={props.values.description} format={true}/>
                     </div>
                 </div>
             </div>

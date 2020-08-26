@@ -49,7 +49,7 @@ function EditForm(props) {
 
                             }} />
                         </div>
-                        <div>
+                        <div className="flex-center">
                             <button className="noteBtn"
                                     onClick={()=>{
                                         if(values.title && values.description){
