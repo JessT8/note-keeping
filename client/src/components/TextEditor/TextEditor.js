@@ -24,6 +24,23 @@ export default class TextEditor extends React.Component {
         const editorState = EditorState.createWithContent(contentState);
         this.onChange(editorState);
     }
+    clear(editorState) {
+        const selection = editorState.getSelection()
+        const contentState = editorState.getCurrentContent()
+        const styles = editorState.getCurrentInlineStyle()
+
+        const removeStyles = styles.reduce((state, style) => {
+          return Modifier.removeInlineStyle(state, selection, style) }, contentState)
+
+        const removeBlock = Modifier.setBlockType(removeStyles, selection, 'unstyled')
+
+       this.setState({
+         editorState: EditorState.push(
+           editorState,
+           removeBlock
+         )
+       })
+    }
     _onToggle( value, type ){
         const { editorState } = this.state;
         if( value === 'unordered-list-item' ){
@@ -35,8 +52,8 @@ export default class TextEditor extends React.Component {
             properties.map(p=>{
                 newEditorState = styles[p].remove(newEditorState);
             });
-                this.onChange(newEditorState);
-                return;
+            this.clear(newEditorState);
+            return;
         }
         const selection = editorState.getSelection();
         const newEditorState = styles[type].remove(editorState);
@@ -46,10 +63,12 @@ export default class TextEditor extends React.Component {
         const {editorState} = this.state;
             return (
                 <div style={styling.root}>
-                    <OptionControls
-                        editorState={editorState}
-                        onToggle={this.onToggle}
-                    />
+                    <div className='flex-center'>
+                        <OptionControls
+                            editorState={editorState}
+                            onToggle={this.onToggle}
+                        />
+                    </div>
                     <div style={styling.editor} onClick={this.focus}>
                         <Editor
                           editorState={editorState}
@@ -125,11 +144,13 @@ export default class TextEditor extends React.Component {
           fontFamily: '\'Georgia\', serif',
           fontSize: 14,
           margin: '0 auto',
+          borderBottom: '2px solid grey',
         },
         editor: {
           borderTop: '1px solid #ddd',
           cursor: 'text',
           fontSize: 16,
+          height:'50vh'
         },
         controls: {
           fontFamily: '\'Helvetica\', sans-serif',
