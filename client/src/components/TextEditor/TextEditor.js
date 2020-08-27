@@ -19,10 +19,12 @@ export default class TextEditor extends React.Component {
         this.onToggle = (value, type) => this._onToggle(value,type);
     }
     componentDidMount(){
-        const data = JSON.parse(JSON.parse(this.props.description));
-        const contentState = convertFromRaw(data);
-        const editorState = EditorState.createWithContent(contentState);
-        this.onChange(editorState);
+        if(this.props.edit){
+            const data = JSON.parse(JSON.parse(this.props.description));
+            const contentState = convertFromRaw(data);
+            const editorState = EditorState.createWithContent(contentState);
+            this.onChange(editorState);
+        }
     }
     clear(editorState) {
         const selection = editorState.getSelection()
@@ -43,10 +45,11 @@ export default class TextEditor extends React.Component {
     }
     _onToggle( value, type ){
         const { editorState } = this.state;
-        if( value === 'unordered-list-item' ){
+        if( type === 'predefined' ){
             this.onChange(RichUtils.toggleBlockType(this.state.editorState, value));
             return;
-        }else if( value === 'initial' ){
+        }else if( type === 'initial' ){
+            //for clearing
             const properties = ['fontStyle', 'fontWeight', 'textDecoration' ];
             let newEditorState = editorState;
             properties.map(p=>{
@@ -115,12 +118,13 @@ export default class TextEditor extends React.Component {
           {label: 'H4', value: '1.5rem', styleName:'tool-label',type:'fontSize'},
           {label: 'H5', value: '1.31rem', styleName:'tool-label',type:'fontSize'},
           {label: 'Normal', value: '1rem', styleName:'tool-label',type:'fontSize'},
-          {label: '•', value: 'unordered-list-item', styleName:'tool-label',type:''},
+          {label: '•', value: 'unordered-list-item', styleName:'tool-label',type:'predefined'},
+          {label: 'code', value: 'code-block', styleName:'tool-label',type:'predefined'},
           {label:'U', value:'underline',styleName:'tool-label underline',type:'textDecoration'},
           {label:'B', value:'bold', styleName:'tool-label bold',type:'fontWeight'},
           {label:'I', value:'italic',styleName:'tool-label italic',type:'fontStyle'},
           {label:'abc', value:'line-through',styleName:'tool-label strikethrough', type:'textDecoration'},
-          {label:'clear', value:'initial',styleName:'tool-label', type:''}
+          {label:'clear', value:'initial',styleName:'tool-label', type:'initial'}
       ]
 
       const OptionControls = (props) => {
