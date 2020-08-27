@@ -1,6 +1,6 @@
 import React, { useState , useRef } from "react";
 import { gql, useMutation } from '@apollo/client';
-
+import TextEditor from './components/TextEditor/TextEditor'
 const ADD_NOTE = gql`
    mutation createNote($noteInput:NoteInput!){
       createNote(
@@ -61,40 +61,26 @@ function AddForm(props) {
                                     Title
                                 </label>
                             </div>
-                            <div className="form__group_popup mx-auto">
-                                <textarea
-                                    ref={addToRefs}
-                                    name="description"
-                                    id="description"
-                                    className="form__field_custom"
-                                    value={values.description}
-                                    placeholder="Write your notes here!"
-                                    onChange={(e)=>{
-                                        setValues({...values, description:e.target.value})}}
-                                    required="required"
-                                />
-                            <label
-                                htmlFor="description"
-                                className="form__label2"
-                            >
-                                Note
-                            </label>
-                        </div>
+                            <div className=" form__group_popup mx-auto">
+                                <TextEditor onChange={(desc)=>{setValues({...values, "description":JSON.stringify(desc)})}}/>
+                            </div>
                         <div>
-                        <button className="noteBtn"
-                                type="button"
-                                onClick={ ()=>{
+                        <div className="flex-center">
+                            <button className="noteBtn"
+                                    type="button"
+                                    onClick={ ()=>{
 
-                                if(values.title && values.description){
-                                   setValues({title:"",description:""});
-                                   addNote({variables:{ noteInput: { title: values.title, description: values.description , pin:values.pin} }})
-                                    props.close();
-                                }else{
-                                    !values.title ? inputRef.current[0].focus(): inputRef.current[1].focus();
-                                }}
-                                }>
-                            Add
-                        </button>
+                                    if(values.title && values.description){
+                                       setValues({title:"",description:""});
+                                       addNote({variables:{ noteInput: { title: values.title, description: values.description , pin:values.pin} }})
+                                        props.close();
+                                    }else{
+                                        !values.title ? inputRef.current[0].focus(): inputRef.current[1].focus();
+                                    }}
+                                    }>
+                                Add
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>
