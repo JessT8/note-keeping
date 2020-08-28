@@ -110,14 +110,14 @@ export default class TextEditor extends React.Component {
     render() {
         const {editorState} = this.state;
             return (
-                <div style={styling.root}>
+                <div className='textbox-container'>
                     <div className='flex-center'>
                         <OptionControls
                             editorState={editorState}
                             onToggle={this.onToggle}
                         />
                     </div>
-                    <div style={styling.editor} onClick={this.focus}>
+                    <div className='textbox-editor' onClick={this.focus}>
                         <Editor
                           readOnly={!this.props.edit}
                           editorState={editorState}
@@ -178,7 +178,7 @@ export default class TextEditor extends React.Component {
       const OptionControls = (props) => {
         var currentStyle = props.editorState.getCurrentInlineStyle();
         return (
-          <div style={styling.controls}>
+          <div className='textbox-options'>
             {OPTIONS.map((option,i) =>
             <React.Fragment key={i}>
               <StyleButton
@@ -189,25 +189,4 @@ export default class TextEditor extends React.Component {
             )}
           </div>
         );
-      };
-
-      const styling = {
-        root: {
-          fontFamily: '\'Georgia\', serif',
-          fontSize: 14,
-          margin: '0 auto',
-          borderBottom: '2px solid grey',
-        },
-        editor: {
-          borderTop: '1px solid #ddd',
-          cursor: 'text',
-          fontSize: 16,
-          height:'50vh'
-        },
-        controls: {
-          fontFamily: '\'Helvetica\', sans-serif',
-          fontSize: 14,
-          marginBottom: 10,
-          userSelect: 'none',
-        },
       };

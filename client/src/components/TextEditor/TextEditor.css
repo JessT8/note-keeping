@@ -50,3 +50,42 @@ div.DraftEditor-root{
 .public-DraftEditorPlaceholder-hasFocus{
 	display: none;
 }
+.textbox-options{
+	  font-family: 'Helvetica, sans-serif';
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.textbox-editor{
+	  border-top: 1px solid #ddd;
+    font-size: 16px;
+    height:50vh;
+    cursor: text;
+}
+.textbox-container{
+    font-family: 'Georgia, serif';
+    font-size: 14px;
+    margin: 0 auto;
+    border-bottom: 2px solid grey;
+}
+
+/*
+      // const styling = {
+      //   root: {
+      //     fontFamily: '\'Georgia\', serif',
+      //     fontSize: 14,
+      //     margin: '0 auto',
+      //     borderBottom: '2px solid grey',
+      //   },
+      //   editor: {
+      //     borderTop: '1px solid #ddd',
+      //     cursor: 'text',
+      //     fontSize: 16,
+      //     height:'50vh'
+      //   },
+      //   controls: {
+      //     fontFamily: '\'Helvetica\', sans-serif',
+      //     fontSize: 14,
+      //     marginBottom: 10,
+      //     userSelect: 'none',
+      //   },
+      // };*/
