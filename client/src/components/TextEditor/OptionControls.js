@@ -1,5 +1,5 @@
 import React from 'react';
-
+import StyleButton from './StyleButton';
 
 var OPTIONS = [
           {label: 'H1', value: '2.25rem', styleName:'tool-label', type:'fontSize'},
@@ -17,24 +17,6 @@ var OPTIONS = [
           {label:'clear', value:'initial',styleName:'tool-label', type:'initial'},
           {label:'a', value:'link',styleName:'tool-label', type:'link'}
 ]
-      class StyleButton extends React.Component {
-        constructor(props) {
-          super(props);
-          this.onToggle = (e) => {
-            e.preventDefault();
-            this.props.onToggle(this.props.option.value, this.props.option.type);
-          };
-        }
-
-        render() {
-          return (
-            <span
-            className={this.props.option.styleName} onMouseDown={this.onToggle}>
-              {this.props.option.label}
-            </span>
-          );
-        }
-      }
 function OptionControls (props){
         var currentStyle = props.editorState.getCurrentInlineStyle();
         return (
