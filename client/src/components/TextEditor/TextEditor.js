@@ -131,6 +131,18 @@ export default class TextEditor extends React.Component {
                           ref={this.editor}
                           customStyleFn={customStyleFn}
                           blockRendererFn={MediaBlock}
+                          handleKeyCommand={(command) => {
+                              const { editorState } = this.state
+
+                              let newState = RichUtils.handleKeyCommand(editorState, command)
+
+                              if (newState) {
+                                this.onChange(newState)
+                                return "handled"
+                              }
+
+                              return "not-handled"
+                            }}
                         />
                     </div>
                 </div>
