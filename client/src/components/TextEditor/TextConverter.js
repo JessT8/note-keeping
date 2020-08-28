@@ -1,8 +1,39 @@
 import React from "react";
 import Draft from 'draft-js'
 import createStyles from 'draft-js-custom-styles';
-const {Editor, EditorState, Modifier, RichUtils, ContentState, convertToRaw, convertFromRaw} = Draft;
+const {Editor, EditorState, Modifier, RichUtils, ContentState, convertToRaw, convertFromRaw, CompositeDecorator} = Draft;
 const {styles, customStyleFn} = createStyles(['font-size', 'font-style', 'font-weight', 'text-decoration'])
+
+
+function findLinkEntities(contentBlock, callback, contentState) {
+  contentBlock.findEntityRanges(
+    (character) => {
+      const entityKey = character.getEntity();
+      return (
+        entityKey !== null &&
+        contentState.getEntity(entityKey).getType() === 'LINK'
+      );
+    },
+    callback
+  );
+}
+
+
+const Link = (props) => {
+  const {url} = props.contentState.getEntity(props.entityKey).getData();
+  return (
+    <a href={url} target='_blank'>
+      {props.children}
+    </a>
+  );
+}
+
+const decorator = new CompositeDecorator([
+  {
+    strategy: findLinkEntities,
+    component: Link,
+  },
+]);
 
 class TextConverter extends React.Component {
     constructor(props) {
@@ -37,7 +68,7 @@ class TextConverter extends React.Component {
     componentDidMount(){
         const data = JSON.parse(JSON.parse(this.props.description));
         const contentState = convertFromRaw(data);
-        let editorState = EditorState.createWithContent(contentState);
+        let editorState = EditorState.createWithContent(contentState, decorator);
         this.setState({ editorState });
     }
   render() {

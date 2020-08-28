@@ -17,7 +17,6 @@ function EditForm(props) {
     const [values, setValues] = useState(props.values);
     const [ updateNote ]= useMutation(UPDATE_NOTE, {
         onError:(err)=>{
-            console.log(err)
             props.displayMessage('Error :( ... ' + err);
         }
     });
@@ -46,14 +45,12 @@ function EditForm(props) {
                         </div>
                         <div className=" form__group_popup mx-auto">
                             <TextEditor description={values.description} onChange={(desc)=>{setValues({...values, "description":JSON.stringify(desc)})
-
-                            }} />
+                            }} edit={true} />
                         </div>
                         <div className="flex-center">
                             <button className="noteBtn"
                                     onClick={()=>{
                                         if(values.title && values.description){
-
                                             if(props.values.title !== values.title || props.values.description!== values.description){
                                             props.updateNote(values);
                                               updateNote( {variables: { id:parseInt(values.id,10), noteInput:{title:values.title, description: values.description, pin: values.pin}}});
@@ -61,7 +58,7 @@ function EditForm(props) {
                                             props.showEdit();
                                         }else{
                                             console.log("invalid input");
-                                        }console.log('Empty');
+                                        }
                                     }
                                     }>
                                          Save

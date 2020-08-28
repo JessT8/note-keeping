@@ -1,9 +1,39 @@
 import React from 'react'
 import Draft from 'draft-js'
 import createStyles from 'draft-js-custom-styles';
-import './TextEditor.css'
-const {Editor, EditorState, Modifier, RichUtils, convertToRaw, convertFromRaw} = Draft;
+import './TextEditor.css';
+const {Editor, EditorState, Modifier, RichUtils, convertToRaw, convertFromRaw, Entity, CompositeDecorator} = Draft;
 const {styles, customStyleFn} = createStyles(['font-size', 'font-style', 'font-weight', 'text-decoration'])
+//LINK
+function findLinkEntities(contentBlock, callback, contentState) {
+  contentBlock.findEntityRanges(
+    (character) => {
+      const entityKey = character.getEntity();
+      return (
+        entityKey !== null &&
+        contentState.getEntity(entityKey).getType() === 'LINK'
+      );
+    },
+    callback
+  );
+}
+
+
+const Link = (props) => {
+  const {url} = props.contentState.getEntity(props.entityKey).getData();
+  return (
+    <a href={url} onClick={()=>window.prompt('Paste the link -')}>
+      {props.children}
+    </a>
+  );
+}
+
+const decorator = new CompositeDecorator([
+  {
+    strategy: findLinkEntities,
+    component: Link,
+  },
+]);
 
 export default class TextEditor extends React.Component {
     constructor(props) {
@@ -12,19 +42,30 @@ export default class TextEditor extends React.Component {
         this.editor = React.createRef();
         this.focus = () => {this.editor.current.focus()};
         this.onChange = (editorState) => {
-        this.setState({editorState})
+        this.setState({editorState});
             const contentState = editorState.getCurrentContent();
             this.props.onChange(JSON.stringify(convertToRaw(contentState)));
         };
         this.onToggle = (value, type) => this._onToggle(value,type);
+        this.onAddLink = () => this._onAddLink();
     }
     componentDidMount(){
         if(this.props.edit){
             const data = JSON.parse(JSON.parse(this.props.description));
             const contentState = convertFromRaw(data);
-            const editorState = EditorState.createWithContent(contentState);
+            const editorState = EditorState.createWithContent(contentState, decorator);
             this.onChange(editorState);
         }
+    }
+    _onAddLink = () => {
+        const link = window.prompt('Paste the link -')
+        const { editorState } = this.state;
+        const selectionState = editorState.getSelection();
+        const entity = Entity.create("LINK", "MUTABLE", {
+            url: link
+        });
+        const newEditorState = RichUtils.toggleLink(editorState, selectionState, entity);
+        this.onChange(newEditorState);
     }
     clear(editorState) {
         const selection = editorState.getSelection()
@@ -45,6 +86,10 @@ export default class TextEditor extends React.Component {
     }
     _onToggle( value, type ){
         const { editorState } = this.state;
+        if( type === 'link'){
+            this.onAddLink();
+            return;
+        }
         if( type === 'predefined' ){
             this.onChange(RichUtils.toggleBlockType(this.state.editorState, value));
             return;
@@ -74,11 +119,13 @@ export default class TextEditor extends React.Component {
                     </div>
                     <div style={styling.editor} onClick={this.focus}>
                         <Editor
+                          readOnly={!this.props.edit}
                           editorState={editorState}
                           onChange={this.onChange}
                           placeholder="Write your notes here..."
                           ref={this.editor}
                           customStyleFn={customStyleFn}
+
                         />
                     </div>
                 </div>
@@ -124,7 +171,8 @@ export default class TextEditor extends React.Component {
           {label:'B', value:'bold', styleName:'tool-label bold',type:'fontWeight'},
           {label:'I', value:'italic',styleName:'tool-label italic',type:'fontStyle'},
           {label:'abc', value:'line-through',styleName:'tool-label strikethrough', type:'textDecoration'},
-          {label:'clear', value:'initial',styleName:'tool-label', type:'initial'}
+          {label:'clear', value:'initial',styleName:'tool-label', type:'initial'},
+          {label:'a', value:'link',styleName:'tool-label', type:'link'}
       ]
 
       const OptionControls = (props) => {

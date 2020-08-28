@@ -47,7 +47,8 @@ export class UserService {
 			const { id } = user;
 			const validation = await user.validatePassword(password);
 			if( user && validation){
-				return jwt.sign({id, username}, jwtConstants.secret);
+				//, expiresIn: 360000000
+				return jwt.sign({ id }, jwtConstants.secret);
 			}else{
 				throw new UnauthorizedException('Invalid Credential');
 			}
