@@ -1,9 +1,10 @@
 import React from 'react'
-import {Editor, EditorState, Modifier, RichUtils, convertToRaw, convertFromRaw, Entity} from 'draft-js'
+import {Editor, EditorState, Modifier, RichUtils, convertToRaw, convertFromRaw, Entity, AtomicBlockUtils} from 'draft-js'
 import createStyles from 'draft-js-custom-styles';
 import './TextEditor.css';
 import OptionControls from './OptionControls';
 import {decorator } from './LinkDecorator';
+import MediaBlock from './MediaBlock';
 const {styles, customStyleFn} = createStyles(['font-size', 'font-style', 'font-weight', 'text-decoration'])
 
 export default class TextEditor extends React.Component {
@@ -19,6 +20,7 @@ export default class TextEditor extends React.Component {
         };
         this.onToggle = (value, type) => this._onToggle(value,type);
         this.onAddLink = () => this._onAddLink();
+        this.onAddImage = () => this._onAddImage();
     }
     componentDidMount(){
         if(this.props.edit){
@@ -28,6 +30,35 @@ export default class TextEditor extends React.Component {
             this.onChange(editorState);
         }
     }
+    _onAddImage = () => {
+  // e.preventDefault();
+  const editorState = this.state.editorState;
+  const urlValue = window.prompt("Paste Image Link");
+  const contentState = editorState.getCurrentContent();
+  const contentStateWithEntity = contentState.createEntity(
+   "image",
+   "IMMUTABLE",
+   { src: urlValue }
+  );
+  const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+  const newEditorState = EditorState.set(
+   editorState,
+   { currentContent: contentStateWithEntity },
+   "create-entity"
+  );
+  this.setState(
+   {
+    editorState: AtomicBlockUtils.insertAtomicBlock(
+     newEditorState,
+     entityKey,
+     " "
+    )
+   },
+   () => {
+    setTimeout(() => this.focus(), 0);
+   }
+  );
+ };
     _onAddLink = () => {
         const link = window.prompt('Paste the link -')
         const { editorState } = this.state;
@@ -59,6 +90,10 @@ export default class TextEditor extends React.Component {
         const { editorState } = this.state;
         if( type === 'link'){
             this.onAddLink();
+            return;
+        }
+        if(type === 'image'){
+            this.onAddImage();
             return;
         }
         if( type === 'predefined' ){
@@ -95,7 +130,7 @@ export default class TextEditor extends React.Component {
                           placeholder="Write your notes here..."
                           ref={this.editor}
                           customStyleFn={customStyleFn}
-
+                          blockRendererFn={MediaBlock}
                         />
                     </div>
                 </div>

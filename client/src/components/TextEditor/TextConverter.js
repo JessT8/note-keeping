@@ -1,8 +1,9 @@
 import React from "react";
-import Draft from 'draft-js'
+import {Editor, EditorState, Modifier, RichUtils, ContentState, convertToRaw, convertFromRaw, CompositeDecorator}from 'draft-js'
 import createStyles from 'draft-js-custom-styles';
 import {decorator } from './LinkDecorator';
-const {Editor, EditorState, Modifier, RichUtils, ContentState, convertToRaw, convertFromRaw, CompositeDecorator} = Draft;
+import MediaBlock from './MediaBlock';
+
 const {styles, customStyleFn} = createStyles(['font-size', 'font-style', 'font-weight', 'text-decoration'])
 
 class TextConverter extends React.Component {
@@ -44,7 +45,7 @@ class TextConverter extends React.Component {
   render() {
     return (
       <div className="App">
-        {this.props.format ? <Editor editorState={this.state.editorState} readOnly={true}  customStyleFn={customStyleFn}/> : this.getText(this.state.editorState)}
+        {this.props.format ? <Editor editorState={this.state.editorState} readOnly={true}  customStyleFn={customStyleFn} blockRendererFn={MediaBlock}/> : this.getText(this.state.editorState)}
       </div>
     );
   }

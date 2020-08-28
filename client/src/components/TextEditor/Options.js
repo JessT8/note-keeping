@@ -14,6 +14,7 @@ export default
           {"label":"I", "value":"italic","styleName":"tool-label italic","type":"fontStyle"},
           {"label":"abc", "value":"line-through","styleName":"tool-label strikethrough", "type":"textDecoration"},
           {"label":"clear", "value":"initial","styleName":"tool-label", "type":"initial"},
-          {"label":"a", "value":"link","styleName":"tool-label", "type":"link"}
+          {"label":"link", "value":"link","styleName":"tool-label", "type":"link"},
+          {"label":"image", "value":"image","styleName":"tool-label", "type":"image"}
 	]
 }

@@ -67,7 +67,11 @@ div.DraftEditor-root{
     margin: 0 auto;
     border-bottom: 2px solid grey;
 }
-
+.cover {
+  object-fit: cover;
+  width: 50%;
+/*  height: 100px;*/
+}
 /*
       // const styling = {
       //   root: {
