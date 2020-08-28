@@ -1,9 +1,7 @@
 import React from 'react'
-import Draft from 'draft-js'
+import {Editor, EditorState, Modifier, RichUtils, convertToRaw, convertFromRaw, Entity, CompositeDecorator} from 'draft-js'
 import createStyles from 'draft-js-custom-styles';
-import './TextEditor.css';
-import OptionControls from './OptionControls';
-const {Editor, EditorState, Modifier, RichUtils, convertToRaw, convertFromRaw, Entity, CompositeDecorator} = Draft;
+
 const {styles, customStyleFn} = createStyles(['font-size', 'font-style', 'font-weight', 'text-decoration'])
 //LINK
 function findLinkEntities(contentBlock, callback, contentState) {
