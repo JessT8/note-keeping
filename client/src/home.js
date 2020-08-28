@@ -86,7 +86,7 @@ function Home() {
         </header>
       {toggle && <AddForm close={()=>{setToggle(false)}}
                           setNotes={(values)=>{
-                            setNotes([...notes,values]); }}
+                          setNotes([...notes,values]); }}
                           displayMessage={(msg)=>{
                                 setDisplayMessage(msg);
                           }}

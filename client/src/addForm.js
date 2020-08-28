@@ -62,7 +62,7 @@ function AddForm(props) {
                                 </label>
                             </div>
                             <div className=" form__group_popup mx-auto">
-                                <TextEditor onChange={(desc)=>{setValues({...values, "description":JSON.stringify(desc)})}}/>
+                                <TextEditor onChange={(desc)=>{setValues({...values, "description":JSON.stringify(desc)})}} />
                             </div>
                         <div>
                         <div className="flex-center">

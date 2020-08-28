@@ -1,38 +1,10 @@
 import React from 'react'
-import {Editor, EditorState, Modifier, RichUtils, convertToRaw, convertFromRaw, Entity, CompositeDecorator} from 'draft-js'
+import {Editor, EditorState, Modifier, RichUtils, convertToRaw, convertFromRaw, Entity} from 'draft-js'
 import createStyles from 'draft-js-custom-styles';
-
+import './TextEditor.css';
+import OptionControls from './OptionControls';
+import {decorator } from './LinkDecorator';
 const {styles, customStyleFn} = createStyles(['font-size', 'font-style', 'font-weight', 'text-decoration'])
-//LINK
-function findLinkEntities(contentBlock, callback, contentState) {
-  contentBlock.findEntityRanges(
-    (character) => {
-      const entityKey = character.getEntity();
-      return (
-        entityKey !== null &&
-        contentState.getEntity(entityKey).getType() === 'LINK'
-      );
-    },
-    callback
-  );
-}
-
-
-const Link = (props) => {
-  const {url} = props.contentState.getEntity(props.entityKey).getData();
-  return (
-    <a href={url} onClick={()=>window.prompt('Paste the link -')}>
-      {props.children}
-    </a>
-  );
-}
-
-const decorator = new CompositeDecorator([
-  {
-    strategy: findLinkEntities,
-    component: Link,
-  },
-]);
 
 export default class TextEditor extends React.Component {
     constructor(props) {
@@ -118,7 +90,6 @@ export default class TextEditor extends React.Component {
                     </div>
                     <div className='textbox-editor' onClick={this.focus}>
                         <Editor
-                          readOnly={!this.props.edit}
                           editorState={editorState}
                           onChange={this.onChange}
                           placeholder="Write your notes here..."
