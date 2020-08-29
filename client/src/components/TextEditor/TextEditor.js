@@ -31,34 +31,33 @@ export default class TextEditor extends React.Component {
         }
     }
     _onAddImage = () => {
-  // e.preventDefault();
-  const editorState = this.state.editorState;
-  const urlValue = window.prompt("Paste Image Link");
-  const contentState = editorState.getCurrentContent();
-  const contentStateWithEntity = contentState.createEntity(
-   "image",
-   "IMMUTABLE",
-   { src: urlValue }
-  );
-  const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-  const newEditorState = EditorState.set(
-   editorState,
-   { currentContent: contentStateWithEntity },
-   "create-entity"
-  );
-  this.setState(
-   {
-    editorState: AtomicBlockUtils.insertAtomicBlock(
-     newEditorState,
-     entityKey,
-     " "
-    )
-   },
-   () => {
-    setTimeout(() => this.focus(), 0);
-   }
-  );
- };
+          const editorState = this.state.editorState;
+          const urlValue = window.prompt("Paste Image Link");
+          const contentState = editorState.getCurrentContent();
+          const contentStateWithEntity = contentState.createEntity(
+           "image",
+           "IMMUTABLE",
+           { src: urlValue }
+          );
+          const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+          const newEditorState = EditorState.set(
+           editorState,
+           { currentContent: contentStateWithEntity },
+           "create-entity"
+          );
+          this.setState(
+           {
+            editorState: AtomicBlockUtils.insertAtomicBlock(
+             newEditorState,
+             entityKey,
+             " "
+            )
+           },
+           () => {
+            setTimeout(() => this.focus(), 0);
+           }
+          );
+         };
     _onAddLink = () => {
         const link = window.prompt('Paste the link -')
         const { editorState } = this.state;
