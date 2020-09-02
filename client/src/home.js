@@ -4,6 +4,7 @@ import AddForm from "./addForm";
 import Notes from "./components/note/notes"
 import './styles.scss';
 import { useQuery, gql, useMutation} from '@apollo/client';
+import { Redirect } from 'react-router-dom';
 
 const NOTES = gql`
       query{
@@ -29,6 +30,7 @@ function Home() {
   const [toggle, setToggle] = useState(false);
   const [notes, setNotes] = useState([]);
   const [displayMessage, setDisplayMessage] = useState("");
+  const [hasError, setHasError] = useState(false);
   const { loading, error, data } = useQuery(NOTES);
   const [ deleteNote ]= useMutation(DELETE_NOTE, {
     onCompleted: (data) => {
@@ -37,7 +39,7 @@ function Home() {
     },
     onError:(err)=>{
         console.log(err)
-        setDisplayMessage("Something went wrong :(  " + err);
+        setHasError(true);
     }
     })
   useEffect(()=>{
@@ -77,7 +79,9 @@ function Home() {
     const n = notes.filter(note => note.id !== i)
     setNotes(n);
   }
-
+  if(error){
+    return <Redirect to='/error'/>
+  }
   return (
     <div className="App-main">
         <header className="pt-5 pb-2">

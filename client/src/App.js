@@ -12,7 +12,9 @@ import Home from './home';
 import LandingPage from './landingPage';
 import SignIn from './components/user/signin';
 import SignUp from './components/user/signup';
-import NotFound from './notFound';
+import Error from './components/error/error';
+// import NotFound from './notFound';
+
 function App() {
    const [user, setUser] = useState({token:localStorage.getItem('token'), username:localStorage.getItem('user')})
   return (
@@ -58,9 +60,12 @@ function App() {
                 <Route exact path="/signup">
                    {!user.token ? <SignUp /> : <Redirect exact from='/signup' to='/'/>}
                 </Route>
-                 <Route path="*">
-                    <NotFound />
+                <Route exact path="/error">
+                    <Error />
                 </Route>
+                {/* <Route path="*">
+                    <NotFound />
+                </Route>*/}
             </Switch>
     </Router>
   );
