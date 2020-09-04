@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^7.1.2",
     "apollo-link-http": "^1.5.17",
     "babel-preset-node5": "^12.0.1",
+    "bootstrap": "^4.5.2",
     "dotenv": "^8.2.0",
     "draft-js": "^0.11.7",
     "draft-js-custom-styles": "^2.1.1",

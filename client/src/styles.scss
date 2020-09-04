@@ -1,3 +1,4 @@
+@import "bootstrap";
 $primary: #11998e;
 $secondary: #38ef7d;
 $black: #000000;
@@ -413,3 +414,35 @@ textarea{
 		}
  	}
  }
+@include media-breakpoint-up(xs) {
+  .error-font {
+    font-size: 1rem;
+  }
+}
+ @include media-breakpoint-up(sm) {
+  .error-font {
+    font-size: 2rem;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .error-font {
+    font-size: 2rem;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .error-font {
+    font-size: 3rem;
+  }
+}
+
+// $breakpoints: (phone: 640px,
+//                tablet: 768px,
+//                desktop: 1024px) !default;
+
+// @include media(">phone", "<tablet") {
+// }
+
+// @include media(">tablet", "<950px") {
+// }

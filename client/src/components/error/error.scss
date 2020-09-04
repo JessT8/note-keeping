@@ -1,0 +1,85 @@
+@import "bootstrap";
+$white: #FCFCFC;
+$gray: #CBCDD3;
+$black: #777777;
+
+$largeSize: 10rem;
+$midSize: 5rem;
+
+.face {
+  position: relative;
+  // background: $white;
+  background: aliceblue;
+  border-radius: 50%;
+  border: 1px solid $black;;
+  z-index: 2;
+}
+
+.eye {
+  position: absolute;
+  background: $black;
+  border-radius: 50%;
+  top: 40%;
+  left: 20%;
+}
+
+.right {
+  left: 68%;
+}
+
+.mouth {
+  position:absolute;
+  top: 40%;
+  left: 43%;
+  border-radius: 50%;
+}
+
+.sad {
+  top: 60%;
+  border: 3px solid;
+  border-color: $black transparent transparent $dark;
+  transform: rotate(45deg);
+}
+
+@include media-breakpoint-up(xs) {
+	.face {
+	  width: $midSize;
+	  height: $midSize;
+	}
+	.eye, .mouth {
+  width: $midSize * 0.1;
+  height: $midSize * 0.1;
+	}
+}
+ @include media-breakpoint-up(sm) {
+	.face {
+	  width: $midSize;
+	  height: $midSize;
+	}
+	.eye, .mouth {
+  width: $midSize * 0.1;
+  height: $midSize * 0.1;
+	}
+}
+
+@include media-breakpoint-up(md) {
+	.face {
+	  width: $largeSize;
+	  height: $largeSize;
+	}
+	.eye, .mouth {
+  width: $largeSize * 0.1;
+  height: $largeSize * 0.1;
+	}
+}
+
+@include media-breakpoint-up(lg) {
+	.face {
+	  width: $largeSize;
+	  height: $largeSize;
+	}
+	.eye, .mouth {
+  width: $largeSize * 0.1;
+  height: $largeSize * 0.1;
+	}
+}
