@@ -42,10 +42,20 @@ class TextConverter extends React.Component {
         let editorState = EditorState.createWithContent(contentState, decorator);
         this.setState({ editorState });
     }
+    blockStyleFn(block) {
+        switch (block.getType()) {
+            case 'TEXT-CENTER':
+                return 'align-center';
+            case 'TEXT-RIGHT':
+                return 'align-right';
+            default:
+                return null;
+        }
+    }
   render() {
     return (
-      <div className="App">
-        {this.props.format ? <Editor editorState={this.state.editorState} readOnly={true}  customStyleFn={customStyleFn} blockRendererFn={MediaBlock}/> : this.getText(this.state.editorState)}
+      <div>
+        {this.props.format ? <Editor editorState={this.state.editorState} readOnly={true}  customStyleFn={customStyleFn} blockRendererFn={MediaBlock} blockStyleFn={this.blockStyleFn}/> : this.getText(this.state.editorState)}
       </div>
     );
   }

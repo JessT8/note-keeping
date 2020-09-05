@@ -5,8 +5,11 @@ import './TextEditor.css';
 import OptionControls from './OptionControls';
 import {decorator } from './LinkDecorator';
 import MediaBlock from './MediaBlock';
-const {styles, customStyleFn} = createStyles(['font-size', 'font-style', 'font-weight', 'text-decoration'])
+const {styles, customStyleFn} = createStyles(['font-size', 'font-style', 'font-weight', 'text-decoration', 'text-align'])
 
+
+
+// blockStyleFn
 export default class TextEditor extends React.Component {
     constructor(props) {
         super(props);
@@ -85,6 +88,16 @@ export default class TextEditor extends React.Component {
          )
        })
     }
+    blockStyleFn(block) {
+        switch (block.getType()) {
+            case 'TEXT-CENTER':
+                return 'align-center';
+            case 'TEXT-RIGHT':
+                return 'align-right';
+            default:
+                return null;
+        }
+    }
     _onToggle( value, type ){
         const { editorState } = this.state;
         if( type === 'link'){
@@ -95,10 +108,23 @@ export default class TextEditor extends React.Component {
             this.onAddImage();
             return;
         }
-        if( type === 'predefined' ){
+        if(type==='align'){
             this.onChange(RichUtils.toggleBlockType(this.state.editorState, value));
             return;
-        }else if( type === 'initial' ){
+        }
+        if( type=== 'fontSize'){
+            this.onChange(styles.fontSize.toggle(this.state.editorState, value));
+            return;
+        }
+        if(type === 'block'){
+            this.onChange(RichUtils.toggleBlockType(this.state.editorState, value));
+           return;
+        }
+        if( type === 'inline' ){
+            this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, value));
+            return;
+        }
+        if( type === 'clear' ){
             //for clearing
             const properties = ['fontStyle', 'fontWeight', 'textDecoration' ];
             let newEditorState = editorState;
@@ -108,15 +134,12 @@ export default class TextEditor extends React.Component {
             this.clear(newEditorState);
             return;
         }
-        const selection = editorState.getSelection();
-        const newEditorState = styles[type].remove(editorState);
-        this.onChange(styles[type].add(newEditorState,value))
     }
     render() {
         const {editorState} = this.state;
             return (
                 <div className='textbox-container'>
-                    <div className='flex-center'>
+                    <div className='flex-center container-fluid'>
                         <OptionControls
                             editorState={editorState}
                             onToggle={this.onToggle}
@@ -129,7 +152,9 @@ export default class TextEditor extends React.Component {
                           placeholder="Write your notes here..."
                           ref={this.editor}
                           customStyleFn={customStyleFn}
+                          blockStyleFn={this.blockStyleFn}
                           blockRendererFn={MediaBlock}
+                          stripPastedStyles={true}
                           handleKeyCommand={(command) => {
                               const { editorState } = this.state
 

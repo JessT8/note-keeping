@@ -1,7 +1,9 @@
 import React from 'react';
 const Image = props => {
  if (props.src) {
-  return <img src={props.src} className="cover" />;
+  return <div className='center'>
+  <img src={props.src} className="note-image"/>
+  </div>
  }
  return null;
 };

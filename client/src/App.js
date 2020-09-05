@@ -26,12 +26,10 @@ function App() {
             </button>
             <div className="collapse navbar-collapse" id="navContent">
                 <ul className="navbar-nav ml-auto">
-                    <li className="nav-item" >
+                    <li className="nav-item ml-3" >
                         <Link className="nunito-font navLink text-white" to="/">Home</Link>
                     </li>
-                    <li className="text-white ml-3 mr-3"> |
-                    </li>
-                    <li className="nav-item">
+                    <li className="nav-item ml-3">
                       {!user.token ?
                       <Link className="nunito-font navLink text-white"
                             to="/signin">Sign in</Link> :

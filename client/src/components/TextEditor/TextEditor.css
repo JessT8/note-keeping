@@ -67,29 +67,20 @@ div.DraftEditor-root{
     margin: 0 auto;
     border-bottom: 2px solid grey;
 }
-.cover {
+.note-image {
   object-fit: cover;
   width: 50%;
-/*  height: 100px;*/
+  display: inline-block;
 }
-/*
-      // const styling = {
-      //   root: {
-      //     fontFamily: '\'Georgia\', serif',
-      //     fontSize: 14,
-      //     margin: '0 auto',
-      //     borderBottom: '2px solid grey',
-      //   },
-      //   editor: {
-      //     borderTop: '1px solid #ddd',
-      //     cursor: 'text',
-      //     fontSize: 16,
-      //     height:'50vh'
-      //   },
-      //   controls: {
-      //     fontFamily: '\'Helvetica\', sans-serif',
-      //     fontSize: 14,
-      //     marginBottom: 10,
-      //     userSelect: 'none',
-      //   },
-      // };*/
+.center
+{
+	display: flex;
+  justify-content: center;
+}
+
+.align-center > div {
+    text-align: center;
+}
+.align-right > div{
+    text-align: right;
+}
