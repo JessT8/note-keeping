@@ -16,20 +16,13 @@ constructor(
 		@GetUser() user: User
 		): Promise<Tag>{
 		const { name } = tagInput;
-		const tag = this.tagRepository.create({
-			name
-		});
+		let tag = await this.tagRepository.findOne({name});
+		if(!tag){
+			tag = this.tagRepository.create({
+				name
+			});
 		return this.tagRepository.save(tag);
-	}
-	async updateTag(
-		tagInput: TagInput,
-		@GetUser() user: User
-		): Promise<Tag>{
-		const { name } = tagInput;
-		const tag = await this.tagRepository.findOne({name});
-		// if(tag){
-
-		// }
-		return this.tagRepository.save(tag);
+		}
+		return tag;
 	}
 }

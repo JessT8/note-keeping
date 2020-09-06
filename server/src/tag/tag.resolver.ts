@@ -13,17 +13,10 @@ export class TagResolver {
 		private tagService: TagService
 		){}
 	@Mutation(returns => TagType)
-	createNote(
+	createTag(
 		@Args("tagInput") tagInput : TagInput,
 		@Context('user') user: User
 	){
 		return this.tagService.createTag(tagInput, user);
-	}
-	@Mutation(returns => TagType)
-	updateTag(
-		@Args("tagInput") tagInput : TagInput,
-		@Context('user') user: User
-	){
-		return this.tagService.updateTag(tagInput, user);
 	}
 }
