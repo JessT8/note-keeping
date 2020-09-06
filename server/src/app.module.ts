@@ -4,6 +4,7 @@ import { typeOrmConfig } from './config/typeorm.config';
 import { NoteModule } from './note/note.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
+import { TagModule } from './tag/tag.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { UserModule } from './user/user.module';
     	context: ({ req }) => ({ headers: req.headers})
     }),
     NoteModule,
-    UserModule
+    UserModule,
+    TagModule
   ],
 })
 export class AppModule {}
