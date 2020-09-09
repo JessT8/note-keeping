@@ -13,10 +13,11 @@ import LandingPage from './landingPage';
 import SignIn from './components/user/signin';
 import SignUp from './components/user/signup';
 import Error from './components/error/error';
-// import NotFound from './notFound';
+import { useApolloClient } from '@apollo/client'
 
 function App() {
-   const [user, setUser] = useState({token:localStorage.getItem('token'), username:localStorage.getItem('user')})
+   const [user, setUser] = useState({token:localStorage.getItem('token'), username:localStorage.getItem('user')});
+   const client = useApolloClient();
   return (
     <Router>
         <nav className="navbar navbar-expand-lg bg-dark navbar-dark" id="navBar">
@@ -37,7 +38,7 @@ function App() {
                          onClick={()=> {
                                 localStorage.clear();
                                 setUser({token:"", username:""});
-                                window.location.href = '/';
+                                client.clearStore();
                             }}>
                             Sign Out</button>
                         }

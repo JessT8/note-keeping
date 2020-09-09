@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { ApolloProvider } from '@apollo/client';
-import { ApolloClient, InMemoryCache} from '@apollo/client';
+import { ApolloProvider , withApollo, ApolloClient, InMemoryCache} from '@apollo/client';
 import { createHttpLink } from "apollo-link-http";
 import { setContext } from '@apollo/client/link/context';
 
@@ -30,11 +29,13 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
+ // const AppWithApollo = withApollo(App);
+
 ReactDOM.render(
   <React.StrictMode>
    <ApolloProvider client={client}>
     <App />
-</ApolloProvider>
+   </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
