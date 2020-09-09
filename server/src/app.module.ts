@@ -5,7 +5,7 @@ import { NoteModule } from './note/note.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { TagModule } from './tag/tag.module';
-
+import { NoteTagModule } from './note-tag/note-tag.module';
 @Module({
   imports: [
  		TypeOrmModule.forRoot(typeOrmConfig),
@@ -15,7 +15,8 @@ import { TagModule } from './tag/tag.module';
     }),
     NoteModule,
     UserModule,
-    TagModule
+    TagModule,
+    NoteTagModule
   ],
 })
 export class AppModule {}
