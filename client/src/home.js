@@ -17,6 +17,10 @@ const NOTES = gql`
             id,
             username
           }
+          tags{
+            id,
+            name
+          }
       }
   }`;
 

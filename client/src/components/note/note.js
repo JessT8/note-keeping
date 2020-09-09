@@ -22,11 +22,11 @@ function Note(props){
                                 </div>
                             </div>
                             <div>
-                                <div className="d-flex justify-content-end note-text--footer bg-white">
-                                    <div className="position-relative text-dark pt-2">
-                                        <i className="fab fa-readme">  View</i>
-                                    </div>
-                                </div>
+                            <div className="note-text--footer pt-2">
+                                {props.note.tags.map(tag=>(
+                                <span className="badge badge-pill badge-secondary mx-1 px-2 py-1">{tag.name}</span>
+                                ))}
+                            </div>
                             </div>
                         </button>
                 {toggle && <NoteModal back={()=>{
