@@ -9,11 +9,11 @@ import { User } from '../user/user.entity';
 @Injectable()
 export class TagService {
 constructor(
-	@InjectRepository(Tag) private tagRepository: Repository<Tag>,
+	@InjectRepository(Tag)
+	private tagRepository: Repository<Tag>,
 	){}
-	async createTag(
+	async getTag(
 		tagInput: TagInput,
-		@GetUser() user: User
 		): Promise<Tag>{
 		const { name } = tagInput;
 		let tag = await this.tagRepository.findOne({name});
@@ -21,7 +21,7 @@ constructor(
 			tag = this.tagRepository.create({
 				name
 			});
-		return this.tagRepository.save(tag);
+			return this.tagRepository.save(tag);
 		}
 		return tag;
 	}

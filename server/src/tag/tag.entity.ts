@@ -1,4 +1,5 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { NoteTag } from '../note-tag/note-tag.entity';
 
 @Entity("tags")
 export class Tag extends BaseEntity{
@@ -8,4 +9,7 @@ export class Tag extends BaseEntity{
 
 	@Column()
 	name:string;
+
+	@OneToMany(type => NoteTag, noteTag => noteTag.note)
+  noteTag: NoteTag[];
 }
