@@ -17,6 +17,4 @@ export class NoteInput {
 	@Field()
 	pin: boolean;
 
- // @Field()
-	// userId: number;
 }

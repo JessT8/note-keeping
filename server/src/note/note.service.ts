@@ -1,23 +1,25 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { InjectRepository} from '@nestjs/typeorm';
 import { Note } from './note.entity';
-import { Repository } from 'typeorm';
+import { Repository, createQueryBuilder, getConnection } from 'typeorm';
 import { NoteInput } from './note.input'
 import { GetUser } from '../user/get-user.decorator';
 import { User } from '../user/user.entity';
-
+import { Tag } from '../tag/tag.entity';
+import { TagInput } from '../tag/tag.input';
+import { NoteTag } from '../note-tag/note-tag.entity';
 @Injectable()
 export class NoteService {
 	constructor(
 	@InjectRepository(Note) private noteRepository: Repository<Note>,
 	){}
 	async getNote(id:number):Promise<Note>{
-		return this.noteRepository.findOne(id, {relations: ['user']})
+		 return await this.noteRepository.findOne({id});
 	}
 	async getNotes():Promise<Note[]>{
 		return this.noteRepository.find({relations: ['user']});
 	}
-async findAll({userId:number}):Promise<Note[]>{
+	async findAll({userId:number}):Promise<Note[]>{
 		return this.noteRepository.find(User);
 		}
 	async createNote(
