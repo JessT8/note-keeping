@@ -31,9 +31,11 @@ export class NoteResolver {
 		return this.noteService.findAll({userId:id});
 	}
 	@Query(returns => [ NoteType ])
-	notes()
+	notes(
+	@Context('user') user: User
+		)
 	{
-		return this.noteService.getNotes();
+		return this.noteService.getNotes(user);
 	}
 	@Mutation(returns => NoteType)
 	createNote(
