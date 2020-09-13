@@ -9,6 +9,7 @@ function Notes(props) {
                            deleteNote={()=>{
                             console.log(note.id);
                             props.deleteNote(note.id)}}
+                            addTag={(tag)=>props.addTag(note.id,tag)}
                     />
                 </React.Fragment>);
         });

@@ -71,19 +71,6 @@ $star: "\2605";
 	  transform: translate3d(0vw, 0, 0);
 	  transition: all 5s ease-in-out;
 	}
-	.close {
-	  position: absolute;
-	  top: 20px;
-	  right: 30px;
-	  transition: all 200ms;
-	  font-size: 30px;
-	  font-weight: bold;
-	  cursor:pointer;
-	  color: #333;
-	}
-	.close:hover {
-	  color: #06D85F;
-	}
 	.back {
 	  position: absolute;
 	  top: 5px;
@@ -189,21 +176,6 @@ $star: "\2605";
 //   border-image: linear-gradient(to right, $color-brand, white);
 //   border-image-slice: 1;
 // }
-.noteBtn{
-	padding:5px 10px 5px 10px;
-	margin-bottom: 20px;
-	cursor: pointer;
-	font-size:1rem;
-	border: 1px solid black;
-	border-radius:10%;
-	&:hover{
-		background-color:black;
-		color:white;
-	}
-	&:focus{
-		outline: none;
-	}
-}
 }
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500);

@@ -25,6 +25,12 @@ const DELETE_NOTE = gql`
       deleteNote(
         id:$id
         )}`;
+const ADD_TAG = gql`
+   mutation addTagsToNote($noteId: Float!, $tagInput: TagInput!){
+      addTagsToNote(
+        noteId:$noteId,
+        tagInput:$tagInput
+        )}`;
 
 function Home() {
   const [toggle, setToggle] = useState(false);
@@ -35,6 +41,14 @@ function Home() {
     onCompleted: (data) => {
         if(data.deleteNote)
             console.log('Successfully deleted')
+    },
+    onError:(err)=>{
+        console.log(err)
+    }
+    })
+  const [ addTagToNote ] = useMutation(ADD_TAG, {
+    onCompleted: (data) => {
+            console.log('Successfully added')
     },
     onError:(err)=>{
         console.log(err)
@@ -77,6 +91,18 @@ function Home() {
     const n = notes.filter(note => note.id !== i)
     setNotes(n);
   }
+  const addTag = (i, tag) => {
+    const noteId = parseInt(i,10);
+    addTagToNote({variables:{noteId, tagInput:{name:tag}}})
+    const n = notes.map(note=> {
+        if (note.id === i) {
+            const copiedNote = {...note, tags:[...note.tags, {name:tag}]};
+            return copiedNote;
+        }
+        return note;
+    });
+    setNotes(n);
+  }
   if(error){
     return <Redirect to='/error'/>
   }
@@ -102,6 +128,7 @@ function Home() {
                     displayMessage={(msg)=>{
                                 setDisplayMessage(msg);
                           }}
+                    addTag={(i, tag)=>addTag(i, tag)}
                     />
     </div>
   );
