@@ -13,10 +13,6 @@ const NOTES = gql`
           title,
           description,
           pin,
-          user{
-            id,
-            username
-          }
           tags{
             id,
             name
@@ -34,7 +30,6 @@ function Home() {
   const [toggle, setToggle] = useState(false);
   const [notes, setNotes] = useState([]);
   const [displayMessage, setDisplayMessage] = useState("");
-  const [hasError, setHasError] = useState(false);
   const { loading, error, data } = useQuery(NOTES);
   const [ deleteNote ]= useMutation(DELETE_NOTE, {
     onCompleted: (data) => {
@@ -43,7 +38,6 @@ function Home() {
     },
     onError:(err)=>{
         console.log(err)
-        setHasError(true);
     }
     })
   useEffect(()=>{
@@ -94,7 +88,7 @@ function Home() {
         </header>
       {toggle && <AddForm close={()=>{setToggle(false)}}
                           setNotes={(values)=>{
-                          setNotes([...notes,values]); }}
+                          setNotes([ values, ...notes ]); }}
                           displayMessage={(msg)=>{
                                 setDisplayMessage(msg);
                           }}

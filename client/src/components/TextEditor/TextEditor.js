@@ -127,8 +127,8 @@ export default class TextEditor extends React.Component {
         if( type === 'clear' ){
             //for clearing
             const properties = ['fontStyle', 'fontWeight', 'textDecoration' ];
-            let newEditorState = editorState;
-            properties.map(p=>{
+           let newEditorState = editorState;
+            properties.forEach(p =>{
                 newEditorState = styles[p].remove(newEditorState);
             });
             this.clear(newEditorState);

@@ -1,10 +1,10 @@
 import React from "react";
-import {Editor, EditorState, Modifier, RichUtils, ContentState, convertToRaw, convertFromRaw, CompositeDecorator}from 'draft-js'
+import {Editor, EditorState, convertToRaw, convertFromRaw }from 'draft-js'
 import createStyles from 'draft-js-custom-styles';
 import {decorator } from './LinkDecorator';
 import MediaBlock from './MediaBlock';
 
-const {styles, customStyleFn} = createStyles(['font-size', 'font-style', 'font-weight', 'text-decoration'])
+const {customStyleFn} = createStyles(['font-size', 'font-style', 'font-weight', 'text-decoration'])
 
 class TextConverter extends React.Component {
     constructor(props) {

@@ -320,7 +320,7 @@ h2{
    &--footer {
     font-size: $font-size-md;
     border-top: 1px solid $color-brand;
-    text-align: left;
+    text-align: right;
   }
 }
 .details{
@@ -347,13 +347,6 @@ h2{
     // transform:translate(0, -8px);
      border-color: darken($color-light, 15%);
   }
-}
-
-.note-label { transition: all 100ms ease-in-out; }
-
-.note-label:hover{
-	border-color: $color-brand;
-	transform: scale(1.02);
 }
 
 textarea{
@@ -402,9 +395,11 @@ textarea{
   color: #069;
   cursor: pointer;
 }
-.view-button{
+.view-button, .option-btn{
 	background-color: transparent;
 	cursor: pointer;
+	display: inline-block;
+	position: relative;
 	i{
 		font-size: 1.2rem;
 	}
@@ -413,6 +408,11 @@ textarea{
 			color:$color-brand !important;
 		}
  	}
+ }
+ .option-btn{
+ 	z-index: 1;
+   display: inline-block;
+
  }
 @include media-breakpoint-up(xs) {
   .error-font {

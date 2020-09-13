@@ -18,7 +18,7 @@ function AddForm(props) {
     onCompleted: (data) => {
         if(data){
             values.id = data.createNote.id
-            props.setNotes( values);
+            props.setNotes( values );
         }
     },
     onError:(err)=>{
@@ -69,7 +69,6 @@ function AddForm(props) {
                             <button className="noteBtn"
                                     type="button"
                                     onClick={ ()=>{
-
                                     if(values.title && values.description){
                                        setValues({title:"",description:""});
                                        addNote({variables:{ noteInput: { title: values.title, description: values.description , pin:values.pin} }})

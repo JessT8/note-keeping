@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { ApolloProvider , withApollo, ApolloClient, InMemoryCache} from '@apollo/client';
+import { ApolloProvider , ApolloClient, InMemoryCache} from '@apollo/client';
 import { createHttpLink } from "apollo-link-http";
 import { setContext } from '@apollo/client/link/context';
 

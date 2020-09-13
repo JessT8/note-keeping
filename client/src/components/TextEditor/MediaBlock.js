@@ -2,7 +2,7 @@ import React from 'react';
 const Image = props => {
  if (props.src) {
   return <div className='center'>
-  <img src={props.src} className="note-image"/>
+    <img src={props.src} className="note-image" alt="img-link"/>
   </div>
  }
  return null;

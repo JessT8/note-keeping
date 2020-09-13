@@ -1,0 +1,74 @@
+$primary: #11998e;
+$secondary: #38ef7d;
+$black: #000000;
+$gray: #9b9b9b;
+$label-size: 60px;
+$label-margin: 16px;
+$label-before-size: 40px;
+$color-light: white;
+$color-brand: #2196F3;
+$color-font: rgba(black, .54);
+$font-size-md: 14px;
+$font-size-lg: 24px;
+$font-size-xl: 54px;
+$font-light: 300;
+$font-normal: 400;
+$font-bold: 500;
+$star: "\2605";
+
+.note-label { transition: all 100ms ease-in-out; }
+
+.note-label:hover{
+	border-color: $color-brand;
+	transform: scale(1.02);
+}
+
+.note-label {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  width: 100%;
+  padding: $label-size/2 $label-size;
+  font-size: $font-size-lg;
+  font-weight: $font-normal;
+  margin: $label-margin 0;
+  border: 1px solid darken($color-light, 15%);
+  border-radius:2px;
+  box-shadow: 3px 3px 5px 6px #ccc;
+  z-index: 2;
+  &:before {
+    position: absolute;
+    top: 75%;
+    //left: -20px;
+    left: 0px;
+    width: $label-before-size;
+    height: $label-before-size;
+    opacity: 0;
+    font-size: 25px;
+    content: $star;
+    color: $color-brand;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 24px;
+    border-radius:50%;
+    transform: translate(0%, -50%);
+    transition:all .4s ease;
+  }
+}
+.note-label-btn{
+  	border:0;
+  	background: transparent;
+  	top:0;
+  	font-size: 1.2rem;
+  	cursor: pointer;
+  	color:black;
+  	animation-fill-mode: forwards;
+  	&:focus{
+			outline: none;
+		}
+		 &:hover{
+			outline: none;
+			color: black;
+			text-decoration: none;
+		}
+}
