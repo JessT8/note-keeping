@@ -5,38 +5,7 @@ import Notes from "./components/note/notes"
 import './styles.scss';
 import { useQuery, gql, useMutation} from '@apollo/client';
 import { Redirect } from 'react-router-dom';
-
-const NOTES = gql`
-      query{
-        notes{
-          id,
-          title,
-          description,
-          pin,
-          tags{
-            id,
-            name
-          }
-      }
-  }`;
-
-const DELETE_NOTE = gql`
-   mutation deleteNote($id: Float!){
-      deleteNote(
-        id:$id
-        )}`;
-const ADD_TAG = gql`
-   mutation addTagsToNote($noteId: Float!, $tagInput: TagInput!){
-      addTagsToNote(
-        noteId:$noteId,
-        tagInput:$tagInput
-        )}`;
-const REMOVE_TAG = gql`
-   mutation removeTagFromNote($noteId: Float!, $tagInput: TagInput!){
-      removeTagFromNote(
-        noteId:$noteId,
-        tagInput:$tagInput
-        )}`;
+import { NOTES, ADD_TAG, DELETE_NOTE, REMOVE_TAG } from './query/query';
 
 function Home() {
   const [toggle, setToggle] = useState(false);
