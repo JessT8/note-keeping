@@ -32,3 +32,25 @@
 .close:hover {
 	color: #2196F3;
 }
+
+
+.badge a {
+  color: white;
+  cursor: pointer;
+  opacity: 0.8;
+  margin: 0 0 0 .3em;
+  &:hover{
+  	 color: white;
+  	 text-decoration: none;
+  	 opacity: 1.0
+  }
+}
+
+.badge .remove {
+  vertical-align: bottom;
+  top: 0;
+}
+.badge a .glyphicon-white {
+  color: #fff;
+  margin-bottom: 2px;
+}

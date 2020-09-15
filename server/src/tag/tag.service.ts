@@ -25,4 +25,23 @@ constructor(
 		}
 		return tag;
 	}
+	async findTag(
+		tagInput: TagInput,
+		): Promise<Tag>{
+		const { name } = tagInput;
+		return await this.tagRepository.findOne({name});
+	}
+	async deleteTag(
+		tagInput: TagInput,
+		): Promise<Boolean>{
+		try{
+		const { name } = tagInput;
+		 let tag = await this.tagRepository.findOne({name});
+		 await this.tagRepository.delete(tag.id);
+		 return true;
+		 }catch(err){
+		 		console.log(err)
+			 return false;
+		}
+	}
 }

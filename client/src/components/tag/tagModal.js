@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './tagModal.scss'
+
 function TagModal(props) {
     const [ tagValue, setTagValue ] = useState('');
     return  <div className="note--details">
@@ -28,7 +29,10 @@ function TagModal(props) {
                             >Add Tags</button>
                         <div className='mt-3 d-flex flex-row flex-wrap'>
                         {props.tags.map((tag,i)=>(
-                           <span key={i} className="badge badge-secondary px-2 py-1 text-truncate mr-1 my-2 ">{tag.name}</span>
+                           <span key={i} className="badge badge-secondary px-2 py-1 text-truncate mr-1 my-2 "><span>{tag.name}</span><a href="!#" onClick={(e)=>{
+                                e.preventDefault();
+                                props.removeTag(tag);
+                           }} className="pl-1">&#10005;</a></span>
                         ))
                         }
                     </div>

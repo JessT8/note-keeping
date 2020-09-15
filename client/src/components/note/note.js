@@ -25,7 +25,7 @@ function Note(props){
                         <a className="dropdown-item" href="!#" onClick={(e)=>{
                             e.preventDefault();
                             setAddTagToggle(true);
-                        }}>Add Tags</a>
+                        }}>Tags</a>
                       </div>
                       <a id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" href="!#"
                           className="pr-auto"
@@ -49,6 +49,7 @@ function Note(props){
                 {addTagToggle && <TagModal close={()=>{setAddTagToggle(false)}}
                     tags={props.note.tags}
                     addTag={(tag)=>props.addTag(tag)}
+                    removeTag={(tag)=>{props.removeTag(tag)}}
                     />
                 }
             </div>

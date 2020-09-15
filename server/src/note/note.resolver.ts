@@ -8,6 +8,7 @@ import { AuthGuard } from '../user/auth.guard';
 import { User } from '../user/user.entity';
 import { TagService } from '../tag/tag.service';
 import { TagInput } from '../tag/tag.input';
+import { TagType } from '../tag/tag.type';
 import { Tag } from '../tag/tag.entity';
 import { NoteTagService } from '../note-tag/note-tag.service';
 
@@ -70,6 +71,31 @@ export class NoteResolver {
 		const tag =await this.tagService.getTag(tagInput);
 		const note = await this.noteService.getNote(noteId);
 		return this.noteTagService.addTagToNote({note, tag});
+	}
+	@Mutation(returns => Boolean )
+	async removeTagFromNote(
+		@Args("tagInput")
+		tagInput : TagInput,
+		@Args("noteId")
+		noteId : number,
+		@Context('user') user: User
+	){
+		const tag =await this.tagService.findTag(tagInput);
+		const note = await this.noteService.getNote(noteId);
+		const deleteFlag = await this.noteTagService.removeTagFromNote({note, tag});
+		// const tagFound =await this.tagService.findTag(tagInput);
+	//	if ( deleteFlag){
+			const success = await this.tagService.deleteTag(tagInput);
+		//}
+		return success;
+	}
+	@Mutation(returns=> Boolean)
+	async testRemove(
+		@Args("tagInput")
+		tagInput : TagInput,){
+		return await this.tagService.deleteTag(tagInput);
+		// return true;
+		// return false;
 	}
 	@ResolveField()
   async tags(@Parent() noteType: NoteType) {

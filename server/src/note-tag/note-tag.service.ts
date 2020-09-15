@@ -27,6 +27,22 @@ export class NoteTagService {
 			return false;
 		}
 	}
+	async removeTagFromNote(
+		noteTagInput: NoteTagInput
+		): Promise<boolean>{
+		try{
+			const { note, tag } = noteTagInput;
+		  const noteTag = await this.noteTagRepository.findOne({
+				  note,
+				  tag
+			});
+			await this.noteTagRepository.delete({id:noteTag.id, note: note, tag: tag});
+			return true;
+		}catch(err){
+			console.log(err);
+			return false;
+		}
+	}
 	async getTags(note: Note) : Promise<Tag[]>{
 		const tags = await this.noteTagRepository.find({ where:{note}, relations: ['tag'] });
 		return tags.map(n=>n.tag)

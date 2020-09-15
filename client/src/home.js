@@ -31,6 +31,12 @@ const ADD_TAG = gql`
         noteId:$noteId,
         tagInput:$tagInput
         )}`;
+const REMOVE_TAG = gql`
+   mutation removeTagFromNote($noteId: Float!, $tagInput: TagInput!){
+      removeTagFromNote(
+        noteId:$noteId,
+        tagInput:$tagInput
+        )}`;
 
 function Home() {
   const [toggle, setToggle] = useState(false);
@@ -49,6 +55,14 @@ function Home() {
   const [ addTagToNote ] = useMutation(ADD_TAG, {
     onCompleted: (data) => {
             console.log('Successfully added')
+    },
+    onError:(err)=>{
+        console.log(err)
+    }
+    })
+    const [ removeTagFromNote ] = useMutation(REMOVE_TAG, {
+    onCompleted: (data) => {
+            console.log('Successfully remove')
     },
     onError:(err)=>{
         console.log(err)
@@ -103,6 +117,19 @@ function Home() {
     });
     setNotes(n);
   }
+  const removeTag = ( id, tag) => {
+    const noteId = parseInt(id,10);
+    removeTagFromNote({variables:{noteId, tagInput:{name:tag.name}}})
+    const n = notes.map(note => {
+        if( note.id === id ){
+            const updatedTag = note.tags.filter(currentTag => currentTag.name !== tag.name );
+            const updatedNote = {...note, tags:updatedTag};
+            return updatedNote;
+        }
+        return note;
+    })
+    setNotes(n);
+  }
   if(error){
     return <Redirect to='/error'/>
   }
@@ -129,6 +156,7 @@ function Home() {
                                 setDisplayMessage(msg);
                           }}
                     addTag={(i, tag)=>addTag(i, tag)}
+                    removeTag={(id, tag)=>removeTag(id,tag)}
                     />
     </div>
   );
