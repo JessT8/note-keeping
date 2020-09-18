@@ -3,13 +3,18 @@ import './App.css';
 import AddForm from "./addForm";
 import Notes from "./components/note/notes"
 import './styles.scss';
-import { useQuery, gql, useMutation} from '@apollo/client';
+import { useQuery, useMutation} from '@apollo/client';
 import { Redirect } from 'react-router-dom';
 import { NOTES, ADD_TAG, DELETE_NOTE, REMOVE_TAG } from './query/query';
 import FilterOptionIcon from './components/icon/filterOptionIcon.svg'
+import SlideDrawer from './components/slideDrawer/slideDrawer'
+
 function Home() {
   const [toggle, setToggle] = useState(false);
   const [notes, setNotes] = useState([]);
+  const [filterNotes, setFilterNotes] = useState([]);
+  const [filterTag, setFilterTag] = useState('');
+  const [toggleDrawer, setToggleDrawer] = useState(false);
   const [displayMessage, setDisplayMessage] = useState("");
   const { loading, error, data } = useQuery(NOTES);
   const [ deleteNote ]= useMutation(DELETE_NOTE, {
@@ -41,12 +46,21 @@ function Home() {
     if (loading)
         setDisplayMessage('loading');
     else if(error)
-       setDisplayMessage('Error :(');
+      console.log(error)
     else if(data){
        setDisplayMessage('');
        setNotes(data.notes);
     }
-},[loading, data,error])
+},[loading, data, error])
+  useEffect(()=>{
+    if(filterTag!==''){
+        const filteredNotes = notes.filter((note)=>
+            note.tags.some(t => t.name === filterTag));
+        setFilterNotes(filteredNotes);
+    }else{
+        setFilterNotes(notes);
+    }
+  }, [filterTag, notes])
 
   const favorite=(id)=>{
     const n = notes.map(note=> {
@@ -102,13 +116,14 @@ function Home() {
   if(error){
     return <Redirect to='/error'/>
   }
+
   return (
-    <>
+    <div className="mt-5">
+        <SlideDrawer show={toggleDrawer} notes={notes} filterNotes={(tag)=>{setFilterTag(tag)}}/>
         <div className="gear">
-        <button className="gear-btn ml-5 mt-4" onClick={()=>console.log('hello')}><img src={FilterOptionIcon} alt="gear"/></button>
+        <button className="gear-btn ml-5 mt-4" onClick={()=>{setToggleDrawer(true)}}><img src={FilterOptionIcon} alt="gear"/></button>
         </div>
     <div className="App-main">
-
         <header className="pt-5 pb-2">
             <h1 className="nunito-font">My notes</h1>
             <button className="toggleAdd" onClick={()=>{setToggle(true)}}>+</button>
@@ -122,7 +137,7 @@ function Home() {
                           />
       }
       {displayMessage}
-      <Notes notes={notes}
+      <Notes notes={filterNotes}
                     favorite={(e)=>{favorite(e)}}
                     updateNote={(values)=>{ updateNote(values)}}
                     deleteNote={(i)=>{removeNote(i)}}
@@ -133,7 +148,7 @@ function Home() {
                     removeTag={(id, tag)=>removeTag(id,tag)}
                     />
     </div>
-    </>
+    </div>
   );
 }
 

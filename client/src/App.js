@@ -20,7 +20,7 @@ function App() {
    const client = useApolloClient();
   return (
     <Router>
-        <nav className="navbar navbar-expand-lg bg-dark navbar-dark" id="navBar">
+        <nav className="fixed-top navbar navbar-expand-lg bg-dark navbar-dark" id="navBar">
             <Link className="navbar-brand cinzel-font pl-5" to="/">Notekeeper</Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent" aria-controls="navContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
