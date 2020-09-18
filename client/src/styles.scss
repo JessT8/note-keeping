@@ -384,7 +384,29 @@ textarea{
  .option-btn{
  	z-index: 1;
    display: inline-block;
+ }
+ .gear{
+ 	position:fixed;
+ 	z-index: 6;
+ 	left: 10 !important;
+ 	.gear-btn{
+ 	border-radius:50%;
+ 	background-color: $color-brand;
+	border: 1px solid white;
+	padding:1px 6px 3px 6px;
+ 		&:hover{
+ 			img{
+ 			transition-duration: 1s;
+			transition-property: transform;
+ 			transform: rotate(91deg);
+ 			}
+ 		}
+ 		&:active, &:focus{
+ 			text-decoration: none;
+ 			    outline:none;
+ 		}
 
+ 	}
  }
 @include media-breakpoint-up(xs) {
   .error-font {
@@ -408,6 +430,7 @@ textarea{
     font-size: 3rem;
   }
 }
+
 
 // $breakpoints: (phone: 640px,
 //                tablet: 768px,

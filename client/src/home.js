@@ -6,7 +6,7 @@ import './styles.scss';
 import { useQuery, gql, useMutation} from '@apollo/client';
 import { Redirect } from 'react-router-dom';
 import { NOTES, ADD_TAG, DELETE_NOTE, REMOVE_TAG } from './query/query';
-
+import FilterOptionIcon from './components/icon/filterOptionIcon.svg'
 function Home() {
   const [toggle, setToggle] = useState(false);
   const [notes, setNotes] = useState([]);
@@ -103,7 +103,12 @@ function Home() {
     return <Redirect to='/error'/>
   }
   return (
+    <>
+        <div className="gear">
+        <button className="gear-btn ml-5 mt-4" onClick={()=>console.log('hello')}><img src={FilterOptionIcon} alt="gear"/></button>
+        </div>
     <div className="App-main">
+
         <header className="pt-5 pb-2">
             <h1 className="nunito-font">My notes</h1>
             <button className="toggleAdd" onClick={()=>{setToggle(true)}}>+</button>
@@ -128,6 +133,7 @@ function Home() {
                     removeTag={(id, tag)=>removeTag(id,tag)}
                     />
     </div>
+    </>
   );
 }
 
