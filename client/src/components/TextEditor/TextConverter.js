@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useEffect, useState}from "react";
 import {Editor, EditorState, convertToRaw, convertFromRaw }from 'draft-js'
 import createStyles from 'draft-js-custom-styles';
 import {decorator } from './LinkDecorator';
@@ -6,14 +6,10 @@ import MediaBlock from './MediaBlock';
 
 const {customStyleFn} = createStyles(['font-size', 'font-style', 'font-weight', 'text-decoration'])
 
-class TextConverter extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state={
-         editorState: EditorState.createEmpty()
-        }
-    }
-    getText(editorState){
+function TextConverter(props){
+    const [ editorState, setEditorState ] = useState(EditorState.createEmpty());
+
+    function getText(){
        const blocks = convertToRaw(editorState.getCurrentContent()).blocks;
        const mappedBlocks = blocks.map(
           block => (!block.text.trim() && "\n") || block.text
@@ -22,12 +18,9 @@ class TextConverter extends React.Component {
         let newText = "";
         for (let i = 0; i < mappedBlocks.length; i++) {
           const block = mappedBlocks[i];
-
-          // handle last block
           if (i === mappedBlocks.length - 1) {
             newText += block;
           } else {
-            // otherwise we join with \n, except if the block is already a \n
             if (block === "\n") newText += block;
             else newText += block + "\n";
           }
@@ -36,13 +29,14 @@ class TextConverter extends React.Component {
         const firstLine = lines[0].trim() + '...';
         return firstLine;
     }
-    componentDidMount(){
-        const data = JSON.parse(JSON.parse(this.props.description));
+    useEffect(()=>{
+        const data = JSON.parse(JSON.parse(props.description));
         const contentState = convertFromRaw(data);
         let editorState = EditorState.createWithContent(contentState, decorator);
-        this.setState({ editorState });
-    }
-    blockStyleFn(block) {
+        setEditorState(editorState);
+    },[props.description]);
+
+    function blockStyleFn(block) {
         switch (block.getType()) {
             case 'TEXT-CENTER':
                 return 'align-center';
@@ -52,13 +46,11 @@ class TextConverter extends React.Component {
                 return null;
         }
     }
-  render() {
     return (
       <div>
-        {this.props.format ? <Editor editorState={this.state.editorState} readOnly={true}  customStyleFn={customStyleFn} blockRendererFn={MediaBlock} blockStyleFn={this.blockStyleFn}/> : this.getText(this.state.editorState)}
+        {props.format ? <Editor editorState={editorState} readOnly={true}  customStyleFn={customStyleFn} blockRendererFn={MediaBlock} blockStyleFn={blockStyleFn}/> : getText()}
       </div>
     );
-  }
 }
 
 export default TextConverter;
