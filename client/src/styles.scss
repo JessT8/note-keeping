@@ -67,6 +67,7 @@ $star: "\2605";
     right: 0;
     z-index: 10;
 	  padding: 25px;
+	  margin-top:50px;
 	  background: #fff;
 	  transform: translate3d(0vw, 0, 0);
 	  transition: all 5s ease-in-out;
@@ -386,20 +387,15 @@ textarea{
    display: inline-block;
  }
  .gear{
- 	position:fixed;
  	z-index: 6;
  	left: 10 !important;
  	.gear-btn{
- 	border-radius:50%;
- 	background-color: $color-brand;
-	border: 1px solid white;
+ 	border-radius:5%;
+ 	background-color: white;
+	border: 1px solid  #91D6FF;
 	padding:1px 6px 3px 6px;
  		&:hover{
- 			img{
- 			transition-duration: 1s;
-			transition-property: transform;
- 			transform: rotate(91deg);
- 			}
+ 			background-color: #91D6FF;
  		}
  		&:active, &:focus{
  			text-decoration: none;

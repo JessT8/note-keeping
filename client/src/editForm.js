@@ -21,7 +21,7 @@ function EditForm(props) {
         }
     });
     return  <div className="EditForm">
-                <div className="popup">
+                <div className="popup mt-5 pt-5">
                     <button className="back button-link"
                        onClick={()=>{props.showEdit()}}>
                         &larr;

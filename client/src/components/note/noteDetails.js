@@ -14,7 +14,6 @@ function NoteDetails(props) {
                         </div>
                         <div className="row">
                             <div className="col d-flex justify-content-center mt-">
-
                                 <button className="button-link mx-2"
                                         onClick={()=>{
                                             props.showEdit();

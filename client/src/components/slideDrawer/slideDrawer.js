@@ -1,10 +1,6 @@
 import React from 'react'
 import './slideDrawer.css'
 function SlideDrawer(props){
-      let drawerClasses = 'side-drawer'
-       if(props.show) {
-          drawerClasses = 'side-drawer open'
-       }
        let tags = []
        props.notes.forEach((note)=>{
             tags = tags.concat(note.tags);
@@ -18,17 +14,24 @@ function SlideDrawer(props){
                 }
                 return str1 > str2 ? 1 : (str1 < str2 ? -1 : 0);
         });
-
        return(
-          <div className={drawerClasses}>
-             <h4 className="mt-5 ml-3 mb-3">Tags</h4>
+          <>
+          {props.show ?
+            <div className="side-drawer col-3">
+            <hr/>
+             <a href="\\" className="tag-filter" onClick={(e)=>{
+                    e.preventDefault();
+                    props.filterNotes("");}}>
+                    <h4 className="ml-3 mb-3">All</h4>
+            </a>
+             <h4 className="ml-3 mb-3">Tags</h4>
              {filteredTags.map((tag , i) =>(
                 <a key={i} href="\\" className="tag-filter" onClick={(e)=>{
                     e.preventDefault();
                     props.filterNotes(tag.name);
                 }}><p className="ml-3 mb-2" >{tag.name}</p></a>
-             ))}
-          </div>)
+             ))}</div>:''}
+          </>)
 }
 
 export default SlideDrawer;

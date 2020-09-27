@@ -74,6 +74,7 @@ function Home() {
   }
 
   const updateNote = (values)=>{
+    console.log(values);
      const n = notes.map(note=> {
         if (note.id === values.id) {
             return values;
@@ -116,15 +117,15 @@ function Home() {
   if(error){
     return <Redirect to='/error'/>
   }
-
+  let noteColClass = "col"
+  if(toggleDrawer) {
+           noteColClass = 'col-9'
+    }
   return (
     <div className="mt-5">
-        <SlideDrawer show={toggleDrawer} notes={notes} filterNotes={(tag)=>{setFilterTag(tag)}}/>
-        <div className="gear">
-        <button className="gear-btn ml-5 mt-4" onClick={()=>{setToggleDrawer(true)}}><img src={FilterOptionIcon} alt="gear"/></button>
-        </div>
+    <div className="container-fluid">
     <div className="App-main">
-        <header className="pt-5 pb-2">
+        <header className="pt-5">
             <h1 className="nunito-font">My notes</h1>
             <button className="toggleAdd" onClick={()=>{setToggle(true)}}>+</button>
         </header>
@@ -136,7 +137,13 @@ function Home() {
                           }}
                           />
       }
-      {displayMessage}
+     <div className="gear">
+        <button className="gear-btn ml-5" onClick={()=>{setToggleDrawer(!toggleDrawer)}}><img src={FilterOptionIcon} alt="gear"/><span className="mx-1">Filter</span></button>
+        </div>
+      <div className="container-fluid">
+      <div className="row">
+         <SlideDrawer show={toggleDrawer} notes={notes} filterNotes={(tag)=>{setFilterTag(tag)}} close={()=>setToggleDrawer(false)}/>
+     <div className={noteColClass}>
       <Notes notes={filterNotes}
                     favorite={(e)=>{favorite(e)}}
                     updateNote={(values)=>{ updateNote(values)}}
@@ -147,6 +154,10 @@ function Home() {
                     addTag={(i, tag)=>addTag(i, tag)}
                     removeTag={(id, tag)=>removeTag(id,tag)}
                     />
+                    </div>
+    </div>
+    </div>
+    </div>
     </div>
     </div>
   );
