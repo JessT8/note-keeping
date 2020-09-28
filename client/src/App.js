@@ -15,7 +15,7 @@ import SignUp from './components/user/signup';
 import Error from './components/error/error';
 import { useApolloClient } from '@apollo/client'
 
-function App() {
+function App(props) {
    const [user, setUser] = useState({token:localStorage.getItem('token'), username:localStorage.getItem('user')});
    const client = useApolloClient();
   return (
@@ -48,7 +48,7 @@ function App() {
         </nav>
             <Switch>
                 <Route exact path="/">
-                    { user.token ? <Home />  : <LandingPage/> }
+                    { user.token ? <Home props={props} client={client}/>  : <LandingPage/> }
                 </Route>
                 <Route exact path="/signin">
                  {!user.token ?
@@ -69,7 +69,6 @@ function App() {
     </Router>
   );
 }
-
 
 
 export default App;
