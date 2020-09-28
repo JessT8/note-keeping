@@ -2,39 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { ApolloProvider , ApolloClient, InMemoryCache} from '@apollo/client';
-import { createHttpLink } from "apollo-link-http";
-import { setContext } from '@apollo/client/link/context';
+import { ApolloProvider } from '@apollo/client';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk'
+import { Provider } from 'react-redux';
+import rootReducer  from "./store/reducers/rootReducer";
+import { client } from './apolloClient';
 
-const link = createHttpLink({ uri: process.env.SERVER_URI});
-
-// const client = new ApolloClient({
-//   link,
-//   cache: new InMemoryCache()
-// });
-const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('token');
-  // return the headers to the context so httpLink can read them\
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : "",
-    }
-  }
-});
-
-const client = new ApolloClient({
-  link: authLink.concat(link),
-  cache: new InMemoryCache()
-});
-
- // const AppWithApollo = withApollo(App);
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <React.StrictMode>
    <ApolloProvider client={client}>
+   <Provider store={store}>
     <App />
+    </Provider>
    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')

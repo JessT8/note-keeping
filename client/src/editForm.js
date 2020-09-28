@@ -2,17 +2,7 @@ import React, { useState } from "react";
 import { gql, useMutation } from '@apollo/client';
 import  TextEditor  from './components/TextEditor/TextEditor';
 import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-
-
-const UPDATE_NOTE = gql`
-   mutation updateNote($id: Float!, $noteInput:NoteInput!){
-      updateNote(id:$id, noteInput:$noteInput){
-        id,
-        description
-      }
-  }
-`;
-
+import { updateNote } from './store/actions/noteAction';
 function EditForm(props) {
     const [values, setValues] = useState(props.values);
     const [ updateNote ]= useMutation(UPDATE_NOTE, {

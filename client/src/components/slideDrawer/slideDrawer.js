@@ -14,6 +14,7 @@ function SlideDrawer(props){
                 }
                 return str1 > str2 ? 1 : (str1 < str2 ? -1 : 0);
         });
+
        return(
           <>
           {props.show ?

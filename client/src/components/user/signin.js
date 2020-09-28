@@ -9,7 +9,7 @@ const SIGN_IN = gql`query SignIn($userInput: UserInput!){
 
 function SignIn(props) {
     const [values, setValues] = useState({username:'', password:''});
-     const [error, setError] = useState("");
+    const [error, setError] = useState("");
     const history = useHistory();
     const  [getUser]= useLazyQuery(SIGN_IN, {
         onCompleted:(data)=>{

@@ -1,35 +1,15 @@
 import React, { useState , useRef } from "react";
-import { gql, useMutation } from '@apollo/client';
 import TextEditor from './components/TextEditor/TextEditor'
-const ADD_NOTE = gql`
-   mutation createNote($noteInput:NoteInput!){
-      createNote(
-        noteInput:$noteInput
-        ){
-        id
-    }
-  }
-`;
+import { useDispatch } from 'react-redux'
+import { addNote } from './store/actions/noteAction';
 
 function AddForm(props) {
     const [values, setValues] = useState({id:"", title:"", description:"", pin:false });
+    const dispatch = useDispatch();
     const inputRef = useRef([]);
-    const [addNote] = useMutation(ADD_NOTE, {
-    onCompleted: (data) => {
-        if(data){
-            values.id = data.createNote.id
-            props.setNotes( values );
-        }
-    },
-    onError:(err)=>{
-        console.log(err)
-        props.displayMessage('Opps... Something went wrong '+ err);
-    }
-    });
     inputRef.current = [];
 
    const addToRefs = el => {
-   //display errors
      if (el && !inputRef.current.includes(el)) {
        inputRef.current.push(el);
      }
@@ -71,7 +51,7 @@ function AddForm(props) {
                                     onClick={ ()=>{
                                     if(values.title && values.description){
                                        setValues({title:"",description:""});
-                                       addNote({variables:{ noteInput: { title: values.title, description: values.description , pin:values.pin} }})
+                                       dispatch(addNote({noteInput: { title: values.title, description: values.description , pin:values.pin} }));
                                         props.close();
                                     }else{
                                         !values.title ? inputRef.current[0].focus(): inputRef.current[1].focus();
