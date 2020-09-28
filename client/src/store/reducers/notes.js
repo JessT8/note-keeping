@@ -9,13 +9,25 @@ export default function noteReducer(state = initialState, action){
     switch(action.type){
         case actionTypes.LOADING:
             return noteActions.loading(state);
-        case actionTypes.UPDATE_NOTE:
+        case actionTypes.GET_NOTES:
+            return ({...state} = action.payload);
+        case actionTypes.ADD_NOTE:
             return ({...state ={
                     notes:[...state.notes, action.payload],
                     isLoading:false}
                 });
-        case actionTypes.GET_NOTES:
-            return ({...state} = action.payload);
+        case actionTypes.UPDATE_NOTE:
+            let notes =  state.notes.map((note) => {
+                if(note.id === action.payload.id){
+                    return ({...note}=action.payload);
+                }
+                return note;
+            });
+            return {
+                ...state,
+                notes,
+                isLoading:false
+            }
         case actionTypes.DELETE_NOTE:
             return {
                 ...state,

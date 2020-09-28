@@ -41,11 +41,12 @@ export const updateNote = (noteInput) => async (dispatch)=>{
     });
     client.mutate({
         mutation: queries.UPDATE_NOTE,
-        variables: noteInput
-    }).then(results=>{
+        variables: noteInput.variables
+    }).then(()=>{
+        let id = noteInput.variables.id.toString();
         dispatch({
             type:actions.UPDATE_NOTE,
-            payload: {id:results.data.createNote.id, ...noteInput.noteInput, tags:[], pin:false}
+            payload: {id, ...noteInput.variables.noteInput}
       });
     });
 }

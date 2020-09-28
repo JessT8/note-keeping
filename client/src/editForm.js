@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-import { gql, useMutation } from '@apollo/client';
 import  TextEditor  from './components/TextEditor/TextEditor';
 import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { updateNote } from './store/actions/noteAction';
+import { useDispatch } from 'react-redux';
+
 function EditForm(props) {
     const [values, setValues] = useState(props.values);
-    const [ updateNote ]= useMutation(UPDATE_NOTE, {
-        onError:(err)=>{
-            props.displayMessage('Error :( ... ' + err);
-        }
-    });
+    const dispatch = useDispatch();
     return  <div className="EditForm">
                 <div className="popup mt-5 pt-5">
                     <button className="back button-link"
@@ -42,8 +39,7 @@ function EditForm(props) {
                                     onClick={()=>{
                                         if(values.title && values.description){
                                             if(props.values.title !== values.title || props.values.description!== values.description){
-                                            props.updateNote(values);
-                                              updateNote( {variables: { id:parseInt(values.id,10), noteInput:{title:values.title, description: values.description, pin: values.pin}}});
+                                              dispatch(updateNote({variables: { id:parseInt(values.id,10), noteInput:{title:values.title, description: values.description, pin: values.pin}}}))
                                            }
                                             props.showEdit();
                                         }else{
