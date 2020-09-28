@@ -13,6 +13,24 @@ export const NOTES = gql`
       }
   }`;
 
+export const ADD_NOTE = gql`
+   mutation createNote($noteInput:NoteInput!){
+      createNote(
+        noteInput:$noteInput
+        ){
+        id
+    }
+  }
+`;
+
+export const UPDATE_NOTE = gql`
+   mutation updateNote($id: Float!, $noteInput:NoteInput!){
+      updateNote(id:$id, noteInput:$noteInput){
+        id,
+        description
+      }
+  }
+`;
 export const DELETE_NOTE = gql`
    mutation deleteNote($id: Float!){
       deleteNote(
