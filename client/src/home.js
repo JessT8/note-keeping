@@ -29,6 +29,7 @@ function Home(props) {
             setFilterNotes(notes);
         }
     }, [filterTag, notes])
+
     let noteColClass = "col"
     if(toggleDrawer) {
         noteColClass = 'col-9'

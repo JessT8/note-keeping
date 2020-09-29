@@ -2,6 +2,7 @@ import React from 'react';
 import TextConverter from '../TextEditor/TextConverter';
 import { useDispatch } from 'react-redux'
 import { deleteNote } from '../../store/actions/noteAction';
+
 function NoteDetails(props) {
     const dispatch = useDispatch();
     return (
