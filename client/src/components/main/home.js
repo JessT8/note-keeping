@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
-import AddForm from "./addForm";
-import Notes from "./components/note/notes"
-import './styles.scss';
-import FilterOptionIcon from './components/icon/filterOptionIcon.svg'
-import SlideDrawer from './components/slideDrawer/slideDrawer'
+import '../../App.css';
+import AddForm from "../../addForm";
+import Notes from "../note/notes"
+import '../../styles.scss';
+import FilterOptionIcon from '../icon/filterOptionIcon.svg'
+import SlideDrawer from '../slideDrawer/slideDrawer'
 import { useSelector, useDispatch} from 'react-redux'
-import { getNotes } from './store/actions/noteAction';
+import { getNotes } from '../../store/actions/noteAction';
 
 function Home(props) {
     const [toggleDrawer, setToggleDrawer] = useState(false);

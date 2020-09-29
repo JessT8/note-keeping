@@ -8,8 +8,8 @@ import {
   Link,
   Redirect
 } from "react-router-dom";
-import Home from './home';
-import LandingPage from './landingPage';
+import Home from './components/main/home';
+import LandingPage from './components/main/landingPage';
 import SignIn from './components/user/signin';
 import SignUp from './components/user/signup';
 import Error from './components/error/error';
