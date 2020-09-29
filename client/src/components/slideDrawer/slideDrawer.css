@@ -3,10 +3,13 @@
    background: white;
    overflow-x: hidden;
 }
-
 .tag-filter{
 	color:black;
 }
-.tag-filter:hover{
+.tag-filter:hover, .currentTag:hover{
 	text-decoration: none;
+}
+.currentTag, .currentTag:hover{
+	cursor: default;
+	color: grey;
 }

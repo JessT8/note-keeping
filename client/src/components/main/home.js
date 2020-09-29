@@ -60,6 +60,7 @@ function Home(props) {
                             <SlideDrawer show={toggleDrawer}
                                          notes={notes}
                                          filterNotes={(tag)=>{setFilterTag(tag)}}
+                                         filterTag={filterTag}
                                          close={()=>setToggleDrawer(false)}/>
                             <div className={noteColClass}>
                                 <Notes notes={filterNotes}/>

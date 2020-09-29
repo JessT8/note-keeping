@@ -14,24 +14,34 @@ function SlideDrawer(props){
                 }
                 return str1 > str2 ? 1 : (str1 < str2 ? -1 : 0);
         });
-
+       let tagFilterClass = "tag-filter"
+       if(props.filterTag === ''){
+            tagFilterClass = "currentTag"
+       }
        return(
           <>
           {props.show ?
             <div className="side-drawer col-3">
             <hr/>
-             <a href="\\" className="tag-filter" onClick={(e)=>{
+             <a href="\\" className={tagFilterClass} onClick={(e)=>{
                     e.preventDefault();
-                    props.filterNotes("");}}>
+                    if(props.filterTag !==""){
+                    props.filterNotes("");}}}>
                     <h4 className="ml-3 mb-3">All</h4>
             </a>
              <h4 className="ml-3 mb-3">Tags</h4>
-             {filteredTags.map((tag , i) =>(
-                <a key={i} href="\\" className="tag-filter" onClick={(e)=>{
+             {filteredTags.map((tag , i) =>{
+                let tagClass = "tag-filter";
+                if(props.filterTag === tag.name){
+                    tagClass = "currentTag"
+                }
+                return (<a key={i} href="\\" className={tagClass} onClick={(e)=>{
                     e.preventDefault();
-                    props.filterNotes(tag.name);
-                }}><p className="ml-3 mb-2" >{tag.name}</p></a>
-             ))}</div>:''}
+                    if(props.filterTag !== tag.name){
+                        props.filterNotes(tag.name);
+                    }
+                }}><p className="ml-3 mb-2" >{tag.name}</p></a>)}
+             )}</div>:''}
           </>)
 }
 
