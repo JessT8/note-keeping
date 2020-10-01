@@ -58,20 +58,6 @@ $star: "\2605";
 	  opacity: 1;
 	  z-index: 10;
 	}
-	.popup {
-  	height: 100%;
-  	position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
-	  padding: 25px;
-	  margin-top:50px;
-	  background: #fff;
-	  transform: translate3d(0vw, 0, 0);
-	  transition: all 5s ease-in-out;
-	}
 	.back {
 	  position: absolute;
 	  top: 5px;
@@ -89,13 +75,6 @@ $star: "\2605";
 	.popup .content {
 	  overflow: auto;
 	}
-
-	// @media screen and (max-width: 700px){
-	//   .popup{
-	//     width: 100%;
-	//   }
-	// }
-
 .form__group_popup{
 	position: relative;
   padding: 15px 10px;
@@ -172,11 +151,6 @@ $star: "\2605";
   border-image: linear-gradient(to right, $color-brand, white);
   border-image-slice: 1;
 }
-// .DraftEditor-root:focus-within{
-// 	  border-width: 3px;
-//   border-image: linear-gradient(to right, $color-brand, white);
-//   border-image-slice: 1;
-// }
 }
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500);
@@ -426,14 +400,3 @@ textarea{
     font-size: 3rem;
   }
 }
-
-
-// $breakpoints: (phone: 640px,
-//                tablet: 768px,
-//                desktop: 1024px) !default;
-
-// @include media(">phone", "<tablet") {
-// }
-
-// @include media(">tablet", "<950px") {
-// }

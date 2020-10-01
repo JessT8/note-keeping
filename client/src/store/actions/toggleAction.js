@@ -6,7 +6,7 @@ export const toggleNote = (toggleNote) =>(dispatch)=>{
         payload:
         {
             toggleNote,
-            toggleAddTag: false
+            toggleAddTag: ''
         }
   });
 }
@@ -16,7 +16,7 @@ export const toggleAddTag = (toggleAddTag) =>(dispatch)=>{
         type:actions.TOGGLE_NOTE,
         payload:
         {
-            toggleNote: false,
+            toggleNote: '',
             toggleAddTag
         }
   });

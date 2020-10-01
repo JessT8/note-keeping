@@ -1,8 +1,8 @@
 import * as actionTypes from "../actions/actionTypes";
 
 let initialState = {
-    toggleNote: false,
-    toggleAddTag: false,
+    toggleNote: '',
+    toggleAddTag: '',
 }
 export default function toggleReducer(state = initialState, action){
     switch(action.type){

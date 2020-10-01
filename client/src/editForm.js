@@ -3,12 +3,12 @@ import  TextEditor  from './components/TextEditor/TextEditor';
 import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { updateNote } from './store/actions/noteAction';
 import { useDispatch } from 'react-redux';
-
+import FullModal from './components/modal/fullModal';
 function EditForm(props) {
     const [values, setValues] = useState(props.values);
     const dispatch = useDispatch();
-    return  <div className="EditForm">
-                <div className="popup mt-5 pt-5">
+    return  <FullModal>
+                <div className="mt-5">
                     <button className="back button-link"
                        onClick={()=>{props.showEdit()}}>
                         &larr;
@@ -52,7 +52,7 @@ function EditForm(props) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </FullModal>
 }
 
 export default EditForm;

@@ -9,7 +9,7 @@ function Note(props){
     const dispatch = useDispatch();
     const noteToggle = useSelector( state => state.toggle.toggleNote);
     const addTagToggle = useSelector( state => state.toggle.toggleAddTag);
-
+    console.log(addTagToggle);
     return (
         <div className="card border-0 pt-2 col-12 col-md-6 col-lg-4 col-xl-4 ">
             <div className="card-body note-label">
@@ -32,7 +32,7 @@ function Note(props){
                            href="!#"
                            onClick={(e)=>{
                             e.preventDefault();
-                            dispatch(toggleAddTag(true));
+                            dispatch(toggleAddTag(props.note.id));
                             }}>
                             Tags
                         </a>
@@ -48,8 +48,10 @@ function Note(props){
                 </div>
             </div>
             {(noteToggle === props.note.id) && <NoteModal values={props.note}/>}
-            {addTagToggle && <TagModal close={()=>{                            dispatch(toggleAddTag(false))}}
-                                       tags={props.note.tags}/>}
+            {(addTagToggle === props.note.id) && <TagModal close={()=>{                            dispatch(toggleAddTag(''))}}
+                                       tags={props.note.tags}
+                                       values={props.note}
+                                       />}
         </div>
     )
 }

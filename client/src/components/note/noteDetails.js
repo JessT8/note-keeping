@@ -2,11 +2,12 @@ import React from 'react';
 import TextConverter from '../TextEditor/TextConverter';
 import { useDispatch } from 'react-redux'
 import { deleteNote } from '../../store/actions/noteAction';
+import FullModal from '../modal/fullModal';
 
 function NoteDetails(props) {
     const dispatch = useDispatch();
     return (
-        <div className="popup">
+        <FullModal>
             <button className="back button-link"
                     onClick={()=>{props.back();}}>
                     &larr;
@@ -38,7 +39,7 @@ function NoteDetails(props) {
                                    format={true}/>
                 </div>
             </div>
-        </div>
+        </FullModal>
     )
 }
 
