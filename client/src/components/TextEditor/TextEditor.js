@@ -1,77 +1,70 @@
-import React from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import {Editor, EditorState, Modifier, RichUtils, convertToRaw, convertFromRaw, Entity, AtomicBlockUtils} from 'draft-js'
 import createStyles from 'draft-js-custom-styles';
 import './TextEditor.css';
 import OptionControls from './OptionControls';
 import {decorator } from './LinkDecorator';
 import MediaBlock from './MediaBlock';
+import Modal from '../modal/modal';
 const {styles, customStyleFn} = createStyles(['font-size', 'font-style', 'font-weight', 'text-decoration', 'text-align'])
 
-
-
-// blockStyleFn
-export default class TextEditor extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {editorState: EditorState.createEmpty()};
-        this.editor = React.createRef();
-        this.focus = () => {this.editor.current.focus()};
-        this.onChange = (editorState) => {
-        this.setState({editorState});
-            const contentState = editorState.getCurrentContent();
-            this.props.onChange(JSON.stringify(convertToRaw(contentState)));
-        };
-        this.onToggle = (value, type) => this._onToggle(value,type);
-        this.onAddLink = () => this._onAddLink();
-        this.onAddImage = () => this._onAddImage();
-    }
-    componentDidMount(){
-        if(this.props.edit){
-            const data = JSON.parse(JSON.parse(this.props.description));
-            const contentState = convertFromRaw(data);
-            const editorState = EditorState.createWithContent(contentState, decorator);
-            this.onChange(editorState);
+function TextEditor (props){
+    const [getData, setData] = useState(true);
+    const [addLink, setAddLink] = useState({value:'', completed:true, toggleModal:false, action:''});
+    const [editorState, setEditorState] = useState(EditorState.createEmpty());
+    const [selectionState, setSelectionState] = useState(null);
+    const editor = useRef(null);
+    const focus = () =>{editor.current.focus();}
+    const onChange = (editorState) => {
+        setEditorState(editorState);
+        const contentState = editorState.getCurrentContent();
+        props.onChange(JSON.stringify(convertToRaw(contentState)));
+    };
+    useEffect(()=>{
+        if(props.edit && getData){
+                const data = JSON.parse(JSON.parse(props.description));
+                const contentState = convertFromRaw(data);
+                const editorState = EditorState.createWithContent(contentState, decorator);
+                setEditorState(editorState);
+                setData(false);
         }
-    }
-    _onAddImage = () => {
-          const editorState = this.state.editorState;
-          const urlValue = window.prompt("Paste Image Link");
-          const contentState = editorState.getCurrentContent();
-          const contentStateWithEntity = contentState.createEntity(
-           "image",
-           "IMMUTABLE",
-           { src: urlValue }
-          );
-          const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-          const newEditorState = EditorState.set(
-           editorState,
-           { currentContent: contentStateWithEntity },
-           "create-entity"
-          );
-          this.setState(
-           {
-            editorState: AtomicBlockUtils.insertAtomicBlock(
-             newEditorState,
-             entityKey,
-             " "
-            )
-           },
-           () => {
-            setTimeout(() => this.focus(), 0);
-           }
-          );
-         };
-    _onAddLink = () => {
-        const link = window.prompt('Paste the link -')
-        const { editorState } = this.state;
-        const selectionState = editorState.getSelection();
-        const entity = Entity.create("LINK", "MUTABLE", {
-            url: link
-        });
-        const newEditorState = RichUtils.toggleLink(editorState, selectionState, entity);
-        this.onChange(newEditorState);
-    }
-    clear(editorState) {
+    },[getData, props])
+
+    useEffect(()=>{
+        if(addLink.value !== '' && addLink.completed){
+            if(addLink.action === 'Add Link'){
+                const entity = Entity.create("LINK", "MUTABLE", {
+                    url: addLink.value
+                });
+                const newEditorState = RichUtils.toggleLink(editorState, selectionState, entity);
+                setEditorState(newEditorState);
+                setAddLink({...addLink, completed:false, value:'', action:  '' });
+            }else if(addLink.action === 'Add Image Link'){
+                const contentState = editorState.getCurrentContent();
+                const contentStateWithEntity = contentState.createEntity(
+                       "image",
+                       "IMMUTABLE",
+                       { src: addLink.value }
+                    );
+                const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+                const newEditorState = EditorState.set(
+                    editorState,
+                    { currentContent: contentStateWithEntity },
+                    "create-entity"
+                );
+                setEditorState(AtomicBlockUtils.insertAtomicBlock(
+                    newEditorState,
+                    entityKey,
+                    " "));
+                setAddLink({...addLink, completed:false, value:'', action:  'Focus' });
+            }
+        }
+        if(editor.current !== document.activeElement && addLink.action === 'Focus'){
+                    focus();
+        }
+
+    },[ addLink , editorState, selectionState]);
+    const clear = () => {
         const selection = editorState.getSelection()
         const contentState = editorState.getCurrentContent()
         const styles = editorState.getCurrentInlineStyle()
@@ -81,14 +74,9 @@ export default class TextEditor extends React.Component {
 
         const removeBlock = Modifier.setBlockType(removeStyles, selection, 'unstyled')
 
-       this.setState({
-         editorState: EditorState.push(
-           editorState,
-           removeBlock
-         )
-       })
+       setEditorState(EditorState.push(editorState,removeBlock));
     }
-    blockStyleFn(block) {
+    const blockStyleFn = (block)=> {
         switch (block.getType()) {
             case 'TEXT-CENTER':
                 return 'align-center';
@@ -98,78 +86,96 @@ export default class TextEditor extends React.Component {
                 return null;
         }
     }
-    _onToggle( value, type ){
-        const { editorState } = this.state;
+    const onToggle = ( value, type )=>{
         if( type === 'link'){
-            this.onAddLink();
+            const selectionState = editorState.getSelection();
+            setSelectionState(selectionState);
+            setAddLink({...addLink, toggleModal:true, completed:false, action: "Add Link"});
             return;
         }
         if(type === 'image'){
-            this.onAddImage();
+            setAddLink({...addLink, toggleModal:true, completed:false, action: "Add Image Link"});
             return;
         }
         if(type==='align'){
-            this.onChange(RichUtils.toggleBlockType(this.state.editorState, value));
+            onChange(RichUtils.toggleBlockType(editorState, value));
             return;
         }
         if( type=== 'fontSize'){
-            this.onChange(styles.fontSize.toggle(this.state.editorState, value));
+            onChange(styles.fontSize.toggle(editorState, value));
             return;
         }
         if(type === 'block'){
-            this.onChange(RichUtils.toggleBlockType(this.state.editorState, value));
+            onChange(RichUtils.toggleBlockType(editorState, value));
            return;
         }
         if( type === 'inline' ){
-            this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, value));
+            onChange(RichUtils.toggleInlineStyle(editorState, value));
             return;
         }
         if( type === 'clear' ){
-            //for clearing
             const properties = ['fontStyle', 'fontWeight', 'textDecoration' ];
            let newEditorState = editorState;
             properties.forEach(p =>{
                 newEditorState = styles[p].remove(newEditorState);
             });
-            this.clear(newEditorState);
+            clear(newEditorState);
             return;
         }
     }
-    render() {
-        const {editorState} = this.state;
             return (
-                <div className='textbox-container'>
-                    <div className='flex-center container-fluid'>
-                        <OptionControls
-                            editorState={editorState}
-                            onToggle={this.onToggle}
+                <>
+                    <div className='textbox-container'>
+                        <div className='flex-center container-fluid'>
+                            <OptionControls
+                                editorState={editorState}
+                                onToggle={onToggle}
+                            />
+                        </div>
+                        <div className='textbox-editor' onClick={focus}>
+                            <Editor
+                              editorState={editorState}
+                              onChange={onChange}
+                              placeholder="Write your notes here..."
+                              ref={editor}
+                              customStyleFn={customStyleFn}
+                              blockStyleFn={blockStyleFn}
+                              blockRendererFn={MediaBlock}
+                              stripPastedStyles={true}
+                              handleKeyCommand={(command) => {
+                                  let newState = RichUtils.handleKeyCommand(editorState, command)
+                                  if (newState) {
+                                    onChange(newState)
+                                    return "handled"
+                                  }
+                                  return "not-handled"
+                                }}
+                            />
+                        </div>
+                    </div>
+                    {addLink.toggleModal && <Modal>
+                    <button className="close"
+                            onClick={()=>{
+                                setAddLink({...addLink, value:'', toggleModal:false, action:  ''})
+                            }}>
+                            &#10005;
+                    </button>
+                    <h3 className="text-center pb-3">{addLink.action}</h3>
+                    <div className="form-group ">
+                        <input className="form-control"
+                               value={addLink.value}
+                               onChange={(e)=>{
+                                    setAddLink({...addLink, value:e.target.value});
+                                }}
                         />
                     </div>
-                    <div className='textbox-editor' onClick={this.focus}>
-                        <Editor
-                          editorState={editorState}
-                          onChange={this.onChange}
-                          placeholder="Write your notes here..."
-                          ref={this.editor}
-                          customStyleFn={customStyleFn}
-                          blockStyleFn={this.blockStyleFn}
-                          blockRendererFn={MediaBlock}
-                          stripPastedStyles={true}
-                          handleKeyCommand={(command) => {
-                              const { editorState } = this.state
-
-                              let newState = RichUtils.handleKeyCommand(editorState, command)
-
-                              if (newState) {
-                                this.onChange(newState)
-                                return "handled"
-                              }
-
-                              return "not-handled"
+                    <button className="btn btn-primary"
+                            onClick={()=>{
+                                setAddLink({...addLink, completed:true, toggleModal:false});
                             }}
-                        />
-                    </div>
-                </div>
-                );
+                            >Add Link</button>
+                    </Modal>}
+                </>);
             }
-        }
+
+export default TextEditor;

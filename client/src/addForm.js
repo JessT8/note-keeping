@@ -43,26 +43,24 @@ function AddForm(props) {
                         <div className=" form__group_popup mx-auto">
                             <TextEditor onChange={(desc)=>{setValues({...values, "description":JSON.stringify(desc)})}} />
                         </div>
-                    <div>
-                    <div className="flex-center">
-                        <button className="noteBtn"
-                                type="button"
-                                onClick={ ()=>{
-                                if(values.title && values.description){
-                                   setValues({title:"",description:""});
-                                   dispatch(addNote({noteInput: { title: values.title, description: values.description , pin:values.pin} }));
-                                    props.close();
-                                }else{
-                                    !values.title ? inputRef.current[0].focus(): inputRef.current[1].focus();
-                                }}
-                                }>
-                            Add
-                        </button>
-                    </div>
+                        <div className="flex-center">
+                            <button className="noteBtn"
+                                    type="button"
+                                    onClick={ ()=>{
+                                    if(values.title && values.description){
+                                       setValues({title:"",description:""});
+                                       dispatch(addNote({noteInput: { title: values.title, description: values.description , pin:values.pin} }));
+                                        props.close();
+                                    }else{
+                                        !values.title ? inputRef.current[0].focus(): inputRef.current[1].focus();
+                                    }}
+                                    }>
+                                Add
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </div>
-    </FullModal>
+            </FullModal>
 }
 
 

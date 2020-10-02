@@ -4,6 +4,7 @@ import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { updateNote } from './store/actions/noteAction';
 import { useDispatch } from 'react-redux';
 import FullModal from './components/modal/fullModal';
+
 function EditForm(props) {
     const [values, setValues] = useState(props.values);
     const dispatch = useDispatch();
@@ -32,7 +33,8 @@ function EditForm(props) {
                         </div>
                         <div className=" form__group_popup mx-auto">
                             <TextEditor description={values.description} onChange={(desc)=>{setValues({...values, "description":JSON.stringify(desc)})
-                            }} edit={true} />
+                            }}   edit={true}
+                             />
                         </div>
                         <div className="flex-center">
                             <button className="noteBtn"

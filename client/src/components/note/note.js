@@ -9,7 +9,7 @@ function Note(props){
     const dispatch = useDispatch();
     const noteToggle = useSelector( state => state.toggle.toggleNote);
     const addTagToggle = useSelector( state => state.toggle.toggleAddTag);
-    console.log(addTagToggle);
+
     return (
         <div className="card border-0 pt-2 col-12 col-md-6 col-lg-4 col-xl-4 ">
             <div className="card-body note-label">
