@@ -1,6 +1,6 @@
 import React from 'react';
 import StyleButton from './StyleButton';
-import Options from './Options'
+import Options from './Options';
 
 function OptionControls (props){
         return (

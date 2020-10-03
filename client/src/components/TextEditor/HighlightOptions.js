@@ -1,6 +1,6 @@
 export default
 {
-	"OPTIONS":[
+    "HIGHTLIGHTOPTIONS":[
           {"label":"font-size-dropdown", "value": "", "styleName": "tool-label", "type":"fontSize"},
           {"label":"U", "value":"UNDERLINE","styleName":"tool-label underline","type":"inline"},
           {"label":"B", "value":"BOLD", "styleName":"tool-label bold","type":"inline"},
@@ -15,5 +15,5 @@ export default
           {"label":"link", "value":"link","styleName":"tool-label", "type":"link"},
           {"label":"image", "value":"image","styleName":"tool-label", "type":"image"},
           {"label":"highlight-dropdown", "value":"highlight","styleName":"tool-label", "type":"highlight"}
-	]
+    ]
 }

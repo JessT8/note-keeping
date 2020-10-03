@@ -16,11 +16,9 @@
 .bold{
 	font-weight: bold;
 }
-
 .strikethrough{
 	text-decoration: line-through;
 }
-
 .underline{
 	text-decoration: underline;
 }
@@ -83,4 +81,9 @@ div.DraftEditor-root{
 }
 .align-right > div{
     text-align: right;
+}
+.scrollable-menu {
+    height: auto;
+    max-height: 180px;
+    overflow-x: hidden;
 }
