@@ -4,7 +4,7 @@ import createStyles from 'draft-js-custom-styles';
 import {decorator } from './LinkDecorator';
 import MediaBlock from './MediaBlock';
 
-const {customStyleFn} = createStyles(['font-size', 'font-style', 'font-weight', 'text-decoration'])
+const {customStyleFn} = createStyles(['font-size', 'font-style', 'font-weight', 'text-decoration', 'background-color'])
 
 function TextConverter(props){
     const [ editorState, setEditorState ] = useState(EditorState.createEmpty());
