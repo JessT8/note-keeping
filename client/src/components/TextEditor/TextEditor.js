@@ -1,12 +1,12 @@
 import React, {useState, useRef, useEffect} from 'react'
 import {Editor, EditorState, Modifier, RichUtils, convertToRaw, convertFromRaw, Entity, AtomicBlockUtils} from 'draft-js'
 import createStyles from 'draft-js-custom-styles';
-import './TextEditor.css';
+import './TextEditor.scss';
 import OptionControls from './OptionControls';
 import {decorator } from './LinkDecorator';
 import MediaBlock from './MediaBlock';
 import Modal from '../modal/modal';
-const {styles, customStyleFn} = createStyles(['font-size', 'font-style', 'font-weight', 'text-decoration', 'text-align'])
+const {styles, customStyleFn} = createStyles(['font-size', 'font-style', 'font-weight', 'text-decoration', 'text-align', 'background-color'])
 
 function TextEditor (props){
     const [getData, setData] = useState(true);
@@ -120,6 +120,10 @@ function TextEditor (props){
                 newEditorState = styles[p].remove(newEditorState);
             });
             clear(newEditorState);
+            return;
+        }
+        if( type === 'highlight' ){
+            onChange(styles.backgroundColor.toggle(editorState, value));
             return;
         }
     }

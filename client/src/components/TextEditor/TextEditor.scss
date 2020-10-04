@@ -4,12 +4,10 @@
     margin-right: 16px;
     padding: 2px 0;
 }
-
 .flex-center{
 	display: flex;
 	justify-content: center;
 }
-
 .italic{
 	font-style: italic;
 }
@@ -28,8 +26,7 @@ div.DraftEditor-root{
 }
 div.DraftEditor-root{
 	outline: 0;
-
-	color: $black;
+	color: black;
   overflow: scroll;
 	background: transparent;
 	resize: none;
@@ -86,4 +83,19 @@ div.DraftEditor-root{
     height: auto;
     max-height: 180px;
     overflow-x: hidden;
+}
+.dropdown-color{
+	width:94%;
+	background-color: #343334 !important;
+}
+span.color>a.dropdown-item-color{
+  display:inline-block;
+  width: 32%;
+	padding-left:20px;
+  background-color:none !important;
+  &:hover{
+  	text-decoration: none;
+    color: inherit !important;
+    transform: scale(1.5);
+	}
 }
