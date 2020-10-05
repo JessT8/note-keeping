@@ -6,6 +6,7 @@ let initialState = {
     isLoading: true
 }
 export default function noteReducer(state = initialState, action){
+    let notes, note;
     switch(action.type){
         case actionTypes.LOADING:
             return noteActions.loading(state);
@@ -17,7 +18,7 @@ export default function noteReducer(state = initialState, action){
                     isLoading:false}
                 });
         case actionTypes.UPDATE_NOTE:
-            let notes =  state.notes.map((note) => {
+            notes =  state.notes.map((note) => {
                 if(note.id === action.payload.id){
                     return ({...note}=action.payload);
                 }
@@ -32,6 +33,36 @@ export default function noteReducer(state = initialState, action){
             return {
                 ...state,
                 notes: state.notes.filter((note) => note.id !== action.payload.id),
+                isLoading:false
+            };
+        case actionTypes.REMOVE_TAG:
+            note = state.notes.find( ele => ele.id === action.payload.id);
+            notes = state.notes.map((n)=> {
+                if(n.id === note.id){
+                    let noteCopy = {...n};
+                    noteCopy.tags = noteCopy.tags.filter((t)=>t.name!==action.payload.name);
+                    return noteCopy;
+                }
+                return n;
+            })
+            return {
+                ...state,
+                notes,
+                isLoading:false
+            };
+        case actionTypes.ADD_TAG:
+            note = state.notes.find( ele => ele.id === action.payload.id);
+            notes = state.notes.map((n)=> {
+                if(n.id === note.id){
+                    let noteCopy = {...n};
+                    noteCopy.tags = [...noteCopy.tags, action.payload.tag]
+                    return noteCopy;
+                }
+                return n;
+            })
+            return {
+                ...state,
+                notes,
                 isLoading:false
             };
         default:

@@ -4,8 +4,9 @@ function SlideDrawer(props){
        let tags = []
        props.notes.forEach((note)=>{
             tags = tags.concat(note.tags);
-       })
-       let filteredTags = tags.filter((tag,i,arr)=> arr.indexOf(tag) === i).sort((a,b)=>{
+       });
+       let unique = {}
+       tags.sort((a,b)=>{
             let str1 = a.name;
             let str2 = b.name;
                 if(str1.toLowerCase() !== str2.toLowerCase()) {
@@ -13,7 +14,12 @@ function SlideDrawer(props){
                     str2 = str2.toLowerCase();
                 }
                 return str1 > str2 ? 1 : (str1 < str2 ? -1 : 0);
-        });
+        }).forEach((tag)=> {
+            if(!unique[tag.name]){
+                unique[tag.name] = tag;
+            }
+        })
+       let uniqueTags = Object.values(unique);
        let tagFilterClass = "tag-filter"
        if(props.filterTag === ''){
             tagFilterClass = "currentTag"
@@ -30,7 +36,7 @@ function SlideDrawer(props){
                     <h4 className="ml-3 mb-3">All</h4>
             </a>
              <h4 className="ml-3 mb-3">Tags</h4>
-             {filteredTags.map((tag , i) =>{
+             {uniqueTags.map((tag , i) =>{
                 let tagClass = "tag-filter";
                 if(props.filterTag === tag.name){
                     tagClass = "currentTag"

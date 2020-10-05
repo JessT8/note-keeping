@@ -24,7 +24,11 @@ function Home(props) {
         if(filterTag!==''){
             const filteredNotes = notes.filter((note)=>
                 note.tags.some(t => t.name === filterTag));
-        setFilterNotes(filteredNotes);
+            if(filteredNotes.length !== 0){
+                setFilterNotes(filteredNotes);
+            }else{
+                setFilterTag('');
+            }
         }else{
             setFilterNotes(notes);
         }

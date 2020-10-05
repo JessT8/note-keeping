@@ -5,3 +5,5 @@ export const UPDATE_NOTE = 'UPDATE_NOTE';
 export const DELETE_NOTE = 'DELETE_NOTE';
 export const TOGGLE_NOTE = 'TOGGLE_NOTE';
 export const TOGGLE_ADD_TAG = 'TOGGLE_ADD_TAG';
+export const ADD_TAG= 'ADD_TAG';
+export const REMOVE_TAG= 'REMOVE_TAG';

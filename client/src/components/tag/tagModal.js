@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import './tagModal.scss'
-import Modal from '../modal/modal'
+import './tagModal.scss';
+import Modal from '../modal/modal';
+import { useDispatch } from 'react-redux';
+import { addTag, removeTag } from '../../store/actions/noteAction';
+import { toggleAddTag } from '../../store/actions/toggleAction';
 function TagModal(props) {
     const [ tagValue, setTagValue ] = useState('');
+    const dispatch = useDispatch();
     return  <Modal>
                 <button className="close"
-                    onClick={()=>{props.close()}}>
+                    onClick={()=>{dispatch(toggleAddTag(''))}}>
                 &#10005;
                 </button>
                 <h3 className="text-center pb-3">Tags</h3>
@@ -20,7 +24,7 @@ function TagModal(props) {
                 <button className="btn btn-primary"
                     onClick={()=>{
                         if(tagValue){
-                            props.addTag(tagValue)
+                            dispatch(addTag({variables:{tagInput:{name:tagValue}, noteId:props.values.id}}));
                             setTagValue('');
                         }
                     }}
@@ -29,7 +33,7 @@ function TagModal(props) {
                 {props.tags.map((tag,i)=>(
                    <span key={i} className="badge badge-secondary px-2 py-1 text-truncate mr-1 my-2 "><span>{tag.name}</span><a href="!#" onClick={(e)=>{
                         e.preventDefault();
-                        props.removeTag(tag);
+                        dispatch(removeTag({variables:{tagInput:{name:tag.name}, noteId:props.values.id}}));
                    }} className="pl-1">&#10005;</a></span>
                 ))
                 }

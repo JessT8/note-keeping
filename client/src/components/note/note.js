@@ -48,7 +48,7 @@ function Note(props){
                 </div>
             </div>
             {(noteToggle === props.note.id) && <NoteModal values={props.note}/>}
-            {(addTagToggle === props.note.id) && <TagModal close={()=>{                            dispatch(toggleAddTag(''))}}
+            {(addTagToggle === props.note.id) && <TagModal
                                        tags={props.note.tags}
                                        values={props.note}
                                        />}

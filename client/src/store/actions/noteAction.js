@@ -64,6 +64,39 @@ export const deleteNote = (id) => async (dispatch)=>{
       });
     });
 }
+export const addTag =  (input) => async (dispatch)=>{
+    dispatch({
+    type: actions.LOADING,
+    });
+    const variables = { ...input.variables, noteId: parseInt(input.variables.noteId,10) };
+    client.mutate({
+        mutation: queries.ADD_TAG,
+        variables
+    }).then((result)=>{
+        console.log(result);
+        dispatch({
+            type:actions.ADD_TAG,
+            payload: {id:input.variables.noteId, tag: {name:input.variables.tagInput.name, id: result.id} }
+        });
+    });
+
+}
+export const removeTag =  (input) => async (dispatch)=>{
+    dispatch({
+    type: actions.LOADING,
+    });
+    const variables = { ...input.variables, noteId: parseInt(input.variables.noteId,10) };
+    client.mutate({
+        mutation: queries.REMOVE_TAG,
+        variables
+    }).then(()=>{
+        dispatch({
+            type:actions.REMOVE_TAG,
+            payload: {id:input.variables.noteId, name: input.variables.tagInput.name }
+        });
+    });
+
+}
 export const loading = (state) => {
     return {...state, isLoading: true}
 }
