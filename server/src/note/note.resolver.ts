@@ -54,13 +54,15 @@ export class NoteResolver {
 		return this.noteService.updateNote(id, noteInput, user);
 	}
 	@Mutation(returns => Boolean)
-	deleteNote(
+	async deleteNote(
 		@Args("id") id:number,
 		@Context('user') user: User
 	){
+		const note = await this.noteService.getNote(id);
+		await this.noteTagService.removeNotes(note)
 		return this.noteService.deleteNote(id, user);
 	}
-	@Mutation(returns => Boolean )
+	@Mutation(returns => Number )
 	async addTagsToNote(
 		@Args("tagInput")
 		tagInput : TagInput,
@@ -70,7 +72,8 @@ export class NoteResolver {
 	){
 		const tag =await this.tagService.getTag(tagInput);
 		const note = await this.noteService.getNote(noteId);
-		return this.noteTagService.addTagToNote({note, tag});
+		const savedTag = await this.noteTagService.addTagToNote({note, tag});
+		return savedTag.id;
 	}
 	@Mutation(returns => Boolean )
 	async removeTagFromNote(
@@ -83,19 +86,12 @@ export class NoteResolver {
 		const tag =await this.tagService.findTag(tagInput);
 		const note = await this.noteService.getNote(noteId);
 		const deleteFlag = await this.noteTagService.removeTagFromNote({note, tag});
-		// const tagFound =await this.tagService.findTag(tagInput);
-	//	if ( deleteFlag){
+		const tagFound =await this.tagService.findTag(tagInput);
+		if (tagFound){
 			const success = await this.tagService.deleteTag(tagInput);
-		//}
-		return success;
-	}
-	@Mutation(returns=> Boolean)
-	async testRemove(
-		@Args("tagInput")
-		tagInput : TagInput,){
-		return await this.tagService.deleteTag(tagInput);
-		// return true;
-		// return false;
+			return success;
+		 }
+		return false;
 	}
 	@ResolveField()
   async tags(@Parent() noteType: NoteType) {

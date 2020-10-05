@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Tag } from './tag.entity';
 import { Repository } from 'typeorm';
@@ -29,7 +29,9 @@ constructor(
 		tagInput: TagInput,
 		): Promise<Tag>{
 		const { name } = tagInput;
-		return await this.tagRepository.findOne({name});
+		let tag = await this.tagRepository.find({where:{name}});
+		if(tag.length !== 0) return tag[0];
+		return null;
 	}
 	async deleteTag(
 		tagInput: TagInput,
@@ -37,11 +39,10 @@ constructor(
 		try{
 		const { name } = tagInput;
 		 let tag = await this.tagRepository.findOne({name});
-		 await this.tagRepository.delete(tag.id);
+		 await this.tagRepository.delete(tag);
 		 return true;
 		 }catch(err){
-		 		console.log(err)
-			 return false;
+		 	return false;
 		}
 	}
 }

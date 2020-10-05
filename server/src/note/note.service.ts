@@ -19,7 +19,7 @@ export class NoteService {
 	async getNotes(
 		@GetUser() user: User
 		):Promise<Note[]>{
-		return this.noteRepository.find({where:{user: user.id}, relations: ['user']});
+		return this.noteRepository.find({where:{user: user.id}, order: { "id": "DESC" } , relations: ['user']});
 	}
 	async findAll({userId:number}):Promise<Note[]>{
 		return this.noteRepository.find(User);

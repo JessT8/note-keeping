@@ -12,7 +12,8 @@ function TagModal(props) {
                     onClick={()=>{dispatch(toggleAddTag(''))}}>
                 &#10005;
                 </button>
-                <h3 className="text-center pb-3">Tags</h3>
+                <h3 className="text-center">Tags</h3>
+                <p className="text-center pb-1">{props.values.title}</p>
                 <div className="form-group ">
                     <input className="form-control"
                         value={tagValue}

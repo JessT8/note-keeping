@@ -13,7 +13,7 @@ export class NoteTagService {
 	){}
 	async addTagToNote(
 		noteTagInput: NoteTagInput
-		): Promise<boolean>{
+		): Promise<Tag>{
 		try{
 			const { note, tag } = noteTagInput;
 		  const noteTag = this.noteTagRepository.create({
@@ -21,10 +21,9 @@ export class NoteTagService {
 				  tag
 			});
 			await this.noteTagRepository.save(noteTag);
-			return true;
+			return tag;
 		}catch(err){
 			console.log(err);
-			return false;
 		}
 	}
 	async removeTagFromNote(
@@ -37,6 +36,18 @@ export class NoteTagService {
 				  tag
 			});
 			await this.noteTagRepository.delete({id:noteTag.id, note: note, tag: tag});
+			return true;
+		}catch(err){
+			console.log(err);
+			return false;
+		}
+	}
+	async removeNotes(
+			note : Note
+		): Promise<boolean>{
+		try{
+			const noteTag = await this.noteTagRepository.find({where:{note}});
+			await this.noteTagRepository.remove(noteTag);
 			return true;
 		}catch(err){
 			console.log(err);
