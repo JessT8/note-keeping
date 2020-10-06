@@ -17,7 +17,14 @@ export const getNotes = () => async (dispatch)=>{
                 isLoading: false
             }
       });
-    });
+    }).catch(()=>{
+        dispatch({
+            type: actions.ERROR,
+            payload:{
+                error: true
+            }
+        })
+    })
 }
 
 export const addNote =  ( noteInput) => async (dispatch)=>{
@@ -32,7 +39,14 @@ export const addNote =  ( noteInput) => async (dispatch)=>{
             type:actions.ADD_NOTE,
             payload: {id:results.data.createNote.id, ...noteInput.noteInput, tags:[], pin:false}
       });
-    });
+    }).catch(()=>{
+        dispatch({
+            type: actions.ERROR,
+            payload:{
+                error: true
+            }
+        })
+    })
 }
 
 export const updateNote = (noteInput) => async (dispatch)=>{
@@ -48,7 +62,14 @@ export const updateNote = (noteInput) => async (dispatch)=>{
             type:actions.UPDATE_NOTE,
             payload: {id, ...noteInput.variables.noteInput}
       });
-    });
+    }).catch(()=>{
+        dispatch({
+            type: actions.ERROR,
+            payload:{
+                error: true
+            }
+        })
+    })
 }
 export const deleteNote = (id) => async (dispatch)=>{
     dispatch({
@@ -62,6 +83,13 @@ export const deleteNote = (id) => async (dispatch)=>{
             type:actions.DELETE_NOTE,
             payload: {id}
       });
+    }).catch(()=>{
+        dispatch({
+            type: actions.ERROR,
+            payload:{
+                error: true
+            }
+        })
     });
 }
 export const addTag =  (input) => async (dispatch)=>{
@@ -78,8 +106,14 @@ export const addTag =  (input) => async (dispatch)=>{
             type:actions.ADD_TAG,
             payload: {id:input.variables.noteId, tag: {name:input.variables.tagInput.name, id: result.id} }
         });
-    });
-
+    }).catch(()=>{
+        dispatch({
+            type: actions.ERROR,
+            payload:{
+                error: true
+            }
+        })
+    })
 }
 export const removeTag =  (input) => async (dispatch)=>{
     dispatch({
@@ -94,8 +128,14 @@ export const removeTag =  (input) => async (dispatch)=>{
             type:actions.REMOVE_TAG,
             payload: {id:input.variables.noteId, name: input.variables.tagInput.name }
         });
-    });
-
+    }).catch(()=>{
+        dispatch({
+            type: actions.ERROR,
+            payload:{
+                error: true
+            }
+        })
+    })
 }
 export const loading = (state) => {
     return {...state, isLoading: true}

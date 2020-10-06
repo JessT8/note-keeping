@@ -3,7 +3,8 @@ import * as noteActions from '../actions/noteAction';
 
 let initialState = {
     notes: [],
-    isLoading: true
+    isLoading: true,
+    error: false,
 }
 export default function noteReducer(state = initialState, action){
     let notes, note;
@@ -64,6 +65,11 @@ export default function noteReducer(state = initialState, action){
                 ...state,
                 notes,
                 isLoading:false
+            };
+         case actionTypes.ERROR:
+            return {
+                ...state,
+                error: action.payload.error
             };
         default:
             return state;

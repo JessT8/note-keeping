@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { Redirect } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux'
+import { getNotes } from '../../store/actions/noteAction';
 import '../../App.css';
+import '../../styles.scss';
 import AddForm from "../../addForm";
 import Notes from "../note/notes"
-import '../../styles.scss';
 import FilterOptionIcon from '../icon/filterOptionIcon.svg'
 import SlideDrawer from '../slideDrawer/slideDrawer'
-import { useSelector, useDispatch} from 'react-redux'
-import { getNotes } from '../../store/actions/noteAction';
 
 function Home(props) {
     const [toggleDrawer, setToggleDrawer] = useState(false);
@@ -16,6 +17,7 @@ function Home(props) {
     const dispatch = useDispatch();
     const notes = useSelector( state => state.notes.notes);
     const isLoading = useSelector( state => state.notes.isLoading);
+    const error = useSelector( state => state.notes.error);
     useEffect(() => {
         dispatch(getNotes());
     }, [dispatch])
@@ -38,6 +40,9 @@ function Home(props) {
     if(toggleDrawer) {
         noteColClass = 'col-9'
     };
+    if(error){
+        return <Redirect to="/error" />
+    }
     return (
         <div className="mt-5">
             <div className="container-fluid">

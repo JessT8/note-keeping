@@ -5,7 +5,7 @@ function Error(){
         <div className="container-fluid position-fixed h-100 w-100 bg-light">
             <div className="justify-content-center">
                 <div className="my-auto">
-                    <div className="row pt-5">
+                    <div className="row pt-5 mt-5">
                         <div className='col'>
                             <div className="face mx-auto">
                                 <div className="eye"></div>
