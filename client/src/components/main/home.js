@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { getNotes } from '../../store/actions/noteAction';
-import '../../App.css';
-import '../../styles.scss';
-import AddForm from "../../addForm";
+import AddNote from "../note/addNote";
 import Notes from "../note/notes"
 import FilterOptionIcon from '../icon/filterOptionIcon.svg'
 import SlideDrawer from '../slideDrawer/slideDrawer'
+import '../../App.css';
+import '../../styles.scss';
+
 
 function Home(props) {
     const [toggleDrawer, setToggleDrawer] = useState(false);
@@ -57,7 +58,7 @@ function Home(props) {
                                 +
                         </button>
                     </header>
-                    {toggleAddNote && <AddForm close={()=>setToggleAddNote(false)}/>}
+                    {toggleAddNote && <AddNote close={()=>setToggleAddNote(false)}/>}
                     <div className="gear">
                         <button className="gear-btn ml-5"
                                 onClick={()=>{setToggleDrawer(!toggleDrawer)}}>

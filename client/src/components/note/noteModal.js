@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import NoteDetails from './noteDetails';
-import EditForm from '../../editForm';
+import EditNote from './editNote';
 import { useDispatch } from 'react-redux'
 import { toggleNote } from '../../store/actions/toggleAction';
 
@@ -13,7 +13,7 @@ function NoteModal(props) {
                              values={props.values}
                              showEdit={()=>{setToggle(true)}}
                              />
-                        : <EditForm showEdit={()=>{
+                        : <EditNote showEdit={()=>{
                                                  setToggle(false);
                                                 }}
                                     values={props.values}/>

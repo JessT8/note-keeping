@@ -1,10 +1,10 @@
 import React, { useState , useRef } from "react";
 import { useDispatch } from 'react-redux';
-import { addNote } from './store/actions/noteAction';
-import TextEditor from './components/TextEditor/TextEditor'
-import FullModal from './components/modal/fullModal';
+import { addNote } from '../../store/actions/noteAction';
+import TextEditor from '../TextEditor/TextEditor'
+import FullModal from '../modal/fullModal';
 
-function AddForm(props) {
+function AddNote(props) {
     const [values, setValues] = useState({id:"", title:"", description:"", pin:false });
     const dispatch = useDispatch();
     const inputRef = useRef([]);
@@ -63,4 +63,4 @@ function AddForm(props) {
             </FullModal>
 }
 
-export default AddForm;
+export default AddNote;

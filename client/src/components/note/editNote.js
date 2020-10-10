@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import  TextEditor  from './components/TextEditor/TextEditor';
-import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import { updateNote } from './store/actions/noteAction';
+import { updateNote } from '../../store/actions/noteAction';
 import { useDispatch } from 'react-redux';
-import FullModal from './components/modal/fullModal';
+import TextEditor  from '../TextEditor/TextEditor';
+import FullModal from '../modal/fullModal';
+import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
-function EditForm(props) {
+function EditNote(props) {
     const [values, setValues] = useState(props.values);
     const dispatch = useDispatch();
     return  <FullModal>
@@ -57,4 +57,4 @@ function EditForm(props) {
             </FullModal>
 }
 
-export default EditForm;
+export default EditNote;
