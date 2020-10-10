@@ -1,6 +1,6 @@
 import * as actions from "./actionTypes";
 
-export const toggleNote = (toggleNote) =>(dispatch)=>{
+export const toggleNote = (toggleNote) => async (dispatch)=>{
     dispatch({
         type:actions.TOGGLE_NOTE,
         payload:
@@ -11,7 +11,7 @@ export const toggleNote = (toggleNote) =>(dispatch)=>{
   });
 }
 
-export const toggleAddTag = (toggleAddTag) =>(dispatch)=>{
+export const toggleAddTag = (toggleAddTag) => async (dispatch)=>{
     dispatch({
         type:actions.TOGGLE_NOTE,
         payload:

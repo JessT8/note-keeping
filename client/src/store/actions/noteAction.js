@@ -9,14 +9,16 @@ export const getNotes = () => async (dispatch)=>{
     client.query({
         query: queries.NOTES
     }).then(results=>{
-        dispatch({
-            type:actions.GET_NOTES,
-            payload:
-            {
-                notes: results.data.notes,
-                isLoading: false
-            }
-      });
+            let uniqueTags = getUniqueTags(results.data.notes);
+            dispatch({
+                type:actions.GET_NOTES,
+                payload:
+                {
+                    notes: results.data.notes,
+                    tags: uniqueTags,
+                    isLoading: false
+                }
+            });
     }).catch(()=>{
         dispatch({
             type: actions.ERROR,
@@ -104,7 +106,7 @@ export const addTag =  (input) => async (dispatch)=>{
         console.log(result);
         dispatch({
             type:actions.ADD_TAG,
-            payload: {id:input.variables.noteId, tag: {name:input.variables.tagInput.name, id: result.id} }
+            payload: {id:input.variables.noteId, tag: {name:input.variables.tagInput.name, id: input.variables.noteId} }
         });
     }).catch(()=>{
         dispatch({
@@ -139,4 +141,25 @@ export const removeTag =  (input) => async (dispatch)=>{
 }
 export const loading = (state) => {
     return {...state, isLoading: true}
+}
+export const getUniqueTags = (notes)=>{
+        let tags = []
+       notes.forEach((note)=>{
+            tags = tags.concat(note.tags);
+       });
+       let unique = {}
+       tags.sort((a,b)=>{
+            let str1 = a.name;
+            let str2 = b.name;
+                if(str1.toLowerCase() !== str2.toLowerCase()) {
+                    str1 = str1.toLowerCase();
+                    str2 = str2.toLowerCase();
+                }
+                return str1 > str2 ? 1 : (str1 < str2 ? -1 : 0);
+        }).forEach((tag)=> {
+            if(!unique[tag.name]){
+                unique[tag.name] = tag;
+            }
+        })
+        return Object.values(unique);
 }

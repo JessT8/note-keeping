@@ -1,25 +1,8 @@
-import React from 'react'
-import './slideDrawer.css'
+import React from 'react';
+import './slideDrawer.css';
+import { useSelector } from 'react-redux'
 function SlideDrawer(props){
-       let tags = []
-       props.notes.forEach((note)=>{
-            tags = tags.concat(note.tags);
-       });
-       let unique = {}
-       tags.sort((a,b)=>{
-            let str1 = a.name;
-            let str2 = b.name;
-                if(str1.toLowerCase() !== str2.toLowerCase()) {
-                    str1 = str1.toLowerCase();
-                    str2 = str2.toLowerCase();
-                }
-                return str1 > str2 ? 1 : (str1 < str2 ? -1 : 0);
-        }).forEach((tag)=> {
-            if(!unique[tag.name]){
-                unique[tag.name] = tag;
-            }
-        })
-       let uniqueTags = Object.values(unique);
+      const tags = useSelector( state => state.notes.tags);
        let tagFilterClass = "tag-filter"
        if(props.filterTag === ''){
             tagFilterClass = "currentTag"
@@ -36,7 +19,7 @@ function SlideDrawer(props){
                     <h4 className="ml-3 mb-3">All</h4>
             </a>
              <h4 className="ml-3 mb-3">Tags</h4>
-             {uniqueTags.map((tag , i) =>{
+             {tags.map((tag , i) =>{
                 let tagClass = "tag-filter";
                 if(props.filterTag === tag.name){
                     tagClass = "currentTag"

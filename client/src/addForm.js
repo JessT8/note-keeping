@@ -1,7 +1,7 @@
 import React, { useState , useRef } from "react";
-import TextEditor from './components/TextEditor/TextEditor'
 import { useDispatch } from 'react-redux';
 import { addNote } from './store/actions/noteAction';
+import TextEditor from './components/TextEditor/TextEditor'
 import FullModal from './components/modal/fullModal';
 
 function AddForm(props) {
@@ -9,12 +9,12 @@ function AddForm(props) {
     const dispatch = useDispatch();
     const inputRef = useRef([]);
     inputRef.current = [];
-
    const addToRefs = el => {
      if (el && !inputRef.current.includes(el)) {
        inputRef.current.push(el);
      }
     };
+
     return  <FullModal>
                 <button className="back button-link"
                         onClick={()=>{props.close();}}>
@@ -50,7 +50,7 @@ function AddForm(props) {
                                     if(values.title && values.description){
                                        setValues({title:"",description:""});
                                        dispatch(addNote({noteInput: { title: values.title, description: values.description , pin:values.pin} }));
-                                        props.close();
+                                       props.close();
                                     }else{
                                         !values.title ? inputRef.current[0].focus(): inputRef.current[1].focus();
                                     }}
@@ -62,6 +62,5 @@ function AddForm(props) {
                 </div>
             </FullModal>
 }
-
 
 export default AddForm;

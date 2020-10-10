@@ -5,9 +5,10 @@ let initialState = {
     notes: [],
     isLoading: true,
     error: false,
+    tags: [],
 }
 export default function noteReducer(state = initialState, action){
-    let notes, note;
+    let notes, note, tagFound, tags;
     switch(action.type){
         case actionTypes.LOADING:
             return noteActions.loading(state);
@@ -15,7 +16,7 @@ export default function noteReducer(state = initialState, action){
             return ({...state} = action.payload);
         case actionTypes.ADD_NOTE:
             return ({...state ={
-                    notes:[...state.notes, action.payload],
+                    notes:[action.payload, ...state.notes],
                     isLoading:false}
                 });
         case actionTypes.UPDATE_NOTE:
@@ -38,7 +39,11 @@ export default function noteReducer(state = initialState, action){
             };
         case actionTypes.REMOVE_TAG:
             note = state.notes.find( ele => ele.id === action.payload.id);
+            let tagCount = 0;
             notes = state.notes.map((n)=> {
+                if(n.tags.some(tag=> tag.name === action.payload.name)){
+                    tagCount+=1;
+                }
                 if(n.id === note.id){
                     let noteCopy = {...n};
                     noteCopy.tags = noteCopy.tags.filter((t)=>t.name!==action.payload.name);
@@ -46,14 +51,23 @@ export default function noteReducer(state = initialState, action){
                 }
                 return n;
             })
+            tags = state.tags;
+            if(tagCount <= 1){
+                tags =  state.tags.filter((t)=>t.name!==action.payload.name)
+            }
             return {
                 ...state,
                 notes,
+                tags,
                 isLoading:false
             };
         case actionTypes.ADD_TAG:
             note = state.notes.find( ele => ele.id === action.payload.id);
+            tagFound = false;
             notes = state.notes.map((n)=> {
+                if(n.tags.indexOf(action.payload.tag)){
+                    tagFound = true;
+                }
                 if(n.id === note.id){
                     let noteCopy = {...n};
                     noteCopy.tags = [...noteCopy.tags, action.payload.tag]
@@ -61,9 +75,14 @@ export default function noteReducer(state = initialState, action){
                 }
                 return n;
             })
+            tags = state.tags;
+            if(tagFound){
+                tags = noteActions.getUniqueTags(notes);
+            }
             return {
                 ...state,
                 notes,
+                tags,
                 isLoading:false
             };
          case actionTypes.ERROR:

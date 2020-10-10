@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { getNotes } from '../../store/actions/noteAction';
+import { toggleAddNote } from '../../store/actions/toggleAction';
 import '../../App.css';
 import '../../styles.scss';
 import AddForm from "../../addForm";
@@ -11,13 +12,14 @@ import SlideDrawer from '../slideDrawer/slideDrawer'
 
 function Home(props) {
     const [toggleDrawer, setToggleDrawer] = useState(false);
-    const [toggle, setToggle] = useState(false);
+    const [toggleAddNote, setToggleAddNote] = useState(false);
     const [filterNotes, setFilterNotes] = useState([]);
     const [filterTag, setFilterTag] = useState('');
     const dispatch = useDispatch();
     const notes = useSelector( state => state.notes.notes);
     const isLoading = useSelector( state => state.notes.isLoading);
     const error = useSelector( state => state.notes.error);
+
     useEffect(() => {
         dispatch(getNotes());
     }, [dispatch])
@@ -50,12 +52,11 @@ function Home(props) {
                     <header className="pt-5">
                         <h1 className="nunito-font">My notes</h1>
                         <button className="toggleAdd"
-                                onClick={()=>{
-                                    setToggle(true)}}>
+                                onClick={()=>{setToggleAddNote(true)}}>
                                 +
                         </button>
                     </header>
-                    {toggle && <AddForm close={()=>{setToggle(false)}}/>}
+                    {toggleAddNote && <AddForm close={()=>setToggleAddNote(false)}/>}
                     <div className="gear">
                         <button className="gear-btn ml-5"
                                 onClick={()=>{setToggleDrawer(!toggleDrawer)}}>
@@ -67,7 +68,6 @@ function Home(props) {
                     <div className="container-fluid">
                         <div className="row">
                             <SlideDrawer show={toggleDrawer}
-                                         notes={notes}
                                          filterNotes={(tag)=>{setFilterTag(tag)}}
                                          filterTag={filterTag}
                                          close={()=>setToggleDrawer(false)}/>
