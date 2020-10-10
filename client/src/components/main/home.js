@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { getNotes } from '../../store/actions/noteAction';
-import { toggleAddNote } from '../../store/actions/toggleAction';
 import '../../App.css';
 import '../../styles.scss';
 import AddForm from "../../addForm";
@@ -25,18 +24,20 @@ function Home(props) {
     }, [dispatch])
 
     useEffect(()=>{
-        if(filterTag!==''){
-            const filteredNotes = notes.filter((note)=>
-                note.tags.some(t => t.name === filterTag));
-            if(filteredNotes.length !== 0){
-                setFilterNotes(filteredNotes);
+        if(!isLoading){
+            if(filterTag!==''){
+                const filteredNotes = notes.filter((note)=>
+                    note.tags.some(t => t.name === filterTag));
+                if(filteredNotes.length !== 0){
+                    setFilterNotes(filteredNotes);
+                }else{
+                    setFilterTag('');
+                }
             }else{
-                setFilterTag('');
+                setFilterNotes(notes);
             }
-        }else{
-            setFilterNotes(notes);
         }
-    }, [filterTag, notes])
+    }, [filterTag, notes, isLoading])
 
     let noteColClass = "col"
     if(toggleDrawer) {
