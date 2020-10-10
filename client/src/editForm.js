@@ -37,7 +37,7 @@ function EditForm(props) {
                              />
                         </div>
                         <div className="flex-center">
-                            <button className="noteBtn"
+                            <button className="btn btn-primary"
                                     onClick={()=>{
                                         if(values.title && values.description){
                                             if(props.values.title !== values.title || props.values.description!== values.description){

@@ -44,7 +44,7 @@ function AddForm(props) {
                             <TextEditor onChange={(desc)=>{setValues({...values, "description":JSON.stringify(desc)})}} />
                         </div>
                         <div className="flex-center">
-                            <button className="noteBtn"
+                            <button className="btn btn-primary"
                                     type="button"
                                     onClick={ ()=>{
                                     if(values.title && values.description){
