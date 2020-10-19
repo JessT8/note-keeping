@@ -365,9 +365,9 @@ textarea{
  	left: 10 !important;
  	.gear-btn{
  	border-radius:5%;
- 	background-color: white;
+ 	background-color: #fff;
 	border: 1px solid  #91D6FF;
-	padding:1px 6px 3px 6px;
+	padding:1px 3px 3px 6px;
  		&:hover{
  			background-color: #91D6FF;
  		}
@@ -377,6 +377,29 @@ textarea{
  		}
 
  	}
+ }
+ .orderBy{
+ 	width: 100%;
+  border: 1px solid var(--select-border);
+  border-radius: 0.25em;
+  padding: 0.2em;
+  cursor: pointer;
+  line-height: 1.1;
+  background-color: #fff;
+	border: 1px solid  #91D6FF;
+	&:focus, &:active{
+		border: 1px solid  #91D6FF;
+		text-decoration: none;
+		outline:none;
+	}
+	&:after{
+  content: "";
+  width: 0.8em;
+  height: 0.5em;
+  border: 1px solid  #91D6FF;
+  background-color: var(--select-arrow);
+  clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+}
  }
 @include media-breakpoint-up(xs) {
   .error-font {

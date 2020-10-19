@@ -16,7 +16,8 @@ export const getNotes = () => async (dispatch)=>{
                 {
                     notes: results.data.notes,
                     tags: uniqueTags,
-                    isLoading: false
+                    isLoading: false,
+                    error: false
                 }
             });
     }).catch(()=>{

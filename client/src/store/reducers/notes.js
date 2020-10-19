@@ -15,10 +15,10 @@ export default function noteReducer(state = initialState, action){
         case actionTypes.GET_NOTES:
             return ({...state} = action.payload);
         case actionTypes.ADD_NOTE:
-            return ({...state ={
+            return {...state,
                     notes:[action.payload, ...state.notes],
-                    isLoading:false}
-                });
+                    isLoading:false
+                    }
         case actionTypes.UPDATE_NOTE:
             notes =  state.notes.map((note) => {
                 if(note.id === action.payload.id){
@@ -32,6 +32,7 @@ export default function noteReducer(state = initialState, action){
                 isLoading:false
             }
         case actionTypes.DELETE_NOTE:
+
             return {
                 ...state,
                 notes: state.notes.filter((note) => note.id !== action.payload.id),
