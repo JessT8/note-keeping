@@ -9,7 +9,6 @@ import SlideDrawer from '../slideDrawer/slideDrawer'
 import '../../App.css';
 import '../../styles.scss';
 
-
 function Home(props) {
     const [toggleDrawer, setToggleDrawer] = useState(false);
     const [toggleAddNote, setToggleAddNote] = useState(false);

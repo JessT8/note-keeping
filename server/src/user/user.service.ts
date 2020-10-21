@@ -35,7 +35,7 @@ export class UserService {
 			if(error.code === '23505'){
 				throw new ConflictException("username already taken");
 			}else{
-				throw new InternalServerErrorException();
+				throw new InternalServerErrorException('Error!'+ error);
 			}
 		}
 	}

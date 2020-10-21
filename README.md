@@ -5,12 +5,14 @@ An app to keep track of notes using NestJS and React
 * Nestjs
 * GraphQL
 * Apollo-client
-* React 
+* React
+* Redux
+* Draftjs
 * Bootstrap
 
 ## Prerequisites  
 * NPM,  yarn package manager
-* PostgreSQL (Datasource used) or MongoDB
+* PostgreSQL (Datasource used)
 
 ## Installation
 
@@ -21,6 +23,21 @@ Fork the repo, then run:
 Next, install all dependencies:
 
 `npm install`
+
+Create .env file in client src folder:
+
+`SERVER_URI=http://localhost:9000/graphql`
+
+Create .env file in server src folder:
+
+`
+PORT=9000
+DB_HOST=
+DB_PORT=
+DB_USERNAME=
+DB_PASSWORD=
+DB_DATABASE=
+`
 
 To run the app, navigate to server directory and run: 
 
