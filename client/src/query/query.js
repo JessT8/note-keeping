@@ -50,3 +50,11 @@ export const REMOVE_TAG = gql`
         noteId:$noteId,
         tagInput:$tagInput
         )}`;
+export const SIGN_UP = gql`
+    mutation SignUp($userInput: UserInput!){
+        signUp(userInput: $userInput)
+  }`;
+export const SIGN_IN = gql`
+    query SignIn($userInput: UserInput!){
+        signIn(userInput: $userInput)
+  }`;

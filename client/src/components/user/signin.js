@@ -1,31 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../App.css';
-import { gql, useLazyQuery} from '@apollo/client';
 import { useHistory } from "react-router-dom";
-
-const SIGN_IN = gql`query SignIn($userInput: UserInput!){
-        signIn(userInput: $userInput)
-  }`;
+import { useDispatch, useSelector } from 'react-redux';
+import { signIn } from '../../store/actions/userAction';
 
 function SignIn(props) {
     const [values, setValues] = useState({username:'', password:''});
-    const [error, setError] = useState("");
+    const signedIn = useSelector( state => state.user.signedIn);
+    const dispatch = useDispatch();
     const history = useHistory();
-    const  [getUser]= useLazyQuery(SIGN_IN, {
-        onCompleted:(data)=>{
-            if(data.signIn){
-                localStorage.setItem("token",  data.signIn);
-                localStorage.setItem("user",  values.username);
-                props.setUser({token: data.signIn, user: values.username})
-                history.push('/');
-            }
-        },
-        onError:(data)=>{
-            setError(true);
-        }
-    });
-
-    const errorMessage = error ? (<div className="alert alert-danger" role="alert">The username or password is invalid</div>): "";
+  useEffect(()=>{
+    if(signedIn){
+        localStorage.setItem("user",  values.username);
+            history.push('/');
+    }
+  },[signedIn, history, values])
   return (
        <div className="container-fluid position-fixed h-100 w-100 bg-light">
             <div className="row h-75 justify-content-center">
@@ -34,8 +23,6 @@ function SignIn(props) {
                         <div className="text-center mb-4">
                             <h2 className="nunito-font">Sign In</h2>
                         </div>
-                        {errorMessage}
-
                         <div className="form-group ">
                             <input className="form-control"
                                    id="username"
@@ -51,6 +38,7 @@ function SignIn(props) {
                                    name="password"
                                    placeholder="Password"
                                    value={values.password}
+                                   autoComplete='on'
                                    onChange={e=>{setValues({...values,"password":e.target.value})}}
                             />
                         </div>
@@ -60,9 +48,10 @@ function SignIn(props) {
                                     onClick={(e)=>{
                                         e.preventDefault();
                                         if(values.username && values.password){
-                                         getUser({variables:{userInput:{username:values.username, password:values.password}}})
+                                         dispatch(signIn({variables:{userInput:{username:values.username, password:values.password}}}));
                                         }else{
-                                            setError(true);
+                                            // setError(true);
+                                            console.log('error');
                                         }
                                      }
                                     }

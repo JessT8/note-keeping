@@ -15,5 +15,5 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
  password: DB_PASSWORD,
  database: DB_DATABASE,
  entities: [ User, Note, Tag, NoteTag ],
- synchronize: false
+ synchronize: true
 }

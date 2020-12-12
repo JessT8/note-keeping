@@ -14,7 +14,7 @@ function Home(props) {
     const [toggleAddNote, setToggleAddNote] = useState(false);
     const [filterNotes, setFilterNotes] = useState([]);
     const [filterTag, setFilterTag] = useState('');
-    const [orderBy, setOrderBy] = useState('');
+    const [orderBy, setOrderBy] = useState({value:'', updated:true});
     const dispatch = useDispatch();
     const notes = useSelector( state => state.notes.notes);
     const isLoading = useSelector( state => state.notes.isLoading);
@@ -39,26 +39,29 @@ function Home(props) {
         }
     }, [filterTag, notes, isLoading])
     useEffect(()=>{
-        const n = [...filterNotes];
-        n.sort(function(a,b){
-            if(orderBy === 'A-Z' || orderBy === 'Z-A'){
-                let textA = a.title.toUpperCase();
-                let textB = b.title.toUpperCase();
-                if(orderBy !=='A-Z' ){
-                    return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
-                }else{
-                    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        if(!orderBy.updated){
+            const n = [...filterNotes];
+            n.sort(function(a,b){
+                if(orderBy === 'A-Z' || orderBy === 'Z-A'){
+                    let textA = a.title.toUpperCase();
+                    let textB = b.title.toUpperCase();
+                    if(orderBy !=='A-Z' ){
+                        return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
+                    }else{
+                        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+                    }
                 }
-            }
-            let idA = parseInt(a.id);
-            let idB = parseInt(b.id);
-            if(orderBy === 'Oldest'){
-                return (idA < idB) ? -1 : (idA > idB) ? 1 : 0;
-            }
-            return (idA > idB) ? -1 : (idA < idB) ? 1 : 0;
-        })
-        setFilterNotes(n);
-    },[orderBy])
+                let idA = parseInt(a.id);
+                let idB = parseInt(b.id);
+                if(orderBy === 'Oldest'){
+                    return (idA < idB) ? -1 : (idA > idB) ? 1 : 0;
+                }
+                return (idA > idB) ? -1 : (idA < idB) ? 1 : 0;
+            })
+            setFilterNotes(n);
+            setOrderBy({...orderBy, updated:true});
+        }
+    },[orderBy, filterNotes])
 
     let noteColClass = "col"
     if(toggleDrawer) {
@@ -92,7 +95,7 @@ function Home(props) {
                                 <p>Order by:</p>
                             </div>
                             <div className="col-2">
-                               <select className="orderBy" onChange={(e)=>{setOrderBy(e.target.value)}}>
+                               <select className="orderBy" onChange={(e)=>{setOrderBy({value:e.target.value, updated:false})}}>
                                     <option value="Default">Newest to Oldest</option>
                                     <option value="Oldest">Oldest to Newest</option>
                                     <option value="A-Z">A-Z</option>

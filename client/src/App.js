@@ -1,4 +1,4 @@
-import React , { useState }from 'react';
+import React from 'react';
 import './App.css';
 import './styles.scss';
 import {
@@ -14,10 +14,13 @@ import SignIn from './components/user/signin';
 import SignUp from './components/user/signup';
 import Error from './components/error/error';
 import { useApolloClient } from '@apollo/client'
+import { useDispatch, useSelector } from 'react-redux';
+import { signOut } from './store/actions/userAction';
 
 function App(props) {
-   const [user, setUser] = useState({token:localStorage.getItem('token'), username:localStorage.getItem('user')});
-   const client = useApolloClient();
+    const client = useApolloClient();
+    const dispatch = useDispatch();
+    const user = useSelector( state => state.user.user);
   return (
     <Router>
         <nav className="fixed-top navbar navbar-expand-lg bg-dark navbar-dark" id="navBar">
@@ -31,14 +34,14 @@ function App(props) {
                         <Link className="nunito-font navLink text-white" to="/">Home</Link>
                     </li>
                     <li className="nav-item ml-3">
-                      {!user.token ?
+                      {(!localStorage.getItem('token') && !user)?
                       <Link className="nunito-font navLink text-white"
                             to="/signin">Sign in</Link> :
                       <button className="button-link navLink nunito-font text-white"
                          onClick={()=> {
                                 localStorage.clear();
-                                setUser({token:"", username:""});
                                 client.clearStore();
+                                dispatch(signOut());
                             }}>
                             Sign Out</button>
                         }
@@ -48,16 +51,14 @@ function App(props) {
         </nav>
             <Switch>
                 <Route exact path="/">
-                    { user.token ? <Home props={props} client={client}/>  : <LandingPage/> }
+                    { (localStorage.getItem('token') || user) ? <Home props={props} client={client}/>  : <LandingPage/> }
                 </Route>
                 <Route exact path="/signin">
-                 {!user.token ?
-                    <SignIn setUser = {(values)=>{
-                        setUser(values);
-                    }}/> : <Redirect exact from='/signin' to='/'/>}
+                 {!localStorage.getItem('token') ?
+                    <SignIn /> : <Redirect exact from='/signin' to='/'/>}
                 </Route>
                 <Route exact path="/signup">
-                   {!user.token ? <SignUp /> : <Redirect exact from='/signup' to='/'/>}
+                   {!localStorage.getItem('token') ? <SignUp /> : <Redirect exact from='/signup' to='/'/>}
                 </Route>
                 <Route exact path="/error">
                     <Error />

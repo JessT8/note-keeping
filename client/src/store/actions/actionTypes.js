@@ -7,4 +7,7 @@ export const TOGGLE_NOTE = 'TOGGLE_NOTE';
 export const TOGGLE_ADD_TAG = 'TOGGLE_ADD_TAG';
 export const ADD_TAG = 'ADD_TAG';
 export const REMOVE_TAG = 'REMOVE_TAG';
+export const SIGN_IN = 'SIGN_IN';
+export const SIGN_UP = 'SIGN_UP';
+export const SIGN_OUT = 'SIGN_OUT';
 export const ERROR = 'ERROR';
