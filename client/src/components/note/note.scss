@@ -74,9 +74,17 @@ $star: "\2605";
 .note-content{
 	border-top:1px solid #C3C2C9;
 }
-.dropdown-item{
-	background: #fff !important;
-	&:hover{
-		color: $color-brand !important;
-	}
+.addTagOption{
+    display:inline-block;
+    width: $font-size-md;
+    height: $font-size-md;
+    background-color: black;
+    padding: 10px;
+    &:hover{
+      background: $color-brand;
+    }
+}
+.addTag-icon{
+	 mask: url('../icon/addIcon.svg');
+	 mask-size:cover;
 }

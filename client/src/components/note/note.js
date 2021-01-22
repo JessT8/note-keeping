@@ -1,6 +1,7 @@
 import React from 'react';
 import NoteModal from "./noteModal";
 import TagModal from "../tag/tagModal";
+import AddIcon from '../icon/addIcon.svg';
 import './note.scss'
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleNote, toggleAddTag } from '../../store/actions/toggleAction';
@@ -26,25 +27,15 @@ function Note(props){
                         </h3>
                     </a>
                 </div>
-                <div className="note-content dropup addTagOption d-flex flex-row-reverse">
-                    <div className="dropdown-menu dropdown-menu-right"aria-labelledby="dropdownMenuButton">
-                        <a className="dropdown-item"
+                <div className="note-content d-flex flex-row-reverse">
+                    <a
                            href="!#"
                            onClick={(e)=>{
                             e.preventDefault();
                             dispatch(toggleAddTag(props.note.id));
                             }}>
-                            Tags
-                        </a>
-                    </div>
-                    <a id="dropdownMenuButton"
-                       data-toggle="dropdown"
-                       aria-haspopup="true"
-                       href="!#"
-                       className="pr-auto"
-                       aria-expanded="false">
-                       ...
-                    </a>
+                           <span class="addTagOption addTag-icon"></span>
+                     </a>
                 </div>
             </div>
             {(noteToggle === props.note.id) && <NoteModal values={props.note}/>}
