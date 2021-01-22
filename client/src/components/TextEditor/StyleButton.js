@@ -1,11 +1,4 @@
 import React from 'react';
-import LinkIcon from '../icon/linkIcon.svg';
-import ULIcon from '../icon/ulIcon.svg';
-import ImageIcon from '../icon/imageIcon.svg';
-import FontSizeIcon from '../icon/fontSizeIcon.svg';
-import TextLeftIcon from '../icon/textLeftIcon.svg';
-import TextCenterIcon from '../icon/textCenterIcon.svg';
-import TextRightIcon from '../icon/textRightIcon.svg';
 import SizeOptions from './SizeOptions';
 import HighlightOptions from './HighlightOptions';
 
@@ -23,19 +16,19 @@ function StyleButton(props){
 
           let label = props.option.label;
           if(props.option.label === 'link'){
-            label = <img src={LinkIcon} alt='link-icon'/>
+            label = <span className="link-icon icon"></span>
           }else if(props.option.label === 'image'){
-            label = <img src={ImageIcon} alt='img-icon'/>
+            label = <span className="image-icon icon"></span>
           }else if(props.option.label === 'unordered-list-item'){
-            label = <img src={ULIcon} alt='UL-icon'/>
+            label = <span className="ul-icon icon"></span>
           }else if(props.option.label === 'text-left'){
-            label = <img src={TextLeftIcon} alt='left-align-icon'/>
+            label = <span className="textLeft-icon icon"></span>
           }else if(props.option.label === 'text-center'){
-            label = <img src={TextCenterIcon} alt='center-align-icon'/>
+            label = <span className="textCenter-icon icon"></span>
           }else if(props.option.label === 'text-right'){
-            label = <img src={TextRightIcon} alt='right-align-icon'/>
+            label = <span className="textRight-icon icon"></span>
           }else if(props.option.label === 'font-size-dropdown'){
-            label = <img src={FontSizeIcon} alt='font-size-icon'/>
+            label = <span className="fontsize-icon icon"></span>
           }
           return (
             <>

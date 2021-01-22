@@ -1,8 +1,14 @@
+$font-size-md: 14px;
+$color-brand: #2196F3;
+
 .tool-label{
-	  color: #999;
     cursor: pointer;
     margin-right: 16px;
     padding: 2px 0;
+    color:#999;
+    &:hover{
+      color:$color-brand;
+    };
 }
 .flex-center{
 	display: flex;
@@ -98,4 +104,49 @@ span.color>a.dropdown-item-color{
     color: inherit !important;
     transform: scale(1.5);
 	}
+}
+
+.icon{
+    display:inline-block;
+  	background-color: #999;
+    padding: 13px 13px 1px 2px;
+    margin: 3px;
+    &:hover{
+      background: $color-brand;
+    }
+}
+.link-icon{
+	 mask: url('../icon/linkIcon.svg');
+	 mask-size:cover;
+}
+.ul-icon{
+	 mask: url('../icon/ulIcon.svg');
+	 mask-size:cover;
+}
+.image-icon{
+	 mask: url('../icon/linkIcon.svg');
+	 mask-size:cover;
+}
+
+.image-icon{
+	 mask: url('../icon/imageIcon.svg');
+	 mask-size:cover;
+}
+
+.fontsize-icon{
+	 mask: url('../icon/fontSizeIcon.svg');
+	 mask-size:cover;
+}
+
+.textLeft-icon{
+	 mask: url('../icon/textLeftIcon.svg');
+	 mask-size:cover;
+}
+.textCenter-icon{
+	 mask: url('../icon/textCenterIcon.svg');
+	 mask-size:cover;
+}
+.textRight-icon{
+	 mask: url('../icon/textRightIcon.svg');
+	 mask-size:cover;
 }

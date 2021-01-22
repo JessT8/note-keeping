@@ -1,7 +1,6 @@
 import React from 'react';
 import NoteModal from "./noteModal";
 import TagModal from "../tag/tagModal";
-import AddIcon from '../icon/addIcon.svg';
 import './note.scss'
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleNote, toggleAddTag } from '../../store/actions/toggleAction';
@@ -28,13 +27,12 @@ function Note(props){
                     </a>
                 </div>
                 <div className="note-content d-flex flex-row-reverse">
-                    <a
-                           href="!#"
-                           onClick={(e)=>{
+                    <a  href="!#"
+                        onClick={(e)=>{
                             e.preventDefault();
                             dispatch(toggleAddTag(props.note.id));
-                            }}>
-                           <span class="addTagOption addTag-icon"></span>
+                        }}>
+                        <span className="addTagOption addTag-icon"></span>
                      </a>
                 </div>
             </div>
