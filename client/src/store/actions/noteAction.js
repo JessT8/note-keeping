@@ -9,7 +9,7 @@ export const getNotes = () => async (dispatch)=>{
     client.query({
         query: queries.NOTES
     }).then(results=>{
-            let uniqueTags = getUniqueTags(results.data.notes);
+            const uniqueTags = getUniqueTags(results.data.notes);
             dispatch({
                 type:actions.GET_NOTES,
                 payload:
@@ -17,14 +17,14 @@ export const getNotes = () => async (dispatch)=>{
                     notes: results.data.notes,
                     tags: uniqueTags,
                     isLoading: false,
-                    error: false
                 }
             });
     }).catch(()=>{
         dispatch({
             type: actions.ERROR,
             payload:{
-                error: true
+                isLoading: false,
+                error: 'Unsuccessful'
             }
         })
     })
@@ -46,7 +46,8 @@ export const addNote =  ( noteInput) => async (dispatch)=>{
         dispatch({
             type: actions.ERROR,
             payload:{
-                error: true
+                isLoading: false,
+                error: 'Unsuccessful'
             }
         })
     })
@@ -69,7 +70,7 @@ export const updateNote = (noteInput) => async (dispatch)=>{
         dispatch({
             type: actions.ERROR,
             payload:{
-                error: true
+                error:'Unsuccessful'
             }
         })
     })
@@ -90,7 +91,7 @@ export const deleteNote = (id) => async (dispatch)=>{
         dispatch({
             type: actions.ERROR,
             payload:{
-                error: true
+                error: 'Unsuccessful'
             }
         })
     });
@@ -113,7 +114,8 @@ export const addTag =  (input) => async (dispatch)=>{
         dispatch({
             type: actions.ERROR,
             payload:{
-                error: true
+                isLoading: false,
+                error: 'Unsuccessful'
             }
         })
     })
@@ -129,13 +131,14 @@ export const removeTag =  (input) => async (dispatch)=>{
     }).then(()=>{
         dispatch({
             type:actions.REMOVE_TAG,
-            payload: {id:input.variables.noteId, name: input.variables.tagInput.name }
+            payload: {id:input.variables.noteId, name: input.variables.tagInput.name , isLoading: true}
         });
     }).catch(()=>{
         dispatch({
             type: actions.ERROR,
             payload:{
-                error: true
+                error: 'Unsuccessful',
+                isLoading: false
             }
         })
     })
@@ -143,6 +146,7 @@ export const removeTag =  (input) => async (dispatch)=>{
 export const loading = (state) => {
     return {...state, isLoading: true}
 }
+
 export const getUniqueTags = (notes)=>{
         let tags = []
        notes.forEach((note)=>{
@@ -163,4 +167,23 @@ export const getUniqueTags = (notes)=>{
             }
         })
         return Object.values(unique);
+}
+
+export const refresh = () => (dispatch) => {
+    dispatch({
+        type: actions.REFRESH,
+        payload:{
+            refresh: true,
+            error: null
+        }
+    })
+}
+
+export const setError = (error) => (dispatch) =>{
+    dispatch({
+        type: actions.ERROR,
+        payload:{
+            error
+        }
+    })
 }

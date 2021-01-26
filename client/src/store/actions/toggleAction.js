@@ -21,3 +21,15 @@ export const toggleAddTag = (toggleAddTag) => async (dispatch)=>{
         }
   });
 }
+
+export const toggleError = (toggleError) => async (dispatch)=>{
+    dispatch({
+        type:actions.TOGGLE_ERROR,
+        payload:
+        {
+            toggleNote: '',
+            toggleAddTag: '',
+            toggleError
+        }
+  });
+}

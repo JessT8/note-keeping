@@ -4,6 +4,7 @@ import Modal from '../modal/modal';
 import { useDispatch } from 'react-redux';
 import { addTag, removeTag } from '../../store/actions/noteAction';
 import { toggleAddTag } from '../../store/actions/toggleAction';
+
 function TagModal(props) {
     const [ tagValue, setTagValue ] = useState('');
     const dispatch = useDispatch();
@@ -29,7 +30,8 @@ function TagModal(props) {
                             setTagValue('');
                         }
                     }}
-                    >Add Tags</button>
+                    >Add Tags
+                </button>
                 <div className='mt-3 d-flex flex-row flex-wrap'>
                 {props.tags.map((tag,i)=>(
                    <span key={i} className="badge badge-secondary px-2 py-1 text-truncate mr-1 my-2 "><span>{tag.name}</span><a href="!#" onClick={(e)=>{

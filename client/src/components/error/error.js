@@ -1,8 +1,9 @@
 import React from 'react';
 import './error.scss';
+
 function Error(){
     return (
-        <div className="container-fluid position-fixed h-100 w-100 bg-light">
+        <>
             <div className="justify-content-center">
                 <div className="my-auto">
                     <div className="row pt-5 mt-5">
@@ -23,7 +24,7 @@ function Error(){
                     </div>
                 </div>
             </div>
-        </div>
+        </>
         )
 }
 

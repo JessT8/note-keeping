@@ -28,7 +28,8 @@ function TextEditor (props){
                 setEditorState(editorState);
                 setData(false);
         }
-    },[getData, props])
+        props.getRef(editor)
+    },[getData, props]);
 
     useEffect(()=>{
         if(addLink.value !== '' && addLink.completed){

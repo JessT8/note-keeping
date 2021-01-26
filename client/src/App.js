@@ -12,7 +12,6 @@ import Home from './components/main/home';
 import LandingPage from './components/main/landingPage';
 import SignIn from './components/user/signin';
 import SignUp from './components/user/signup';
-import Error from './components/error/error';
 import { useApolloClient } from '@apollo/client'
 import { useDispatch, useSelector } from 'react-redux';
 import { signOut } from './store/actions/userAction';
@@ -60,12 +59,6 @@ function App(props) {
                 <Route exact path="/signup">
                    {!localStorage.getItem('token') ? <SignUp /> : <Redirect exact from='/signup' to='/'/>}
                 </Route>
-                <Route exact path="/error">
-                    <Error />
-                </Route>
-                {/* <Route path="*">
-                    <NotFound />
-                </Route>*/}
             </Switch>
     </Router>
   );

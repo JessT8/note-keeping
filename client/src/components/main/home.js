@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { getNotes } from '../../store/actions/noteAction';
 import AddNote from "../note/addNote";
 import Notes from "../note/notes"
+import Error from '../error/error';
 import FilterOptionIcon from '../icon/filterOptionIcon.svg'
 import SlideDrawer from '../slideDrawer/slideDrawer'
 import '../../App.css';
@@ -19,9 +19,10 @@ function Home(props) {
     const notes = useSelector( state => state.notes.notes);
     const isLoading = useSelector( state => state.notes.isLoading);
     const error = useSelector( state => state.notes.error);
+    const refresh = useSelector( state => state.notes.refresh);
     useEffect(() => {
         dispatch(getNotes());
-    }, [dispatch])
+    }, [dispatch,refresh])
 
     useEffect(()=>{
         if(!isLoading){
@@ -67,19 +68,16 @@ function Home(props) {
     if(toggleDrawer) {
         noteColClass = 'col-9'
     };
-    if(error){
-        return <Redirect to="/error" />
-    }
     return (
         <div className="mt-5">
             <div className="container-fluid">
                 <div className="App-main">
                     <header className="pt-5">
-                        <h1 className="nunito-font">My notes</h1>
+                        <h1 className="nunito-font">My notes</h1>{ (error) ? '':
                         <button className="toggleAdd"
                                 onClick={()=>{setToggleAddNote(true)}}>
                                 +
-                        </button>
+                        </button>}
                     </header>
                     {toggleAddNote && <AddNote close={()=>setToggleAddNote(false)}/>}
                     <div className="container">
@@ -104,7 +102,7 @@ function Home(props) {
                             </div>
                         </div>
                     </div>
-                    {!isLoading  &&
+                    {(!isLoading && !error) ?
                     <div className="container-fluid">
                         <div className="row">
                             <SlideDrawer show={toggleDrawer}
@@ -115,7 +113,7 @@ function Home(props) {
                                 <Notes notes={filterNotes}/>
                             </div>
                         </div>
-                    </div>}
+                    </div> : (error) ? <Error/> : 'Loading'}
                 </div>
             </div>
         </div>
