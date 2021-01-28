@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { getNotes } from '../../store/actions/noteAction';
 import AddNote from "../note/addNote";
@@ -15,54 +15,66 @@ function Home(props) {
     const [filterNotes, setFilterNotes] = useState([]);
     const [filterTag, setFilterTag] = useState('');
     const [orderBy, setOrderBy] = useState({value:'', updated:true});
-    const dispatch = useDispatch();
+
     const notes = useSelector( state => state.notes.notes);
     const isLoading = useSelector( state => state.notes.isLoading);
     const error = useSelector( state => state.notes.error);
-    const refresh = useSelector( state => state.notes.refresh);
+    const dispatch = useDispatch();
+
+    //takes in notes and rearrange them
+    const rearrangeNotes = useCallback(n => {
+        const currentOrder = orderBy.value;
+        const isOldest = (currentOrder === 'Oldest');
+        const isAlphabetical =  (currentOrder === 'A-Z');
+        const isReverse =  (currentOrder === 'Z-A');
+        return n.sort((a,b)=>{
+            if( isAlphabetical || isReverse ){
+                let textA = a.title.toUpperCase();
+                let textB = b.title.toUpperCase();
+                if( isReverse ){
+                    return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
+                }else{
+                    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+                }
+            }
+            let idA = parseInt(a.id);
+            let idB = parseInt(b.id);
+            if(isOldest){
+                return (idA < idB) ? -1 : (idA > idB) ? 1 : 0;
+            }
+            return (idA > idB) ? -1 : (idA < idB) ? 1 : 0;
+        })
+    }, [orderBy.value]);
+
     useEffect(() => {
         dispatch(getNotes());
-    }, [dispatch,refresh])
+    }, [dispatch])
 
+    //filter notes by tags and rearrange them
     useEffect(()=>{
         if(!isLoading){
-            if(filterTag!==''){
-                let filteredNotes = notes.filter((note)=>
+            if(filterTag !== ''){
+                const filteredNotes = notes.filter((note)=>
                     note.tags.some(t => t.name === filterTag));
                     if(filteredNotes.length !== 0){
-                        setFilterNotes(filteredNotes);
+                        setFilterNotes(rearrangeNotes(filteredNotes));
                     }else{
                         setFilterTag('');
                     }
             }else{
-                setFilterNotes(notes);
+                setFilterNotes(rearrangeNotes([...notes]));
             }
         }
-    }, [filterTag, notes, isLoading])
+    }, [filterTag, notes, isLoading, rearrangeNotes])
+
+    //fires when drop-down list value changes and rearrange notes
     useEffect(()=>{
         if(!orderBy.updated){
             const n = [...filterNotes];
-            n.sort(function(a,b){
-                if(orderBy === 'A-Z' || orderBy === 'Z-A'){
-                    let textA = a.title.toUpperCase();
-                    let textB = b.title.toUpperCase();
-                    if(orderBy !=='A-Z' ){
-                        return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
-                    }else{
-                        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-                    }
-                }
-                let idA = parseInt(a.id);
-                let idB = parseInt(b.id);
-                if(orderBy === 'Oldest'){
-                    return (idA < idB) ? -1 : (idA > idB) ? 1 : 0;
-                }
-                return (idA > idB) ? -1 : (idA < idB) ? 1 : 0;
-            })
-            setFilterNotes(n);
-            setOrderBy({...orderBy, updated:true});
+            setFilterNotes(rearrangeNotes(n));
+            setOrderBy( {...orderBy, updated: true} );
         }
-    },[orderBy, filterNotes])
+    },[orderBy, filterNotes, rearrangeNotes])
 
     let noteColClass = "col"
     if(toggleDrawer) {
