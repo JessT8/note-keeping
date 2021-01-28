@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { updateNote } from '../../store/actions/noteAction';
 import { useDispatch } from 'react-redux';
 import TextEditor  from '../TextEditor/TextEditor';
 import FullModal from '../modal/fullModal';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import NoteSubmissionError from '../error/noteSubmissionError';
 
 function EditNote(props) {
     const [values, setValues] = useState(props.values);
+    const [clicked, setClicked] = useState(false);
     const dispatch = useDispatch();
+    const inputRef = useRef(null);
+
     return  <FullModal>
                 <div className="mt-5">
                     <button className="back button-link"
@@ -22,6 +26,7 @@ function EditNote(props) {
                                 className="form__field"
                                 value={values.title}
                                 placeholder="Title"
+                                ref={inputRef}
                                 onChange={(e)=>{setValues({...values, "title":e.target.value})}}
                             />
                             <label
@@ -32,20 +37,21 @@ function EditNote(props) {
                             </label>
                         </div>
                         <div className=" form__group_popup mx-auto">
-                            <TextEditor description={values.description} onChange={(desc)=>{setValues({...values, "description":JSON.stringify(desc)})
-                            }}   edit={true}
+                            <TextEditor
+                                description={values.description} onChange={(desc)=>{setValues({...values, "description":JSON.stringify(desc)})}}
+                                edit={true}
                              />
                         </div>
                         <div className="flex-center">
                             <button className="btn btn-primary"
                                     onClick={()=>{
-                                        if(values.title && values.description){
+                                        if(values.title){
                                             if(props.values.title !== values.title || props.values.description!== values.description){
                                               dispatch(updateNote({variables: { id:parseInt(values.id,10), noteInput:{title:values.title, description: values.description, pin: values.pin}}}))
-                                           }
-                                            props.showEdit();
+                                            }
+                                            setClicked(true);
                                         }else{
-                                            console.log("invalid input");
+                                            inputRef.current.focus();
                                         }
                                     }
                                     }>
@@ -54,6 +60,7 @@ function EditNote(props) {
                         </div>
                     </div>
                 </div>
+                { <NoteSubmissionError clicked={clicked} close={props.close} clearValues={()=>{setValues({title:'', description:''})}} resetClick={()=>{setClicked(false)}} showEdit={props.showEdit}/>}
             </FullModal>
 }
 

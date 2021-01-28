@@ -28,7 +28,6 @@ function TextEditor (props){
                 setEditorState(editorState);
                 setData(false);
         }
-        props.getRef(editor)
     },[getData, props]);
 
     useEffect(()=>{
