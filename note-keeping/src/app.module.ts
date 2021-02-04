@@ -7,13 +7,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { TagModule } from './tag/tag.module';
 import { NoteTagModule } from './note-tag/note-tag.module';
-
+console.log(typeOrmConfig);
 @Module({
   imports: [
   	ConfigModule.forRoot(),
  		TypeOrmModule.forRoot(typeOrmConfig),
     GraphQLModule.forRoot({
     	autoSchemaFile: true,
+    	playground: true,
     	context: ({ req }) => ({ headers: req.headers})
     }),
     NoteModule,
@@ -22,4 +23,5 @@ import { NoteTagModule } from './note-tag/note-tag.module';
     NoteTagModule
   ],
 })
+
 export class AppModule {}

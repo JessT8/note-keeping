@@ -6,7 +6,7 @@ import { NoteTag } from '../note-tag/note-tag.entity';
 import { join } from 'path';
 require('dotenv').config();
 const { DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_HOST } = process.env;
-
+console.log(process.env);
 export const typeOrmConfig: TypeOrmModuleOptions = {
  type:'postgres',
  host: DB_HOST,
