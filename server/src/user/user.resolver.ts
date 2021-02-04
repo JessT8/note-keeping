@@ -30,7 +30,7 @@ export class UserResolver{
 		return this.userService.validatePassword(userInput);
 	}
 
-	@Mutation (returns => Boolean)
+	@Mutation (returns => String)
 	signUp(
 		@Args("userInput") userInput: UserInput
 		){

@@ -22,7 +22,7 @@ export class UserService {
 		return this.userRepository.findOne(id);
 	}
 	//create user
-	async signUp( userInput: UserInput): Promise<boolean>{
+	async signUp( userInput: UserInput): Promise<string>{
 		const { username, password } = userInput;
 		const user = new User();
 		user.username = username;
@@ -30,7 +30,7 @@ export class UserService {
 		user.password = await this.hashPassword(password, user.salt);
 		try{
 			await user.save();
-			return true;
+			return jwt.sign({ id: user.id }, jwtConstants.secret);
 		}catch(error){
 			if(error.code === '23505'){
 				throw new ConflictException("username already taken");
