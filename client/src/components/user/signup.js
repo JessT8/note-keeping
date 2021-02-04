@@ -1,11 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../App.css';
 import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { signUp } from '../../store/actions/userAction';
 
 function SignUp() {
     const [values, setValues] = useState({username:'', password:''});
-     const history = useHistory();
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const error = useSelector( state => state.user.error);
+    const signIn = useSelector( state => state.user.signedIn);
 
+    useEffect(()=>{
+        if(signIn){
+            localStorage.setItem("user",  values.username);
+            history.push('/');
+        }
+    }, [signIn, history, values.username ])
   return (
     <div className="container-fluid position-fixed h-100 w-100 bg-light">
         <div className="row h-75 justify-content-center">
@@ -14,6 +25,7 @@ function SignUp() {
                     <div className="text-center mb-4">
                         <h2 className="nunito-font">Sign Up</h2>
                     </div>
+                    {(error === 'SIGNUP_ERROR') ? <div className="alert-danger alert " role="alert">Username is taken</div>:''}
                     <div className="form-group">
                         <input className="form-control"
                                id="username"
@@ -28,6 +40,7 @@ function SignUp() {
                                id="password"
                                name="password"
                                placeholder="Password"
+                               autoComplete="off"
                                value={values.password}
                                onChange={e=>{setValues({...values,"password":e.target.value})}}
                         />
@@ -37,9 +50,8 @@ function SignUp() {
                                 className="btn btn-primary"
                                 onClick={(e)=>{
                                     e.preventDefault();
-                                    // signup({variables:{userInput:{username:values.username, password:values.password}}})
-                                     history.push("/");
-                                }
+                                    dispatch(signUp({variables:{userInput:{username:values.username, password:values.password}}}));
+                                    }
                                 }
                             >
                                 Sign up &rarr;

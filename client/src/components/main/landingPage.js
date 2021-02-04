@@ -11,10 +11,6 @@ function LandingPage() {
                 <h4 className="text-center">A quick and easy way for you to access all your notes</h4>
                 <div className="text-right pt-5 started-font"><a  href="/signin">Get Started &rarr;</a></div>
             </div>
-
-        </div>
-        <div className="row justify-content-center fade-in">
-
         </div>
     </div>
   );

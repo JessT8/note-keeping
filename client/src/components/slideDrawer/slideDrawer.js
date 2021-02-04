@@ -3,6 +3,7 @@ import './slideDrawer.css';
 import { useSelector } from 'react-redux'
 function SlideDrawer(props){
        const tags = useSelector( state => state.notes.tags);
+
        let tagFilterClass = "tag-filter"
        if(props.filterTag === ''){
             tagFilterClass = "currentTag"

@@ -24,13 +24,13 @@ export const getNotes = () => async (dispatch)=>{
             type: actions.ERROR,
             payload:{
                 isLoading: false,
-                error: 'Unsuccessful'
+                error: 'Get note unsuccessful'
             }
         })
     })
 }
 
-export const addNote =  ( noteInput) => async (dispatch)=>{
+export const addNote =  (noteInput) => async (dispatch)=>{
     dispatch({
     type: actions.LOADING,
     });
@@ -40,14 +40,21 @@ export const addNote =  ( noteInput) => async (dispatch)=>{
     }).then(results=>{
         dispatch({
             type:actions.ADD_NOTE,
-            payload: {id:results.data.createNote.id, ...noteInput.noteInput, tags:[], pin:false}
+            payload: {
+                note: {
+                    id:results.data.createNote.id,
+                    ...noteInput.noteInput,
+                    tags:[],
+                    pin:false
+                }
+            }
       });
     }).catch(()=>{
         dispatch({
             type: actions.ERROR,
             payload:{
                 isLoading: false,
-                error: 'Unsuccessful'
+                error: 'Add note unsuccessful'
             }
         })
     })
@@ -70,7 +77,7 @@ export const updateNote = (noteInput) => async (dispatch)=>{
         dispatch({
             type: actions.ERROR,
             payload:{
-                error:'Unsuccessful'
+                error:'Update unsuccessful'
             }
         })
     })
@@ -91,7 +98,7 @@ export const deleteNote = (id) => async (dispatch)=>{
         dispatch({
             type: actions.ERROR,
             payload:{
-                error: 'Unsuccessful'
+                error: 'delete note unsuccessful'
             }
         })
     });
@@ -108,14 +115,20 @@ export const addTag =  (input) => async (dispatch)=>{
         console.log(result);
         dispatch({
             type:actions.ADD_TAG,
-            payload: {id:input.variables.noteId, tag: {name:input.variables.tagInput.name, id: input.variables.noteId} }
+            payload: {
+                id:input.variables.noteId,
+                tag: {
+                    name:input.variables.tagInput.name,
+                    id: input.variables.noteId
+                }
+            }
         });
     }).catch(()=>{
         dispatch({
             type: actions.ERROR,
             payload:{
                 isLoading: false,
-                error: 'Unsuccessful'
+                error: 'Add tag unsuccessful'
             }
         })
     })
@@ -131,24 +144,28 @@ export const removeTag =  (input) => async (dispatch)=>{
     }).then(()=>{
         dispatch({
             type:actions.REMOVE_TAG,
-            payload: {id:input.variables.noteId, name: input.variables.tagInput.name , isLoading: true}
+            payload: {
+                id:input.variables.noteId,
+                name: input.variables.tagInput.name ,
+                isLoading: false
+            }
         });
     }).catch(()=>{
         dispatch({
             type: actions.ERROR,
             payload:{
-                error: 'Unsuccessful',
+                error: 'remove tag unsuccessful',
                 isLoading: false
             }
         })
     })
 }
 export const loading = (state) => {
-    return {...state, isLoading: true}
+    return {...state, isLoading: true, error:''}
 }
 
 export const getUniqueTags = (notes)=>{
-        let tags = []
+       let tags = []
        notes.forEach((note)=>{
             tags = tags.concat(note.tags);
        });
@@ -167,23 +184,4 @@ export const getUniqueTags = (notes)=>{
             }
         })
         return Object.values(unique);
-}
-
-export const refresh = () => (dispatch) => {
-    dispatch({
-        type: actions.REFRESH,
-        payload:{
-            refresh: true,
-            error: null
-        }
-    })
-}
-
-export const setError = (error) => (dispatch) =>{
-    dispatch({
-        type: actions.ERROR,
-        payload:{
-            error
-        }
-    })
 }

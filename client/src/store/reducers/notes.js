@@ -4,26 +4,23 @@ import * as noteActions from '../actions/noteAction';
 let initialState = {
     notes: [],
     isLoading: true,
-    error: null,
-    refresh: false,
+    error: '',
     tags: [],
 }
 export default function noteReducer(state = initialState, action){
     let notes, note, tagFound, tags;
-    let additionalState =  action.payload;
     switch(action.type){
         case actionTypes.LOADING:
             return noteActions.loading(state);
         case actionTypes.GET_NOTES:
-            return {...state,
-                    ...additionalState
-                };
+            return {...state = action.payload }
         case actionTypes.ADD_NOTE:
-            return {...state,
-                    notes:[action.payload, ...state.notes],
-                    isLoading:false,
-                    error:null
-                    }
+            return {
+                ...state,
+                notes:[action.payload.note, ...state.notes],
+                isLoading:false,
+                error:''
+            }
         case actionTypes.UPDATE_NOTE:
             notes =  state.notes.map((note) => {
                 if(note.id === action.payload.id){
@@ -37,10 +34,13 @@ export default function noteReducer(state = initialState, action){
                 isLoading:false
             }
         case actionTypes.DELETE_NOTE:
+            notes = state.notes.filter((note) => note.id !== action.payload.id);
             return {
                 ...state,
-                notes: state.notes.filter((note) => note.id !== action.payload.id),
-                isLoading:false
+                tags: noteActions.getUniqueTags(notes),
+                notes,
+                isLoading: false,
+                error: '',
             };
         case actionTypes.REMOVE_TAG:
             note = state.notes.find( ele => ele.id === action.payload.id);
@@ -56,15 +56,14 @@ export default function noteReducer(state = initialState, action){
                 }
                 return n;
             })
-            tags = state.tags;
-            if(tagCount <= 1){
-                tags =  state.tags.filter((t)=>t.name!==action.payload.name)
-            }
+            tags = (tagCount <= 1) ? state.tags.filter((t)=>t.name!==action.payload.name) : state.tags;
+
             return {
                 ...state,
                 notes,
                 tags,
-                isLoading:false
+                isLoading:false,
+                error: ''
             };
         case actionTypes.ADD_TAG:
             note = state.notes.find( ele => ele.id === action.payload.id);
@@ -80,28 +79,16 @@ export default function noteReducer(state = initialState, action){
                 }
                 return n;
             })
-            tags = state.tags;
-            if(tagFound){
-                tags = noteActions.getUniqueTags(notes);
-            }
+            tags = tagFound ? noteActions.getUniqueTags(notes) : state.tags;
             return {
                 ...state,
                 notes,
                 tags,
-                isLoading:false
+                isLoading:false,
+                error:''
             };
          case actionTypes.ERROR:
-                 console.log('error', state);
-            return {
-                ...state,
-                ...additionalState
-            };
-        case actionTypes.REFRESH:
-            return {
-                ...state,
-                refresh: additionalState.refresh,
-                error: additionalState.error
-            };
+            return { ...state = action.payload}
         default:
             return state;
     }

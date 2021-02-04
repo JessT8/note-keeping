@@ -16,15 +16,15 @@ export const signIn = (userInput) => async (dispatch)=>{
                 payload:
                 {
                     user:userInput.variables.userInput.username,
-                    error: false,
-                    signedIn:true
+                    signedIn:true,
+                    error: '',
                 }
             })
     }).catch(()=>{
         dispatch({
             type: actions.ERROR,
             payload:{
-                error: true
+                error: 'SIGNIN_ERROR',
             }
         })
     })
@@ -32,13 +32,31 @@ export const signIn = (userInput) => async (dispatch)=>{
 
 export const signUp = (userInput) => async (dispatch)=>{
     dispatch({
-        type:actions.SIGN_UP,
-        payload:
-        {
-            user:userInput.username,
-            loading:false,
-        }
-  });
+        type: actions.LOADING,
+    });
+    client.mutate({
+        mutation: queries.SIGN_UP,
+        variables: userInput.variables
+    }).then(results=>{
+            localStorage.setItem("token",  results.data.signUp);
+            dispatch({
+                type:actions.SIGN_UP,
+                payload:
+                {
+                    user:userInput.variables.userInput.username,
+                    error: '',
+                    signedIn:true
+                }
+            })
+    }).catch((err)=>{
+        console.log(err);
+        dispatch({
+            type: actions.ERROR,
+            payload:{
+                error: 'SIGNUP_ERROR',
+            }
+        })
+    })
 }
 
 export const signOut = () => (dispatch)=>{
@@ -48,7 +66,8 @@ export const signOut = () => (dispatch)=>{
         {
             user:'',
             loading:false,
-            signedIn:false
+            signedIn:false,
+            error:''
         }
   });
 }

@@ -80,6 +80,14 @@ function Home(props) {
     if(toggleDrawer) {
         noteColClass = 'col-9'
     };
+    const noteComponent = (filterNotes.length) ? <Notes notes={filterNotes}/> :<div className="container-fluid w-100 h-100">
+        <div className="row h-75 p-5">
+            <div className="my-5 p-5 ">
+                <p className="big-font text-center cinzel-font">Currently no notes</p>
+            </div>
+        </div>
+        </div>;
+
     return (
         <div className="mt-5">
             <div className="container-fluid">
@@ -94,18 +102,16 @@ function Home(props) {
                     {toggleAddNote && <AddNote close={()=>setToggleAddNote(false)}/>}
                     <div className="container">
                         <div className="row no-gutters mt-3">
-                            <div className="gear col-2">
+                            <div className="gear col-md-3 col-sm-12">
                                 <button className="gear-btn ml-5"
                                         onClick={()=>{setToggleDrawer(!toggleDrawer)}}>
                                         <img src={FilterOptionIcon} alt="gear"/>
                                         <span className="mx-1">Filter</span>
                                 </button>
                             </div>
-                            <div className="col-1 mt-1 offset-4-md">
-                                <p>Order by:</p>
-                            </div>
-                            <div className="col-2">
-                               <select className="orderBy" onChange={(e)=>{setOrderBy({value:e.target.value, updated:false})}}>
+                            <div className="col-md-5 ml-5">
+                                <label className="mr-3" for="orderBy-select">Order by:</label>
+                                <select className="orderBy" id="orderBy-select" onChange={(e)=>{setOrderBy({value:e.target.value, updated:false})}}>
                                     <option value="Default">Newest to Oldest</option>
                                     <option value="Oldest">Oldest to Newest</option>
                                     <option value="A-Z">A-Z</option>
@@ -122,7 +128,7 @@ function Home(props) {
                                          filterTag={filterTag}
                                          close={()=>setToggleDrawer(false)}/>
                             <div className={noteColClass}>
-                                <Notes notes={filterNotes}/>
+                                {noteComponent}
                             </div>
                         </div>
                     </div> : (error) ? <Error/> : 'Loading'}

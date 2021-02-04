@@ -7,15 +7,17 @@ import { signIn } from '../../store/actions/userAction';
 function SignIn(props) {
     const [values, setValues] = useState({username:'', password:''});
     const signedIn = useSelector( state => state.user.signedIn);
+    const error = useSelector( state => state.user.error);
     const dispatch = useDispatch();
     const history = useHistory();
-  useEffect(()=>{
-    if(signedIn){
-        localStorage.setItem("user",  values.username);
+    useEffect(()=>{
+        if(signedIn){
+            localStorage.setItem("user",  values.username);
             history.push('/');
-    }
-  },[signedIn, history, values])
-  return (
+        }
+    },[signedIn, history, values]);
+
+    return (
        <div className="container-fluid position-fixed h-100 w-100 bg-light">
             <div className="row h-75 justify-content-center">
                 <div className="col-5 rounded border  pt-4 pb-5 pl-5 pr-5 mt-5 bg-white my-auto">
@@ -23,6 +25,7 @@ function SignIn(props) {
                         <div className="text-center mb-4">
                             <h2 className="nunito-font">Sign In</h2>
                         </div>
+                        {(error === 'SIGNIN_ERROR') ? <div className="alert alert-danger" role="alert">Invalid username or password</div> : ''}
                         <div className="form-group ">
                             <input className="form-control"
                                    id="username"
@@ -50,8 +53,7 @@ function SignIn(props) {
                                         if(values.username && values.password){
                                          dispatch(signIn({variables:{userInput:{username:values.username, password:values.password}}}));
                                         }else{
-                                            // setError(true);
-                                            console.log('error');
+
                                         }
                                      }
                                     }
