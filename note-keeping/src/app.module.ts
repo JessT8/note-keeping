@@ -7,15 +7,19 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { TagModule } from './tag/tag.module';
 import { NoteTagModule } from './note-tag/note-tag.module';
-console.log(typeOrmConfig);
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 @Module({
   imports: [
   	ConfigModule.forRoot(),
  		TypeOrmModule.forRoot(typeOrmConfig),
     GraphQLModule.forRoot({
     	autoSchemaFile: true,
-    	playground: true,
+    	playground: false,
     	context: ({ req }) => ({ headers: req.headers})
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client/build'),
     }),
     NoteModule,
     UserModule,
