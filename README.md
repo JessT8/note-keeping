@@ -24,25 +24,30 @@ Next, install all dependencies:
 
 `npm install`
 
-Create .env file in client src folder:
+Create .env file in client folder:
 
 `SERVER_URI=http://localhost:9000/graphql`
 
-Create .env file in server src folder:
+Create react build:
+`npm run build`
+
+Create .env file in note-keeping folder:
 
 `
 PORT=9000
-DB_HOST=
-DB_PORT=
-DB_USERNAME=
-DB_PASSWORD=
-DB_DATABASE=
+DB_HOST=YOUR_DB_HOST
+DB_PORT=YOUR_DB_PORT
+DB_USERNAME=YOUR_DB_USERNAME
+DB_PASSWORD=YOUR_DB_PASSWORD
+DB_DATABASE=YOUR_DB_DATABASE
 `
 
-To run the app, navigate to server directory and run: 
+Create constant file in note-keeping folder:
+`export const jwtConstants= {
+   secret: YOUR_JWT_KEY
+}
+`
+
+To run the app, navigate to note-keeping directory and run: 
 
 `npm run start` or `nest start`
-
-Open another terminal, navigate to the client directory and run:
-
-`npm run start`
