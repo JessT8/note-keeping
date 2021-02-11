@@ -5,7 +5,6 @@ import { Repository } from 'typeorm';
 import { UserInput } from './user.input';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
-import { jwtConstants } from '../constants';
 
 @Injectable()
 export class UserService {
@@ -30,7 +29,7 @@ export class UserService {
 		user.password = await this.hashPassword(password, user.salt);
 		try{
 			await user.save();
-			return jwt.sign({ id: user.id }, jwtConstants.secret);
+			return jwt.sign({ id: user.id }, process.env.JWT_SECRET);
 		}catch(error){
 			if(error.code === '23505'){
 				throw new ConflictException("username already taken");
@@ -48,7 +47,7 @@ export class UserService {
 			const validation = await user.validatePassword(password);
 			if( user && validation){
 				//, expiresIn: 360000000
-				return jwt.sign({ id }, jwtConstants.secret);
+				return jwt.sign({ id }, process.env.JWT_SECRET);
 			}else{
 				throw new UnauthorizedException('Invalid Credential');
 			}

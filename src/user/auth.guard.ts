@@ -1,7 +1,6 @@
 import { Injectable, CanActivate, ExecutionContext , HttpException, HttpStatus } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import * as jwt from 'jsonwebtoken';
-import { jwtConstants } from '../constants';
 
 @Injectable()
 export class AuthGuard implements CanActivate{
@@ -19,7 +18,7 @@ export class AuthGuard implements CanActivate{
 		}
 		const token = auth.split(' ')[1];
 		try{
-			return await jwt.verify(token, jwtConstants.secret);
+			return await jwt.verify(token, process.env.JWT_SECRET);
 		}catch(err){
 			throw new HttpException('Invalid Token', HttpStatus.UNAUTHORIZED);
 		}
