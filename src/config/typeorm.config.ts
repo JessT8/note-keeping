@@ -9,7 +9,8 @@ const { DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_HOST, DATABASE_URL } 
 export let typeOrmConfig: TypeOrmModuleOptions = {
   type:'postgres',
   entities: [ User, Note, Tag, NoteTag ],
-  synchronize: true
+  synchronize: true,
+  ssl: true
 };
 if(DATABASE_URL){
   typeOrmConfig = {
@@ -17,7 +18,7 @@ if(DATABASE_URL){
     url:DATABASE_URL
   }
 }else{
-typeOrmConfig = {
+  typeOrmConfig = {
     ...typeOrmConfig,
     host: DB_HOST,
     port: parseInt(DB_PORT),
