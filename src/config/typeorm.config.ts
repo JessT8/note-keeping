@@ -17,7 +17,7 @@ if(DATABASE_URL){
     url:DATABASE_URL
   }
 }else{
-typeOrmConfig = {
+  typeOrmConfig = {
     ...typeOrmConfig,
     host: DB_HOST,
     port: parseInt(DB_PORT),
