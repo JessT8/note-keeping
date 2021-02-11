@@ -10,7 +10,7 @@ export let typeOrmConfig: TypeOrmModuleOptions = {
   type:'postgres',
   entities: [ User, Note, Tag, NoteTag ],
   synchronize: true,
-  ssl: true
+  ssl: { rejectUnauthorized: false }
 };
 if(DATABASE_URL){
   typeOrmConfig = {
