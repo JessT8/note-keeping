@@ -2,7 +2,7 @@ import React from 'react';
 const Image = props => {
  if (props.src) {
   return <div className='center'>
-    <img src={props.src} className="note-image" alt="img-link"/>
+    <img src={props.src} className="note-image" alt={props.src} />
   </div>
  }
  return null;
@@ -15,7 +15,7 @@ const Media = props => {
  let media;
 
  if (type === "image") {
-  media = <Image src={src}/>;
+  media = <Image src={src}  />;
  }
 
  return media;

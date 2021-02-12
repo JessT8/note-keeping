@@ -9,13 +9,13 @@ const { DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_HOST, DATABASE_URL } 
 export let typeOrmConfig: TypeOrmModuleOptions = {
   type:'postgres',
   entities: [ User, Note, Tag, NoteTag ],
-  synchronize: true,
-  ssl: { rejectUnauthorized: false }
+  synchronize: true
 };
 if(DATABASE_URL){
   typeOrmConfig = {
     ...typeOrmConfig,
-    url:DATABASE_URL
+    url:DATABASE_URL,
+    ssl: { rejectUnauthorized: false }
   }
 }else{
   typeOrmConfig = {
