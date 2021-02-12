@@ -1,5 +1,5 @@
-# Note-keeping
-An app to keep track of notes using NestJS and React
+# Note-keeping 
+An app to keep track of notes using NestJS and React. View demo [here](https://notekeepr-app.herokuapp.com/)
 
 ## Technologies used
 * Nestjs
@@ -27,9 +27,6 @@ Next, install all dependencies:
 Create .env file in client folder:
 
 `SERVER_URI=http://localhost:9000/graphql`
-
-Create react build:
-`npm run build`
 
 Create .env file in note-keeping folder:
 
